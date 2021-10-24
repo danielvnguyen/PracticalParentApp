@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PracticalParentApp</string>
+    <string name="timeout_txt">Timeout Timer</string>
+    <string name="flip_coin_txt">Flip A Coin</string>
+    <string name="configure_children_txt">Configure Children</string>
+</resources>
