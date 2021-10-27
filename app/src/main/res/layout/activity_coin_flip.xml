@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/flip_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="100dp"
         android:layout_marginStart="175dp"
         android:layout_marginTop="586dp"
         android:layout_marginEnd="142dp"
@@ -22,25 +22,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/coin"
-        android:layout_width="209dp"
-        android:layout_height="216dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="103dp"
-        android:layout_marginBottom="50dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/heads"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
         app:srcCompat="@drawable/heads" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="198dp"
-        android:layout_height="204dp"
-        app:srcCompat="@drawable/tails"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="332dp" />
 </RelativeLayout>

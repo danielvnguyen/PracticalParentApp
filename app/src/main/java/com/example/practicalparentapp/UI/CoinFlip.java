@@ -59,9 +59,6 @@ public class CoinFlip extends AppCompatActivity {
         this.coin = coin;
     }
 
-
-
-
     {
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setInterpolator(new AccelerateInterpolator());
