@@ -2,10 +2,9 @@ package com.example.practicalparentapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -16,57 +15,49 @@ import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
 
-import java.util.Objects;
 import java.util.Random;
 
-public class CoinFlip extends AppCompatActivity {
-    @Override
+public class MainMenu extends AppCompatActivity {
 
+
+    // private static final Random random= new Random();
+    // private ImageView coin;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin_flip);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        setTitle("Flip Coin");
+        setContentView(R.layout.activity_main);
+
+        setUpConfigChildrenBtn();
+
+        setUpCoinFlipBtn();
+
+        //setUpTimeoutTimerBtn();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemID = item.getItemId();
-
-        // If the back button is pressed triggered cancel warning
-        if (itemID == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    //when back button is pressed, finish the activity
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, CoinFlip.class);
+    public void setUpCoinFlipBtn() {
+        Button flip_btn = findViewById(R.id.flipCoinBtn);
+        // ImageView coin = (ImageView) findViewById(R.id.coin);
+        //flip_btn.setOnClickListener(new View.OnClickListener()
+        flip_btn.setOnClickListener((v) -> {
+            Intent intent = CoinFlip.makeIntent(this);
+            startActivity(intent);
+        } );
     }
 
 
-   /* Button flip_btn = findViewById(R.id.flip_button);
 
-    //flip_btn.setOnClickListener(new View.OnClickListener()
-
-    private static final Random random = new Random();
-    private ImageView coin;
-
-    public void CoinFl(ImageView coin) {
-        this.coin = coin;
-    }
+    private void setUpConfigChildrenBtn() {
+        Button btn = findViewById(R.id.configureChildrenBtn);
+        btn.setOnClickListener((v2) -> {
+            Intent intent2 = ConfigureChildren.makeIntent(this);
+            startActivity(intent2);
 
 
+
+    /*private void flipCoin()
     {
-        Animation fadeOut = new AlphaAnimation(1, 0);
+        Animation fadeOut=new AlphaAnimation(1,0);
         fadeOut.setInterpolator(new AccelerateInterpolator());
         fadeOut.setDuration(1000);
         fadeOut.setFillAfter(true);
@@ -78,19 +69,22 @@ public class CoinFlip extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // coin.setImageResource(RANDOM.nextFloat()>0.5f?R.drawable.tails:R.drawable.heads);
+               // coin.setImageResource(RANDOM.nextFloat()>0.5f?R.drawable.tails:R.drawable.heads);
 
-                int side = random.nextInt(2);
+                int side=random.nextInt(2);
 
-                if (side == 1) {
+                if(side==1)
+                {
                     coin.setImageResource(R.drawable.heads);
-                    Toast.makeText(getApplicationContext(), "Heads", Toast.LENGTH_SHORT).show();
-                } else if (side == 0) {
+                    Toast.makeText(getApplicationContext(),"Heads", Toast.LENGTH_SHORT).show();
+                }
+                else if(side==0)
+                {
                     coin.setImageResource(R.drawable.tails);
-                    Toast.makeText(getApplicationContext(), "Tails", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Tails", Toast.LENGTH_SHORT).show();
 
                 }
-                Animation fadeIn = new AlphaAnimation(0, 1);
+                Animation fadeIn=new AlphaAnimation(0,1);
                 fadeIn.setInterpolator(new DecelerateInterpolator());
                 fadeIn.setDuration(3000);
                 fadeIn.setFillAfter(true);
@@ -105,13 +99,22 @@ public class CoinFlip extends AppCompatActivity {
 
             }
         });
-        coin.startAnimation(fadeOut);*/
+        coin.startAnimation(fadeOut);
 
 
+      /*  int side=random.nextInt(2);
+
+        if(side==1)
+        {
+            coin.setImageResource(R.drawable.heads);
+            Toast.makeText(getApplicationContext(),"Heads", Toast.LENGTH_SHORT).show();
+        }
+        else if(side==0)
+        {
+            coin.setImageResource(R.drawable.tails);
+            Toast.makeText(getApplicationContext(),"Tails", Toast.LENGTH_SHORT).show();
+
+        }*/
+        });
+    }
 }
-
-
-
-
-
-

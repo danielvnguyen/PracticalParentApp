@@ -10,6 +10,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -47,17 +48,22 @@ public class CoinFlip extends AppCompatActivity {
         finish();
     }
 
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlip.class);
     }
 
+
+   /* Button flip_btn = findViewById(R.id.flip_button);
+
+    //flip_btn.setOnClickListener(new View.OnClickListener()
+
     private static final Random random = new Random();
     private ImageView coin;
 
-    public CoinFlip(ImageView coin) {
+    public void CoinFl(ImageView coin) {
         this.coin = coin;
     }
+
 
     {
         Animation fadeOut = new AlphaAnimation(1, 0);
@@ -99,10 +105,13 @@ public class CoinFlip extends AppCompatActivity {
 
             }
         });
-        coin.startAnimation(fadeOut);
+        coin.startAnimation(fadeOut);*/
 
 
-    }
 }
+
+
+
+
 
 
