@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
+            android:name=".UI.NewChildActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.TimeoutTimer"
             android:exported="false" />
         <activity

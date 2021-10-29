@@ -32,7 +32,15 @@ public class MainMenu extends AppCompatActivity {
 
         setUpCoinFlipBtn();
 
-        //setUpTimeoutTimerBtn();
+        setUpTimeoutTimerBtn();
+    }
+
+    private void setUpTimeoutTimerBtn() {
+        Button timeOutBtn = findViewById(R.id.timeoutBtn);
+        timeOutBtn.setOnClickListener((v) -> {
+            Intent intent = TimeoutTimer.makeIntent(this);
+            startActivity(intent);
+        } );
     }
 
     public void setUpCoinFlipBtn() {

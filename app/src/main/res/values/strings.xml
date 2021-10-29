@@ -3,4 +3,9 @@
     <string name="timeout_txt">Timeout Timer</string>
     <string name="flip_coin_txt">Flip A Coin</string>
     <string name="configure_children_txt">Configure Children</string>
+    <string name="child_name">Child name</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="what_is_your_child_s_name">What is your child\'s name?</string>
+    <string name="add_child">Add Child</string>
 </resources>
