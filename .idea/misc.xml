@@ -9,8 +9,10 @@
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/activity_new_child.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/adapter.xml" value="0.33" />
-        <entry key="..\:/Users/tejes/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.1796875" />
-        <entry key="..\:/Users/tejes/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
+        <entry key="app/src/main/res/layout/activity_coin_flip.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/layout/activity_configure_children.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/layout/activity_timeout_timer.xml" value="0.35260416666666666" />
       </map>
     </option>
   </component>

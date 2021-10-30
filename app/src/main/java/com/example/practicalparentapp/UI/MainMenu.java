@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -11,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
@@ -18,6 +20,8 @@ import com.example.practicalparentapp.R;
 import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
+
+
 
 
     // private static final Random random= new Random();
