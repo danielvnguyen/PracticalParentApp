@@ -8,4 +8,12 @@
     <string name="delete">Delete</string>
     <string name="what_is_your_child_s_name">What is your child\'s name?</string>
     <string name="add_child">Add Child</string>
+    
+    <string-array name="times">
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+    </string-array>
 </resources>

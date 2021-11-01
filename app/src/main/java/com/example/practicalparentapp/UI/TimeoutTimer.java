@@ -1,13 +1,18 @@
 package com.example.practicalparentapp.UI;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.practicalparentapp.R;
@@ -27,15 +32,25 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private long mTimeLeftInMillis= START_TIME_IN_MILLIS;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
         setTitle("Timeout Timer");
 
+        // function for the Dropdown Menu for selecting the number of minutes to timeout
+        timeoutDropdown();
+
+        updateCountDownText();
+
+        Spinner mySpinner = findViewById(R.id.spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(TimeoutTimer.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.times));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(myAdapter);
+    }
+
+    private void timeoutDropdown() {
         mTextViewCountDown=findViewById(R.id.text_view_countdown);
 
         mButtonStartPause=findViewById(R.id.button_start_pause);
@@ -59,8 +74,6 @@ public class TimeoutTimer extends AppCompatActivity {
                 resetTimer();
             }
         });
-        updateCountDownText();
-
     }
 
     public static Intent makeIntent(Context context) {
@@ -73,6 +86,7 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis=millisUntilFinished;
                 updateCountDownText();
+
             }
 
             @Override
@@ -80,26 +94,27 @@ public class TimeoutTimer extends AppCompatActivity {
                 mTimerRunning=false;
                 mButtonStartPause.setText("start");
                 mButtonStartPause.setVisibility(View.INVISIBLE);
-                mButtonReset.setVisibility(View.VISIBLE);
             }
         } .start();
+
+        // The lines below happen when the pause button has been clicked
         mTimerRunning = true;
         mButtonStartPause.setText("pause");
-        mButtonReset.setVisibility(View.INVISIBLE);
     }
 
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning=false;
-        mButtonStartPause.setText("Start");
+        mButtonStartPause.setText("Resume");
         mButtonReset.setVisibility(View.VISIBLE);
     }
 
     private void resetTimer() {
         mTimeLeftInMillis=START_TIME_IN_MILLIS;
+        mCountDownTimer.cancel();
         updateCountDownText();
+        mButtonStartPause.setText("Start");
         mButtonReset.setVisibility(View.INVISIBLE);
-        mButtonStartPause.setVisibility(View.VISIBLE);
     }
 
     private void updateCountDownText() {
@@ -109,8 +124,6 @@ public class TimeoutTimer extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
 
         mTextViewCountDown.setText(timeLeftFormatted);
-
-
     }
 
 
