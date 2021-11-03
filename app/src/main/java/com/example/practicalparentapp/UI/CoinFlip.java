@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.animation.AccelerateInterpolator;
@@ -20,6 +21,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CoinFlip extends AppCompatActivity {
+    private MediaPlayer coinSound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class CoinFlip extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         setTitle("Flip Coin");
 
+        setUpSounds();
         setUpFlipBtn();
     }
 
@@ -62,6 +66,7 @@ public class CoinFlip extends AppCompatActivity {
         flip_btn.setOnClickListener((v) -> {
             CoinFl(coinsImage);
             flipTheCoin();
+            coinSound.start();
         });
     }
 
@@ -109,6 +114,10 @@ public class CoinFlip extends AppCompatActivity {
             }
         });
         coin.startAnimation(fadeOut);
+    }
+
+    private void setUpSounds() {
+        coinSound = MediaPlayer.create(getApplicationContext(), R.raw.coin_flip_sound);
     }
 }
 
