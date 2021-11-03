@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,11 +10,7 @@
         android:id="@+id/flip_button"
         android:layout_width="166dp"
         android:layout_height="100dp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="586dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginBottom="97dp"
-        android:text="Tap to Flip Coin"
+        android:text="@string/tap_to_flip_coin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +20,10 @@
         android:id="@+id/heads"
         android:layout_width="match_parent"
         android:layout_height="195dp"
-        app:srcCompat="@drawable/heads" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heads"
+        android:contentDescription="@string/heads_side_of_coin" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

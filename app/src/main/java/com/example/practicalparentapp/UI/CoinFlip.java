@@ -21,12 +21,13 @@ import java.util.Random;
 
 public class CoinFlip extends AppCompatActivity {
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         setTitle("Flip Coin");
+
+        setUpFlipBtn();
     }
 
     @Override
@@ -52,19 +53,23 @@ public class CoinFlip extends AppCompatActivity {
         return new Intent(context, CoinFlip.class);
     }
 
-
-   /* Button flip_btn = findViewById(R.id.flip_button);
-
-    //flip_btn.setOnClickListener(new View.OnClickListener()
-
     private static final Random random = new Random();
     private ImageView coin;
+
+    private void setUpFlipBtn() {
+        ImageView coinsImage = findViewById(R.id.heads);
+        Button flip_btn = findViewById(R.id.flip_button);
+        flip_btn.setOnClickListener((v) -> {
+            CoinFl(coinsImage);
+            flipTheCoin();
+        });
+    }
 
     public void CoinFl(ImageView coin) {
         this.coin = coin;
     }
 
-
+    private void flipTheCoin()
     {
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setInterpolator(new AccelerateInterpolator());
@@ -73,22 +78,21 @@ public class CoinFlip extends AppCompatActivity {
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // coin.setImageResource(RANDOM.nextFloat()>0.5f?R.drawable.tails:R.drawable.heads);
+                coin.setImageResource(random.nextFloat()>0.5f?R.drawable.tails:R.drawable.heads);
 
                 int side = random.nextInt(2);
 
                 if (side == 1) {
                     coin.setImageResource(R.drawable.heads);
                     Toast.makeText(getApplicationContext(), "Heads", Toast.LENGTH_SHORT).show();
-                } else if (side == 0) {
+                }
+                else {
                     coin.setImageResource(R.drawable.tails);
                     Toast.makeText(getApplicationContext(), "Tails", Toast.LENGTH_SHORT).show();
-
                 }
                 Animation fadeIn = new AlphaAnimation(0, 1);
                 fadeIn.setInterpolator(new DecelerateInterpolator());
@@ -102,12 +106,10 @@ public class CoinFlip extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
-        coin.startAnimation(fadeOut);*/
-
-
+        coin.startAnimation(fadeOut);
+    }
 }
 
 

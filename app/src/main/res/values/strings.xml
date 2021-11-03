@@ -8,4 +8,6 @@
     <string name="delete">Delete</string>
     <string name="what_is_your_child_s_name">What is your child\'s name?</string>
     <string name="add_child">Add Child</string>
+    <string name="tap_to_flip_coin">Tap to Flip Coin</string>
+    <string name="heads_side_of_coin">Heads side of coin</string>
 </resources>
