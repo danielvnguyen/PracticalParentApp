@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
 
@@ -17,7 +19,7 @@ import java.util.Locale;
 
 public class TimeoutTimer extends AppCompatActivity {
 
-    private static final long START_TIME_IN_MILLIS=600000;
+    private long START_TIME_IN_MILLIS;
     private TextView mTextViewCountDown;
     private Button mButtonStartPause;
     private Button mButtonReset;
@@ -39,9 +41,46 @@ public class TimeoutTimer extends AppCompatActivity {
 
         updateCountDownText();
 
+        setupSpinner();
+    }
+
+    private void setupSpinner() {
         Spinner mySpinner = findViewById(R.id.spinner);
         mySpinner.setAdapter(new SpinnerAdapter(this, R.layout.spinner_dropdown,
                 getResources().getStringArray(R.array.timeout_minutes)));
+
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            switch (i) {
+                                case 0:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 1:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 2:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 3:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 4:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 5:
+                                    Toast.makeText(TimeoutTimer.this, "Message?", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void timeoutDropdown() {
