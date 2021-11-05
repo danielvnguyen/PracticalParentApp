@@ -18,7 +18,8 @@
             android:exported="false" />
         <activity
             android:name=".UI.CoinFlip"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".UI.ConfigureChildren"
             android:exported="false" />

@@ -15,7 +15,6 @@ import com.example.practicalparentapp.R;
 import com.example.practicalparentapp.UI.NewChildActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This class handles sending names and updating the
@@ -23,8 +22,8 @@ import java.util.Arrays;
  */
 public class RecyclerViewAdapter extends ArrayAdapter<Child>{
 
-    private Context context;
-    private Integer resource;
+    private final Context context;
+    private final Integer resource;
     public static final String STRING_EXTRA = "Is edit";
     public static final String POSITION_EXTRA = "Child position";
 
@@ -39,8 +38,6 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         String name = getItem(position).getName();
-        //why does it return "Name" for this at each position?
-        //are they being set as "Name"?
 
         LayoutInflater inflater = LayoutInflater.from(context);
         @SuppressLint("ViewHolder") View childView = inflater.inflate(resource, parent, false);

@@ -48,8 +48,19 @@ public class ChildrenManager {
         saveChildList(context, childList);
     }
 
+    public boolean isChildListEmpty() {
+        return childList.isEmpty();
+    }
+
     public Child getChild(Integer index) {
         return childList.get(index);
+    }
+
+    public boolean isChildExist(Integer index) {
+        if (index >= childList.size() || index < 0) {
+            return false;
+        }
+        return getChild(index) != null;
     }
 
     public ArrayList<Child> getChildList() {

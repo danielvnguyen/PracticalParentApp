@@ -6,6 +6,7 @@ package com.example.practicalparentapp.Model;
  */
 public class Child {
     private String name;
+    private boolean flippedLast = false;
 
     public Child(String name) {
         this.name = name;
@@ -15,8 +16,15 @@ public class Child {
         return name;
     }
 
-    //Edits will just set name to whatever the parameter is.
     public void editChild(String name) {
         this.name = name;
+    }
+
+    public boolean isFlippedLast() {
+        return flippedLast;
+    }
+
+    public void setFlippedLast(boolean flippedLast) {
+        this.flippedLast = flippedLast;
     }
 }

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import com.example.practicalparentapp.R;
 
-
+/**
+ * This class handles the main menu interface buttons.
+ */
 public class MainMenu extends AppCompatActivity {
 
     @Override

@@ -4,26 +4,161 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.CoinFlip">
+    android:background="@drawable/cloud_bg"
+    tools:context=".UI.CoinFlip"
+    tools:layout_editor_absoluteX="-7dp"
+    tools:layout_editor_absoluteY="93dp">
 
     <Button
         android:id="@+id/flip_button"
         android:layout_width="166dp"
         android:layout_height="100dp"
+        android:backgroundTint="@color/blue"
         android:text="@string/tap_to_flip_coin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tails_btn"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/heads"
         android:layout_width="match_parent"
         android:layout_height="195dp"
+        android:contentDescription="@string/heads_side_of_coin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heads"
-        android:contentDescription="@string/heads_side_of_coin" />
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/enter_posTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/enter_pos_string"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/current_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heads"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/enter_pos1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/enter_pos2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="108dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/confirm"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/flip_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/enter_pos2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.214"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+    <ListView
+        android:id="@+id/flipHistory"
+        android:layout_width="409dp"
+        android:layout_height="180dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heads"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/current_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/ask_child"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heads"
+        app:layout_constraintVertical_bias="0.256"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/heads_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:text="@string/heads"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/flip_button"
+        app:layout_constraintEnd_toStartOf="@+id/tails_btn"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/tails_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:text="@string/tails"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.749"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
