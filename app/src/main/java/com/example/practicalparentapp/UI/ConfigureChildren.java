@@ -31,7 +31,6 @@ public class ConfigureChildren extends AppCompatActivity {
         setContentView(R.layout.activity_configure_children);
         setTitle("Your Children");
 
-        //set child manager and create list
         childrenManager = ChildrenManager.getInstance(this);
         setUpList();
         setUpAddButton();
