@@ -18,4 +18,6 @@
     <string name="tails">TAILS</string>
     <string name="confirm">Confirm</string>
     <string name="white_box_msg">White box for user clarity</string>
+    <string name="created_by_daniel_danny_emmanuel_and_tej">Created by Daniel, Danny, Emmanuel, and Tej</string>
+    <string name="practical_parent_app">Practical Parent App</string>
 </resources>
