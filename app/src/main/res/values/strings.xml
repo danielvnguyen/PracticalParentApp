@@ -11,9 +11,9 @@
     <string name="tap_to_flip_coin">Flip the coin</string>
     <string name="heads_side_of_coin">Heads side of coin</string>
     <string name="enter_pos_string">Enter the positions of your kids:<br/>
-        Ex. Child #1 would be position 0.<br/>
-        Press confirm after.</string>
-    <string name="ask_child">Child _, choose heads or tails.</string>
+        Ex. Child #1 would be position 1.<br/>
+        Press confirm, then pick heads/tails.</string>
+    <string name="ask_child">Child _, choose heads or tails, then press "FLIP THE COIN"</string>
     <string name="heads">HEADS</string>
     <string name="tails">TAILS</string>
     <string name="confirm">Confirm</string>
