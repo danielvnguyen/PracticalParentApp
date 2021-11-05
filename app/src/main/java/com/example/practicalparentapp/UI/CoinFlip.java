@@ -63,7 +63,6 @@ public class CoinFlip extends AppCompatActivity {
         flipHistory.setAdapter(adapter);
         childrenManager = ChildrenManager.getInstance(this);
 
-        //get the input names stuff. invisible if isChildListEmpty() is true.
         enterPosTV = findViewById(R.id.enter_posTV);
         enterPosOne = findViewById(R.id.enter_pos1);
         enterPosTwo = findViewById(R.id.enter_pos2);
@@ -90,7 +89,6 @@ public class CoinFlip extends AppCompatActivity {
             flipBtn.setEnabled(true);
         }
         //otherwise, ask parents children before flipping
-        //do this in when flip button is clicked
 
         setUpSounds();
         setUpConfirmBtn();
@@ -117,9 +115,6 @@ public class CoinFlip extends AppCompatActivity {
         });
     }
 
-    //When pressed, validate the input, set up kids.
-    //Then, enable the 'flip coin' button and remove
-    //unnecessary UI components from the screen.
     @SuppressLint("SetTextI18n")
     private void setUpConfirmBtn() {
         Button confirmBtn = findViewById(R.id.confirm_btn);
@@ -191,7 +186,6 @@ public class CoinFlip extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemID = item.getItemId();
 
-        // If the back button is pressed triggered cancel warning
         if (itemID == android.R.id.home) {
             onBackPressed();
             return true;
@@ -236,7 +230,6 @@ public class CoinFlip extends AppCompatActivity {
 
                 //edit children attributes and update text view
                 if (childOne.isFlippedLast()) {
-                    //2nd kids turn
                     askChildChoice.setText(childTwo.getName() +
                             ", choose heads or tails, then press \"FLIP THE COIN\"");
                     childTwo.setFlippedLast(true);
@@ -244,7 +237,6 @@ public class CoinFlip extends AppCompatActivity {
                     currentChild = childOne;
                 }
                 else if (childTwo.isFlippedLast()) {
-                    //1st kids turn
                     askChildChoice.setText(childOne.getName() +
                             ", choose heads or tails, then press \"FLIP THE COIN\"");
                     childOne.setFlippedLast(true);
