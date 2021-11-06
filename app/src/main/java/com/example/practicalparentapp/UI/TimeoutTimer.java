@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,6 +94,22 @@ public class TimeoutTimer extends AppCompatActivity {
                         timeText.setVisibility(View.VISIBLE);
                         inputTime = findViewById(R.id.editTextNumber);
                         inputTime.setVisibility(View.VISIBLE);
+                        inputTime.setOnKeyListener(new View.OnKeyListener() {
+                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                                    int minutes = Integer.parseInt(inputTime.getText().toString());
+                                    setInputVisiblityToTrue();
+                                    START_TIME_IN_MILLIS = minutes*60*1000;
+                                    mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                                    updateCountDownText();
+
+                                    // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
+                                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                }
+                                return false;
+                            }
+                        });
                         mButtonSave = findViewById(R.id.button_save);
                         mButtonSave.setVisibility(View.VISIBLE);
                         mButtonSave.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +120,7 @@ public class TimeoutTimer extends AppCompatActivity {
                                 START_TIME_IN_MILLIS = minutes*60*1000;
                                 mTimeLeftInMillis= START_TIME_IN_MILLIS;
                                 updateCountDownText();
-                               }
+                            }
                         });
                         break;
                     default:
@@ -133,6 +151,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
         mButtonStartPause=findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        mTimerRunning = false;
 
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,20 +183,21 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis=millisUntilFinished;
                 updateCountDownText();
-
             }
 
             @Override
             public void onFinish() {
                 mTimerRunning=false;
-                mButtonStartPause.setText("start");
-                mButtonStartPause.setVisibility(View.INVISIBLE);
+                mButtonReset.setVisibility(View.INVISIBLE);
+                mButtonStartPause.setText("Restart Timer");
+                mTimeLeftInMillis=START_TIME_IN_MILLIS;
             }
         } .start();
 
         // The lines below happen when the pause button has been clicked
         mTimerRunning = true;
         mButtonStartPause.setText("pause");
+        mButtonReset.setVisibility(View.VISIBLE);
     }
 
     private void pauseTimer() {
@@ -193,6 +213,7 @@ public class TimeoutTimer extends AppCompatActivity {
         updateCountDownText();
         mButtonStartPause.setText("Start");
         mButtonReset.setVisibility(View.INVISIBLE);
+        mTimerRunning=false;
     }
 
     private void updateCountDownText() {
