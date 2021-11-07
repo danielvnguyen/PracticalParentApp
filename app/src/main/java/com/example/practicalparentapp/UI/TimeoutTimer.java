@@ -1,23 +1,28 @@
 package com.example.practicalparentapp.UI;
 
-import static java.lang.Math.floor;
-import static java.lang.Math.log;
 import static java.lang.Math.log10;
 import static java.lang.Math.pow;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
+import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.os.Build;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -25,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
 
@@ -39,8 +43,9 @@ public class TimeoutTimer extends AppCompatActivity {
     private EditText inputTime;
 
     private CountDownTimer mCountDownTimer;
-    private MediaPlayer alarmSound;
-    private Vibrator vibrator;
+    public static MediaPlayer alarmSound;
+    private static Vibrator vibrator;
+    private NotificationManagerCompat notificationManager;
 
     private boolean mTimerRunning;
 
@@ -50,15 +55,37 @@ public class TimeoutTimer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
-        setTitle("Timeout Timer");
 
-        alarmSound = MediaPlayer.create(this, R.raw.alarm_sound);
+        setTitle("Timeout Timer");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        notificationManager = NotificationManagerCompat.from(this);
+        alarmSound = MediaPlayer.create(this, R.raw.sunny);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         // function for the Dropdown Menu for selecting the number of minutes to timeout
         timeoutDropdown();
 
         updateCountDownText();
 
         setupSpinner();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        alarmSound.stop();
+        vibrator.cancel();
     }
 
     private void setupSpinner() {
@@ -160,6 +187,14 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonSave.setVisibility(View.INVISIBLE);
     }
 
+    public static Vibrator getVibrator(){
+        return vibrator;
+    }
+
+    public static MediaPlayer getAlarm(){
+        return alarmSound;
+    }
+
     private void timeoutDropdown() {
         mTextViewCountDown=findViewById(R.id.text_view_countdown);
 
@@ -197,17 +232,19 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis=millisUntilFinished;
                 if (convertTimeToSecond(mTimeLeftInMillis) == 0) {
+                    mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                    updateCountDownText();
                     setupAlarmVibrate();
-
+                } else {
+                    updateCountDownText();
                 }
-                updateCountDownText();
             }
 
             @Override
             public void onFinish() {
                 mTimerRunning=false;
                 mButtonReset.setVisibility(View.INVISIBLE);
-                mButtonStartPause.setText("Restart Timer");
+                mButtonStartPause.setText("Start");
                 mTimeLeftInMillis=START_TIME_IN_MILLIS;
             }
         } .start();
@@ -225,13 +262,33 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void setupAlarmVibrate() {
         // Playing the alarm sound when the timer reaches 00:00
-        //alarmSound.start();
+        alarmSound.start();
+
+        // Setting up the notification
+        Intent activityIntent = new Intent(this, TimeoutTimer.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                0, activityIntent, 0);
+
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent actionIntent = PendingIntent.getBroadcast(this,
+                0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(this, App.ChannelID)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Timer is Up!")
+                .setContentText("Your set timer is now up. Click OK to stop the timer.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentIntent(contentIntent)
+                .setColor(Color.BLUE)
+                .setAutoCancel(true)
+                .addAction(R.mipmap.ic_launcher, "OK", actionIntent)
+                .build();
+
+        notificationManager.notify(1, notification);
 
         // Setting up the Vibration functionality when the timer reaches 00:00
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-        final long[] VIBRATE_PATTERN = { 500, 500 };
-        vibrator.vibrate(VibrationEffect.createWaveform(VIBRATE_PATTERN, 0));
+        vibrator.vibrate(VibrationEffect.createOneShot(START_TIME_IN_MILLIS*1000, VibrationEffect.DEFAULT_AMPLITUDE));
     }
 
     private void pauseTimer() {

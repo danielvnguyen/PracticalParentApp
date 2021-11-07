@@ -17,6 +17,7 @@
             android:exported="false" />
         <activity
             android:name=".UI.TimeoutTimer"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".UI.CoinFlip"
@@ -33,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".UI.NotificationReceiver" />
     </application>
 
 </manifest>
