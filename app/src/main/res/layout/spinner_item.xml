@@ -13,6 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18dp" />
 
@@ -21,5 +22,5 @@
         android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/thin_dropdown" />
+        android:background="@drawable/ic_baseline_arrow_drop_down_24" />
 </RelativeLayout>

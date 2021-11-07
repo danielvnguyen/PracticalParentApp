@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.TimeoutTimer">
+    tools:context=".UI.TimeoutTimer"
+    android:background="@drawable/abstract_background">
 
 
     <TextView
@@ -25,11 +26,15 @@
 
     <Button
         android:id="@+id/button_start_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="58dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
+        android:backgroundTint="#FF58ADF1"
         android:text="start"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:cornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -39,33 +44,41 @@
 
     <Button
         android:id="@+id/button_save"
-        android:layout_width="162dp"
-        android:layout_height="51dp"
+        android:layout_width="166dp"
+        android:layout_height="59dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
+        android:backgroundTint="#58ADF1"
         android:text="Save"
+        android:textColor="#000000"
+        android:textSize="16sp"
         android:visibility="invisible"
+        app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652" />
+        app:layout_constraintVertical_bias="0.805" />
 
     <Button
         android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="58dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_toEndOf="@+id/button_start_pause"
+        android:backgroundTint="#FF58ADF1"
         android:text="reset"
+        android:textColor="#000000"
+        android:textSize="16sp"
         android:visibility="invisible"
+        app:cornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.699"
+        app:layout_constraintVertical_bias="0.713"
         tools:visibility="visible" />
 
     <Spinner
@@ -87,16 +100,17 @@
     <TextView
         android:id="@+id/textTime"
         android:layout_width="370dp"
-        android:layout_height="47dp"
-        android:text="Enter the time (in whole number) that you wish to set: "
+        android:layout_height="wrap_content"
+        android:text="Enter the time (in whole number minutes) that you wish to set: "
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.469" />
+        app:layout_constraintVertical_bias="0.557" />
 
     <EditText
         android:id="@+id/editTextNumber"
@@ -109,7 +123,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintVertical_bias="0.661" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="181dp"
+        android:layout_height="149dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027"
+        app:srcCompat="@drawable/clock_img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
