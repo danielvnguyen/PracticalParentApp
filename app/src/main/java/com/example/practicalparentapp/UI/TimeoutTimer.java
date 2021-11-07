@@ -1,11 +1,21 @@
 package com.example.practicalparentapp.UI;
 
+import static java.lang.Math.floor;
+import static java.lang.Math.log;
+import static java.lang.Math.log10;
+import static java.lang.Math.pow;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +39,8 @@ public class TimeoutTimer extends AppCompatActivity {
     private EditText inputTime;
 
     private CountDownTimer mCountDownTimer;
+    private MediaPlayer alarmSound;
+    private Vibrator vibrator;
 
     private boolean mTimerRunning;
 
@@ -40,6 +52,7 @@ public class TimeoutTimer extends AppCompatActivity {
         setContentView(R.layout.activity_timeout_timer);
         setTitle("Timeout Timer");
 
+        alarmSound = MediaPlayer.create(this, R.raw.alarm_sound);
         // function for the Dropdown Menu for selecting the number of minutes to timeout
         timeoutDropdown();
 
@@ -96,6 +109,7 @@ public class TimeoutTimer extends AppCompatActivity {
                         inputTime.setVisibility(View.VISIBLE);
                         inputTime.setOnKeyListener(new View.OnKeyListener() {
                             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                // To respond to when the user clicks the 'Enter' key
                                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                                     int minutes = Integer.parseInt(inputTime.getText().toString());
                                     setInputVisiblityToTrue();
@@ -182,6 +196,10 @@ public class TimeoutTimer extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis=millisUntilFinished;
+                if (convertTimeToSecond(mTimeLeftInMillis) == 0) {
+                    setupAlarmVibrate();
+
+                }
                 updateCountDownText();
             }
 
@@ -198,6 +216,22 @@ public class TimeoutTimer extends AppCompatActivity {
         mTimerRunning = true;
         mButtonStartPause.setText("pause");
         mButtonReset.setVisibility(View.VISIBLE);
+    }
+
+    private int convertTimeToSecond(long time) {
+        double temp_time = pow(10, (int)log10(time));
+        return (int)((int)(time / temp_time) * temp_time) / 1000;
+    }
+
+    private void setupAlarmVibrate() {
+        // Playing the alarm sound when the timer reaches 00:00
+        //alarmSound.start();
+
+        // Setting up the Vibration functionality when the timer reaches 00:00
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        final long[] VIBRATE_PATTERN = { 500, 500 };
+        vibrator.vibrate(VibrationEffect.createWaveform(VIBRATE_PATTERN, 0));
     }
 
     private void pauseTimer() {
