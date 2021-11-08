@@ -17,8 +17,9 @@ import com.example.practicalparentapp.UI.NewChildActivity;
 import java.util.ArrayList;
 
 /**
- * This class handles sending names and updating the
- * children list.
+ * This class handles adapting the list of
+ * configured children. Supports editing
+ * the children's names when clicked on.
  */
 public class RecyclerViewAdapter extends ArrayAdapter<Child>{
 
@@ -42,13 +43,9 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
         LayoutInflater inflater = LayoutInflater.from(context);
         @SuppressLint("ViewHolder") View childView = inflater.inflate(resource, parent, false);
 
-        //setting views
         TextView nameText = childView.findViewById(R.id.childNameTV);
-
-        //display name
         nameText.setText(name);
 
-        //when click start in edit mode (allow parent to delete or change name)
         childView.setOnClickListener(view -> {
             Intent intent = NewChildActivity.makeIntent(context);
             intent.putExtra(STRING_EXTRA, true);

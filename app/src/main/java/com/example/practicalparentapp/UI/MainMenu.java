@@ -18,9 +18,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpConfigChildrenBtn();
-
         setUpCoinFlipBtn();
-
         setUpTimeoutTimerBtn();
     }
 

@@ -56,17 +56,32 @@
         android:id="@+id/enter_pos1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="number"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/enter_pos2"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.286"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.718"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/enter_pos2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintStart_toEndOf="@+id/enter_pos1"
+        app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
+        app:layout_constraintVertical_bias="0.718"
         tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
     <Button
@@ -82,23 +97,8 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/enter_pos2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/current_child"
-        app:layout_constraintVertical_bias="0.214"
-        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
     <ListView
         android:id="@+id/flipHistory"
@@ -133,7 +133,7 @@
         android:id="@+id/heads_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/white"
         android:text="@string/heads"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/flip_button"

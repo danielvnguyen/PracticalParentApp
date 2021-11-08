@@ -15,7 +15,6 @@ import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.RecyclerViewAdapter;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -23,7 +22,6 @@ import java.util.Objects;
  */
 public class ConfigureChildren extends AppCompatActivity {
 
-    private ArrayList<Child> childList;
     private ChildrenManager childrenManager;
     private ArrayAdapter<Child> listAdapter;
 
@@ -48,7 +46,6 @@ public class ConfigureChildren extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemID = item.getItemId();
 
-        // If the back button is pressed triggered cancel warning
         if (itemID == android.R.id.home) {
             onBackPressed();
             return true;
@@ -63,7 +60,6 @@ public class ConfigureChildren extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        //update list with any new children
         listAdapter.notifyDataSetChanged();
     }
 
@@ -75,12 +71,9 @@ public class ConfigureChildren extends AppCompatActivity {
         });
     }
 
-    //need to use adapter class here
     private void setUpList() {
-        //create list view with properties
         ListView childListLV = findViewById(R.id.list_of_children);
         listAdapter = new RecyclerViewAdapter(this, R.layout.adapter, childrenManager.getChildList());
         childListLV.setAdapter(listAdapter);
-        childList = childrenManager.getChildList();
     }
 }

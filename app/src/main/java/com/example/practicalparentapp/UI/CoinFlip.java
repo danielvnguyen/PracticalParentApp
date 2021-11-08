@@ -88,7 +88,6 @@ public class CoinFlip extends AppCompatActivity {
             hasConfiguredChildren = false;
             flipBtn.setEnabled(true);
         }
-        //otherwise, ask parents children before flipping
 
         setUpSounds();
         setUpConfirmBtn();
@@ -124,7 +123,7 @@ public class CoinFlip extends AppCompatActivity {
         TextView askChildChoice = findViewById(R.id.current_child);
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
-                //set up children
+
                 Integer currentPosOne = (Integer.parseInt(enterPosOne.getText().toString()) - 1);
                 childOne = childrenManager.getChild(currentPosOne);
                 Integer currentPosTwo = (Integer.parseInt(enterPosTwo.getText().toString()) - 1);
@@ -140,14 +139,11 @@ public class CoinFlip extends AppCompatActivity {
                 headsBtn.setVisibility(View.VISIBLE);
                 tailsBtn.setVisibility(View.VISIBLE);
                 askChildChoice.setVisibility(View.VISIBLE);
-
-                //get rid of unnecessary UI components.
                 enterPosTV.setVisibility(View.INVISIBLE);
                 enterPosOne.setVisibility(View.INVISIBLE);
                 enterPosTwo.setVisibility(View.INVISIBLE);
                 confirmBtn.setVisibility(View.INVISIBLE);
             }
-            //do nothing until valid input.
         });
     }
 
@@ -155,7 +151,6 @@ public class CoinFlip extends AppCompatActivity {
         String nameOne = childOne.getText().toString();
         String nameTwo = childTwo.getText().toString();
 
-        //check for empty inputs
         if (nameOne.isEmpty() || nameTwo.isEmpty()) {
             Toast.makeText(getApplicationContext(),
                     "You didn't finish entering the positions!", Toast.LENGTH_SHORT).show();
@@ -165,14 +160,12 @@ public class CoinFlip extends AppCompatActivity {
         int nameOneToInt = Integer.parseInt(nameOne) - 1;
         int nameTwoToInt = Integer.parseInt(nameTwo) - 1;
 
-        //check for invalid inputs / out of bound inputs
-        if (!childrenManager.isChildExist(nameOneToInt) || !childrenManager.isChildExist(nameTwoToInt)) {
+        if (childrenManager.isChildExist(nameOneToInt) || childrenManager.isChildExist(nameTwoToInt)) {
             Toast.makeText(getApplicationContext(),
                     "You input a position that doesn't correlate to a child!", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        //check if parent input same child/position
         if (nameOneToInt == nameTwoToInt) {
             Toast.makeText(getApplicationContext(),
                     "You need to enter 2 different positions!", Toast.LENGTH_SHORT).show();
@@ -228,7 +221,6 @@ public class CoinFlip extends AppCompatActivity {
 
             if (hasConfiguredChildren) {
 
-                //edit children attributes and update text view
                 if (childOne.isFlippedLast()) {
                     askChildChoice.setText(childTwo.getName() +
                             ", choose heads or tails, then press \"FLIP THE COIN\"");
@@ -244,7 +236,6 @@ public class CoinFlip extends AppCompatActivity {
                     currentChild = childTwo;
                 }
 
-                //add information to flip history
                 if (resultOfFlip.equals(childChoice)) {
                     listItems.add(flipTime + " | " + currentChild.getName() + " chose " + childChoice +
                             " and the result was " + resultOfFlip + ": ✅ Won!");

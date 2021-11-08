@@ -2,7 +2,8 @@ package com.example.practicalparentapp.Model;
 
 /**
  * Keeps track of the parent's children.
- * Data includes name. Possibly coin flip variables.
+ * Data includes the child's name and whether
+ * they flipped a coin recently or not.
  */
 public class Child {
     private String name;
