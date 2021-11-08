@@ -98,36 +98,66 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        setInputVisiblityToTrue();
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
+
+//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 60000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateButtons();
                         updateCountDownText();
                         break;
                     case 1:
-                        setInputVisiblityToTrue();
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
+//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 120000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateButtons();
                         updateCountDownText();
                         break;
                     case 2:
-                        setInputVisiblityToTrue();
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
+//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 180000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateButtons();
                         updateCountDownText();
                         break;
                     case 3:
-                        setInputVisiblityToTrue();
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
+//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 300000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateButtons();
                         updateCountDownText();
                         break;
                     case 4:
-                        setInputVisiblityToTrue();
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
+//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 600000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateButtons();
                         updateCountDownText();
                         break;
                     case 5:
+                        if (mTimerRunning) {
+                            pauseTimer();
+                            resetTimer();
+                        }
                         mTextViewCountDown.setVisibility(View.INVISIBLE);
                         mButtonStartPause.setVisibility(View.INVISIBLE);
                         timeText = findViewById(R.id.textTime);
@@ -175,7 +205,26 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         });
     }
+    private void updateButtons() {
+        if (mTimerRunning) {
+            mButtonReset.setVisibility(View.INVISIBLE);
+            mButtonStartPause.setText("Pause");
+        } else {
+            mButtonStartPause.setText("Start");
 
+            if (mTimeLeftInMillis < 1000) {
+                mButtonStartPause.setVisibility(View.INVISIBLE);
+            } else {
+                mButtonStartPause.setVisibility(View.VISIBLE);
+            }
+
+            if (mTimeLeftInMillis < START_TIME_IN_MILLIS) {
+                mButtonReset.setVisibility(View.VISIBLE);
+            } else {
+                mButtonReset.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
     private void setInputVisiblityToTrue() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
