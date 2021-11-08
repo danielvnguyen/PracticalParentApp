@@ -117,6 +117,7 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         });
 
+
         mButton_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,6 +209,7 @@ public class TimeoutTimer extends AppCompatActivity {
                     pauseTimer();
                     resetTimer();
                 }
+
                 mTextViewCountDown.setVisibility(View.INVISIBLE);
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 timeText = findViewById(R.id.textTime);
@@ -251,7 +253,10 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         });
 
+
     }
+
+
     private void setInputVisiblityToTrue() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
