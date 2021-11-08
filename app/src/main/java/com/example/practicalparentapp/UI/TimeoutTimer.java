@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.practicalparentapp.R;
@@ -40,27 +40,29 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private long START_TIME_IN_MILLIS;
     private TextView mTextViewCountDown, timeText;
-    private Button mButtonStart, mButtonReset, mButtonSave, mButtonPause;
+    private Button mButtonStartPause, mButtonReset, mButtonSave;
+    private Button mButton_one, mButton_two, mButton_three, mButton_five, mButton_ten, mButton_custom;
     private EditText inputTime;
-    private Spinner spinner;
 
     private CountDownTimer mCountDownTimer;
     public static MediaPlayer alarmSound;
     private static Vibrator vibrator;
     private NotificationManagerCompat notificationManager;
 
-    private long mTimeLeftInMillis, mEndTime;
     private boolean mTimerRunning;
+    private boolean isCustom;
 
-    private SharedPreferences prefs;
+    private long lastSelector;
+    private long mTimeLeftInMillis;
+    private long mEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
 
         setTitle("Timeout Timer");
-        mTimerRunning = true;
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -72,6 +74,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
         // If the intent called is from clicking the notification
         if (getIntent().getBooleanExtra("clickedNotification", false)) {
+            Log.d("D_MSG", "I was clicked. 90");
             vibrator.cancel();
             alarmSound.stop();
             try {
@@ -83,63 +86,126 @@ public class TimeoutTimer extends AppCompatActivity {
             finish();
         }
 
+        mButtonStartPause=findViewById(R.id.button_start_pause);
+        mButtonReset=findViewById(R.id.button_reset);
+        mButton_one=findViewById(R.id.button_one);
+        mButton_two=findViewById(R.id.button_two);
+        mButton_three=findViewById(R.id.button_three);
+        mButton_five=findViewById(R.id.button_five);
+        mButton_ten=findViewById(R.id.button_ten);
+        mButton_custom=findViewById(R.id.button_custom);
 
-        // function for the Dropdown Menu for selecting the number of minutes to timeout
-        timeoutDropdown();
+        mTextViewCountDown=findViewById(R.id.text_view_countdown);
 
-        updateCountDownText();
 
-        setupSpinner();
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void setupSpinner() {
-        Spinner mySpinner = findViewById(R.id.spinner);
-        mySpinner.setAdapter(new SpinnerAdapter(this, R.layout.spinner_dropdown,
-                getResources().getStringArray(R.array.timeout_minutes)));
-
-        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i) {
-                    case 0:
-                        START_TIME_IN_MILLIS = 10000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateCountDownText();
-                        break;
-                    case 1:
-                        START_TIME_IN_MILLIS = 120000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateCountDownText();
-                        break;
-                    case 2:
-                        START_TIME_IN_MILLIS = 180000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateCountDownText();
-                        break;
-                    case 3:
-                        START_TIME_IN_MILLIS = 300000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateCountDownText();
-                        break;
-                    case 4:
-                        START_TIME_IN_MILLIS = 600000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateCountDownText();
-                        break;
-                    case 5:
+            public void onClick(View v) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
+
+        mButtonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTimer();
+            }
+        });
+
+        mButton_one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                }
+                START_TIME_IN_MILLIS = 60000;
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateButtons();
+                updateCountDownText();
+                lastSelector=1;
+                isCustom=false;
+
+            }
+        });
+
+        mButton_two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                }
+                START_TIME_IN_MILLIS = 120000;
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateButtons();
+                updateCountDownText();
+                lastSelector=2;
+                isCustom=false;
+
+            }
+        });
+
+        mButton_three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                }
+                START_TIME_IN_MILLIS = 180000;
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateButtons();
+                updateCountDownText();
+                lastSelector=3;
+                isCustom=false;
+
+            }
+        });
+
+        mButton_five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                }
+                START_TIME_IN_MILLIS = 300000;
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateButtons();
+                updateCountDownText();
+                lastSelector=5;
+                isCustom=false;
+
+            }
+        });
+
+        mButton_ten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                }
+                START_TIME_IN_MILLIS = 600000;
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateButtons();
+                updateCountDownText();
+                lastSelector=10;
+                isCustom=false;
+            }
+        });
+
+        mButton_custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                         mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        mButtonStart.setVisibility(View.INVISIBLE);
+                        mButtonStartPause.setVisibility(View.INVISIBLE);
                         timeText = findViewById(R.id.textTime);
                         timeText.setVisibility(View.VISIBLE);
                         inputTime = findViewById(R.id.editTextNumber);
@@ -150,13 +216,14 @@ public class TimeoutTimer extends AppCompatActivity {
                                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                                     int minutes = Integer.parseInt(inputTime.getText().toString());
                                     setInputVisiblityToTrue();
-                                    START_TIME_IN_MILLIS = minutes*60*1000;
-                                    mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                                    START_TIME_IN_MILLIS = minutes * 60 * 1000;
+                                    mTimeLeftInMillis = START_TIME_IN_MILLIS;
                                     updateCountDownText();
 
                                     // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
-                                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                     inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                    lastSelector= START_TIME_IN_MILLIS;
                                 }
                                 return false;
                             }
@@ -168,27 +235,22 @@ public class TimeoutTimer extends AppCompatActivity {
                             public void onClick(View v) {
                                 int minutes = Integer.parseInt(inputTime.getText().toString());
                                 setInputVisiblityToTrue();
-                                START_TIME_IN_MILLIS = minutes*60*1000;
-                                mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                                START_TIME_IN_MILLIS = minutes * 60 * 1000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
                                 updateCountDownText();
+                                lastSelector= START_TIME_IN_MILLIS;
                             }
                         });
-                        break;
-                    default:
-                        break;
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                        isCustom=true;
 
             }
         });
-    }
 
+    }
     private void setInputVisiblityToTrue() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
-        mButtonStart.setVisibility(View.VISIBLE);
+        mButtonStartPause.setVisibility(View.VISIBLE);
         timeText = findViewById(R.id.textTime);
         timeText.setVisibility(View.INVISIBLE);
         inputTime = findViewById(R.id.editTextNumber);
@@ -196,6 +258,107 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonSave = findViewById(R.id.button_save);
         mButtonSave.setVisibility(View.INVISIBLE);
     }
+
+//                        mTextViewCountDown.setVisibility(View.INVISIBLE);
+//                        mButtonStartPause.setVisibility(View.INVISIBLE);
+//                        timeText = findViewById(R.id.textTime);
+//                        timeText.setVisibility(View.VISIBLE);
+//                        inputTime = findViewById(R.id.editTextNumber);
+//                        inputTime.setVisibility(View.VISIBLE);
+//                        inputTime.setOnKeyListener(new View.OnKeyListener() {
+//                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                                // To respond to when the user clicks the 'Enter' key
+//                                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+//                                    int minutes = Integer.parseInt(inputTime.getText().toString());
+//                                    setInputVisiblityToTrue();
+//                                    START_TIME_IN_MILLIS = minutes * 60 * 1000;
+//                                    mTimeLeftInMillis = START_TIME_IN_MILLIS;
+//                                    updateCountDownText();
+//
+//                                    // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
+//                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//                                }
+//                                return false;
+//                            }
+//                        });
+//                        mButtonSave = findViewById(R.id.button_save);
+//                        mButtonSave.setVisibility(View.VISIBLE);
+//                        mButtonSave.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                int minutes = Integer.parseInt(inputTime.getText().toString());
+//                                setInputVisiblityToTrue();
+//                                START_TIME_IN_MILLIS = minutes * 60 * 1000;
+//                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+//                                updateCountDownText();
+//                            }
+//                        });
+
+@Override
+public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    switch(item.getItemId()) {
+        case android.R.id.home:
+
+            finish();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    }
+}
+
+    private void resetTimer() {
+        if (lastSelector!=-1) {
+            if (lastSelector==1 && !isCustom) {
+                mTimeLeftInMillis=60000;
+            }
+            if (lastSelector==2 && !isCustom) {
+                mTimeLeftInMillis=120000;
+            }
+            if (lastSelector==3 && !isCustom) {
+                mTimeLeftInMillis=180000;
+            }
+            if (lastSelector==5 && !isCustom) {
+                mTimeLeftInMillis=300000;
+            }
+            if (lastSelector==10 && !isCustom) {
+                mTimeLeftInMillis=600000;
+            }
+            if (isCustom) {
+                Log.d("TAG: isCustomYay ", " is custom" + lastSelector);
+                mTimeLeftInMillis=lastSelector;
+            }
+        }
+
+        if (lastSelector==0) {
+            mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        }
+            updateCountDownText();
+            updateButtons();
+
+    }
+
+    private void updateButtons() {
+        if (mTimerRunning) {
+            mButtonReset.setVisibility(View.INVISIBLE);
+            mButtonStartPause.setText("Pause");
+        } else {
+            mButtonStartPause.setText("Start");
+
+            if (mTimeLeftInMillis < 1000) {
+                mButtonStartPause.setVisibility(View.INVISIBLE);
+            } else {
+                mButtonStartPause.setVisibility(View.VISIBLE);
+            }
+
+            if (mTimeLeftInMillis < START_TIME_IN_MILLIS) {
+                mButtonReset.setVisibility(View.VISIBLE);
+            } else {
+                mButtonReset.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
 
     public static Vibrator getVibrator(){
         return vibrator;
@@ -205,45 +368,14 @@ public class TimeoutTimer extends AppCompatActivity {
         return alarmSound;
     }
 
-    private void timeoutDropdown() {
-        mTextViewCountDown=findViewById(R.id.text_view_countdown);
-
-        mButtonStart = findViewById(R.id.button_start);
-        mButtonPause = findViewById(R.id.button_pause);
-        mButtonReset = findViewById(R.id.button_reset);
-
-        mButtonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startTimer();
-            }
-        });
-
-        mButtonPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mTimerRunning)
-                    pauseTimer();
-                else
-                    ResumeTimer();
-            }
-        });
-
-        mButtonReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetTimer();
-            }
-        });
-    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimeoutTimer.class);
     }
 
     private void startTimer() {
-        spinner = findViewById(R.id.spinner);
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -259,20 +391,14 @@ public class TimeoutTimer extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                mButtonReset.setVisibility(View.INVISIBLE);
-                mButtonPause.setVisibility(View.INVISIBLE);
-                mButtonStart.setVisibility(View.VISIBLE);
-                spinner.setVisibility(View.VISIBLE);
-                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                updateCountDownText();
+                mTimerRunning=false;
+                updateButtons();
             }
         } .start();
 
         // The lines below happen when the pause button has been clicked
-        mButtonStart.setVisibility(View.INVISIBLE);
-        mButtonReset.setVisibility(View.VISIBLE);
-        mButtonPause.setVisibility(View.VISIBLE);
-        spinner.setVisibility(View.INVISIBLE);
+        mTimerRunning = true;
+        updateButtons();
     }
 
     private int convertTimeToSecond(long time) {
@@ -313,45 +439,35 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void pauseTimer() {
-        mTimerRunning = false;
         mCountDownTimer.cancel();
-        mButtonPause.setText("Resume");
+        mTimerRunning = false;
+        updateButtons();
         mButtonReset.setVisibility(View.VISIBLE);
     }
 
-    private void ResumeTimer() {
-        mTimerRunning = true;
-        updateCountDownText();
-        mButtonPause.setText("Pause");
-        startTimer();
-    }
 
-    private void resetTimer() {
-        mTimeLeftInMillis=START_TIME_IN_MILLIS;
-        mCountDownTimer.cancel();
-        updateCountDownText();
-        mButtonReset.setVisibility(View.INVISIBLE);
-        mButtonPause.setVisibility(View.INVISIBLE);
-        mButtonStart.setVisibility(View.VISIBLE);
-        spinner.setVisibility(View.VISIBLE);
-    }
 
     private void updateCountDownText() {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
-        String timeLeftFormatted;
-        timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
-    }
 
+    }
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences pref_stop = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref_stop.edit();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
         editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putBoolean("isCustom",isCustom);
         editor.putLong("endTime", mEndTime);
+        editor.putLong("lastSelector",lastSelector);
+
         editor.apply();
 
         if (mCountDownTimer != null) {
@@ -362,7 +478,32 @@ public class TimeoutTimer extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences pref_start = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
+        mTimerRunning = prefs.getBoolean("timerRunning", false);
+
         updateCountDownText();
+        updateButtons();
+        lastSelector=prefs.getLong("lastSelector",-1);
+        isCustom=prefs.getBoolean("isCustom",false);
+
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0);
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+                updateButtons();
+            } else {
+                startTimer();
+            }
+        }
     }
+
+
+
 }
