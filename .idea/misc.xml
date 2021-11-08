@@ -11,11 +11,18 @@
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/adapter.xml" value="0.33" />
         <entry key="..\:/Users/tejes/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.1796875" />
         <entry key="..\:/Users/tejes/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.33384615384615385" />
+        <entry key="app/src/main/res/drawable/border_of_dropdown.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/drawable/border_of_spinner.xml" value="0.1921875" />
         <entry key="app/src/main/res/drawable/dropdown_outline.xml" value="0.33384615384615385" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.3177083333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_up_24.xml" value="0.3177083333333333" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3177083333333333" />
+        <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/layout/activity_coin_flip.xml" value="0.17604166666666668" />
-        <entry key="app/src/main/res/layout/activity_timeout_timer.xml" value="0.3088768115942029" />
+        <entry key="app/src/main/res/layout/activity_new_child.xml" value="0.165625" />
+        <entry key="app/src/main/res/layout/activity_timeout_timer.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/adapter.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/array_adapter.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/spinner_dropdown.xml" value="0.3229166666666667" />

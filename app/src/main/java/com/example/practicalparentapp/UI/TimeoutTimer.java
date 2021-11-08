@@ -16,13 +16,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
 
@@ -41,33 +37,30 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class TimeoutTimer extends AppCompatActivity {
-    private boolean isSelected;
-    private SharedPreferences prefs;
-    private static final String HAG= "internalsOfSpinner";
-    private static final String TAG= "TimeoutTimer";
+
     private long START_TIME_IN_MILLIS;
     private TextView mTextViewCountDown, timeText;
-    private Button mButtonStartPause, mButtonReset, mButtonSave;
+    private Button mButtonStart, mButtonReset, mButtonSave, mButtonPause;
     private EditText inputTime;
+    private Spinner spinner;
 
     private CountDownTimer mCountDownTimer;
     public static MediaPlayer alarmSound;
     private static Vibrator vibrator;
     private NotificationManagerCompat notificationManager;
 
+    private long mTimeLeftInMillis, mEndTime;
     private boolean mTimerRunning;
 
-    private long mTimeLeftInMillis;
-    private long mEndTime;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
-        Log.d(TAG, "it started onCreate"+ mTimeLeftInMillis);
 
         setTitle("Timeout Timer");
+        mTimerRunning = true;
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -78,9 +71,7 @@ public class TimeoutTimer extends AppCompatActivity {
         }
 
         // If the intent called is from clicking the notification
-        Log.d("D_MSG", "I was clicked. 3");
         if (getIntent().getBooleanExtra("clickedNotification", false)) {
-            Log.d("D_MSG", "I was clicked. 90");
             vibrator.cancel();
             alarmSound.stop();
             try {
@@ -97,7 +88,7 @@ public class TimeoutTimer extends AppCompatActivity {
         timeoutDropdown();
 
         updateCountDownText();
-        Log.d(TAG, "it started onCreate + after updateCountDown" + mTimeLeftInMillis);
+
         setupSpinner();
     }
 
@@ -105,7 +96,6 @@ public class TimeoutTimer extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
-
                 finish();
                 return true;
             default:
@@ -118,238 +108,87 @@ public class TimeoutTimer extends AppCompatActivity {
         mySpinner.setAdapter(new SpinnerAdapter(this, R.layout.spinner_dropdown,
                 getResources().getStringArray(R.array.timeout_minutes)));
 
-        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
-        mTimeLeftInMillis = prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS);
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        START_TIME_IN_MILLIS = 10000;
+                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateCountDownText();
+                        break;
+                    case 1:
+                        START_TIME_IN_MILLIS = 120000;
+                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateCountDownText();
+                        break;
+                    case 2:
+                        START_TIME_IN_MILLIS = 180000;
+                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateCountDownText();
+                        break;
+                    case 3:
+                        START_TIME_IN_MILLIS = 300000;
+                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateCountDownText();
+                        break;
+                    case 4:
+                        START_TIME_IN_MILLIS = 600000;
+                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                        updateCountDownText();
+                        break;
+                    case 5:
+                        mTextViewCountDown.setVisibility(View.INVISIBLE);
+                        mButtonStart.setVisibility(View.INVISIBLE);
+                        timeText = findViewById(R.id.textTime);
+                        timeText.setVisibility(View.VISIBLE);
+                        inputTime = findViewById(R.id.editTextNumber);
+                        inputTime.setVisibility(View.VISIBLE);
+                        inputTime.setOnKeyListener(new View.OnKeyListener() {
+                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                // To respond to when the user clicks the 'Enter' key
+                                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                                    int minutes = Integer.parseInt(inputTime.getText().toString());
+                                    setInputVisiblityToTrue();
+                                    START_TIME_IN_MILLIS = minutes*60*1000;
+                                    mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                                    updateCountDownText();
 
-        SharedPreferences.Editor editor = prefs_start.edit();
-
-
-
-            mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            int j=i;
-                            if (prefs_start.getBoolean("isSelected",false)) {
-                                j=prefs_start.getInt("spinnerSelection",-6);
-                                Log.d(TAG, "this is the J:" + j);
-
-                                editor.putBoolean("isSelected",false);
-                                editor.apply();
+                                    // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
+                                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                }
+                                return false;
                             }
-                    switch (j) {
-                        case 0:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=0) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-                                Log.d(HAG, "firstIfStatement");
-
-                            }
-                            if ( prefs_start.getInt("getSelection",-2)!=0) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",0);
-                                editor.apply();
-                                START_TIME_IN_MILLIS = 60000;
-                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                updateButtons();
+                        });
+                        mButtonSave = findViewById(R.id.button_save);
+                        mButtonSave.setVisibility(View.VISIBLE);
+                        mButtonSave.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int minutes = Integer.parseInt(inputTime.getText().toString());
+                                setInputVisiblityToTrue();
+                                START_TIME_IN_MILLIS = minutes*60*1000;
+                                mTimeLeftInMillis= START_TIME_IN_MILLIS;
                                 updateCountDownText();
-                                Log.d(HAG, "secondIfStatement");
-                                break;
                             }
-                            else if (prefs_start.getInt("getSelection",-1)==0){
-
-                                updateButtons();
-                                updateCountDownText();
-                                Log.d(HAG, "thirdIfStatement");
-                                break;
-                            }
-
-                        case 1:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=1) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-
-                            }
-                            if (prefs_start.getInt("getSelection",-2)!=1) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",1);
-                                editor.apply();
-                                START_TIME_IN_MILLIS = 120000;
-                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-                            else if (prefs_start.getInt("getSelection",-1)==1){
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-
-                        case 2:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=2) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-
-                            }
-                            if (prefs_start.getInt("getSelection",-2)!=2) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",2);
-                                editor.apply();
-                                START_TIME_IN_MILLIS = 180000;
-                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-                            else if (prefs_start.getInt("getSelection",-1)==2) {
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-
-                        case 3:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=3) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-
-                            }
-                            if (prefs_start.getInt("getSelection",-2)!=3) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",3);
-                                editor.apply();
-                                START_TIME_IN_MILLIS = 300000;
-                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-                            else if (prefs_start.getInt("getSelection",-1)==3) {
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-
-                        case 4:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=4) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-
-                            }
-                            if (prefs_start.getInt("getSelection",-2)!=4) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",4);
-                                editor.apply();
-                                START_TIME_IN_MILLIS = 600000;
-                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-                            else if (prefs_start.getInt("getSelection",-1)==4){
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                        }
-
-                        case 5:
-                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=5) {
-                                pauseTimer();
-                                resetTimer();
-                                updateButtons();
-
-                            }
-                            if (prefs_start.getInt("getSelection",-2)!=5) {
-                                editor.putInt("spinnerSelection",j);
-                                editor.putInt("getSelection",5);
-                                editor.apply();
-
-                                mTextViewCountDown.setVisibility(View.INVISIBLE);
-                                mButtonStartPause.setVisibility(View.INVISIBLE);
-                                timeText = findViewById(R.id.textTime);
-                                timeText.setVisibility(View.VISIBLE);
-                                inputTime = findViewById(R.id.editTextNumber);
-                                inputTime.setVisibility(View.VISIBLE);
-                                inputTime.setOnKeyListener(new View.OnKeyListener() {
-                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                        // To respond to when the user clicks the 'Enter' key
-                                        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                                            int minutes = Integer.parseInt(inputTime.getText().toString());
-                                            setInputVisiblityToTrue();
-                                            START_TIME_IN_MILLIS = minutes * 60 * 1000;
-                                            mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                            updateCountDownText();
-
-                                            // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
-                                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                                        }
-                                        return false;
-                                    }
-                                });
-                                mButtonSave = findViewById(R.id.button_save);
-                                mButtonSave.setVisibility(View.VISIBLE);
-                                mButtonSave.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        int minutes = Integer.parseInt(inputTime.getText().toString());
-                                        setInputVisiblityToTrue();
-                                        START_TIME_IN_MILLIS = minutes * 60 * 1000;
-                                        mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                                        updateCountDownText();
-                                    }
-                                });
-                                break;
-                            }
-                            else if (prefs_start.getInt("getSelection",-1)==5) {
-                                updateButtons();
-                                updateCountDownText();
-                                break;
-                            }
-
-
-                        default:
-                            break;
-                    }
-
+                        });
+                        break;
+                    default:
+                        break;
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-        }
-
-    private void updateButtons() {
-        if (mTimerRunning) {
-            mButtonReset.setVisibility(View.INVISIBLE);
-            mButtonStartPause.setText("Pause");
-        } else {
-            mButtonStartPause.setText("Start");
-
-            if (mTimeLeftInMillis < 1000) {
-                mButtonStartPause.setVisibility(View.INVISIBLE);
-            } else {
-                mButtonStartPause.setVisibility(View.VISIBLE);
             }
 
-            if (mTimeLeftInMillis < START_TIME_IN_MILLIS) {
-                mButtonReset.setVisibility(View.VISIBLE);
-            } else {
-                mButtonReset.setVisibility(View.INVISIBLE);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
-        }
+        });
     }
+
     private void setInputVisiblityToTrue() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
-        mButtonStartPause.setVisibility(View.VISIBLE);
+        mButtonStart.setVisibility(View.VISIBLE);
         timeText = findViewById(R.id.textTime);
         timeText.setVisibility(View.INVISIBLE);
         inputTime = findViewById(R.id.editTextNumber);
@@ -369,20 +208,24 @@ public class TimeoutTimer extends AppCompatActivity {
     private void timeoutDropdown() {
         mTextViewCountDown=findViewById(R.id.text_view_countdown);
 
-        mButtonStartPause=findViewById(R.id.button_start_pause);
+        mButtonStart = findViewById(R.id.button_start);
+        mButtonPause = findViewById(R.id.button_pause);
         mButtonReset = findViewById(R.id.button_reset);
-        // changed this NOW
-//        mTimerRunning = false;
 
-        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
+        mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTimerRunning) {
+                startTimer();
+            }
+        });
+
+        mButtonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning)
                     pauseTimer();
-                }
-                else {
-                    startTimer();
-                }
+                else
+                    ResumeTimer();
             }
         });
 
@@ -399,6 +242,7 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
+        spinner = findViewById(R.id.spinner);
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -407,26 +251,28 @@ public class TimeoutTimer extends AppCompatActivity {
                 if (convertTimeToSecond(mTimeLeftInMillis) == 0) {
                     mTimeLeftInMillis = START_TIME_IN_MILLIS;
                     updateCountDownText();
-//                    setupAlarmVibrate();
+                    setupAlarmVibrate();
+                } else {
+                    updateCountDownText();
                 }
-//                else {
-                updateCountDownText();
-//                }
             }
 
             @Override
             public void onFinish() {
-                mTimerRunning=false;
                 mButtonReset.setVisibility(View.INVISIBLE);
-                mButtonStartPause.setText("Start");
-                mTimeLeftInMillis=START_TIME_IN_MILLIS;
+                mButtonPause.setVisibility(View.INVISIBLE);
+                mButtonStart.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
+                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                updateCountDownText();
             }
         } .start();
 
         // The lines below happen when the pause button has been clicked
-        mTimerRunning = true;
-        mButtonStartPause.setText("pause");
+        mButtonStart.setVisibility(View.INVISIBLE);
         mButtonReset.setVisibility(View.VISIBLE);
+        mButtonPause.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.INVISIBLE);
     }
 
     private int convertTimeToSecond(long time) {
@@ -467,23 +313,27 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void pauseTimer() {
+        mTimerRunning = false;
         mCountDownTimer.cancel();
-        mTimerRunning=false;
-        mButtonStartPause.setText("Resume");
+        mButtonPause.setText("Resume");
         mButtonReset.setVisibility(View.VISIBLE);
     }
 
+    private void ResumeTimer() {
+        mTimerRunning = true;
+        updateCountDownText();
+        mButtonPause.setText("Pause");
+        startTimer();
+    }
+
     private void resetTimer() {
-        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs_start.edit();
-        editor.putInt("getSelection",-3);
-        editor.apply();
         mTimeLeftInMillis=START_TIME_IN_MILLIS;
         mCountDownTimer.cancel();
         updateCountDownText();
-        mButtonStartPause.setText("Start");
         mButtonReset.setVisibility(View.INVISIBLE);
-        mTimerRunning=false;
+        mButtonPause.setVisibility(View.INVISIBLE);
+        mButtonStart.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.VISIBLE);
     }
 
     private void updateCountDownText() {
@@ -493,31 +343,16 @@ public class TimeoutTimer extends AppCompatActivity {
         String timeLeftFormatted;
         timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
-
     }
-
 
     @Override
     protected void onStop() {
         super.onStop();
-        alarmSound.stop();
-        vibrator.cancel();
-
-
-
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
+        SharedPreferences pref_stop = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref_stop.edit();
         editor.putLong("millisLeft", mTimeLeftInMillis);
-        editor.putBoolean("timerRunning", mTimerRunning);
-        editor.putBoolean("status",true);
-        editor.putBoolean("isSelected",true);
-//        editor.putInt("getSelection",);
         editor.putLong("endTime", mEndTime);
         editor.apply();
-        Log.d("MSG", "" + prefs.getLong("millisLeft", START_TIME_IN_MILLIS));
-        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
-        Log.d(TAG, "it stopped");
 
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
@@ -527,32 +362,7 @@ public class TimeoutTimer extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        mTimeLeftInMillis = prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS);
-        mTimerRunning = prefs_start.getBoolean("timerRunning", false);
-        Log.d(TAG, "it started onStart");
+        SharedPreferences pref_start = getSharedPreferences("prefs", MODE_PRIVATE);
         updateCountDownText();
-        updateButtons();
-        Log.d("MSG", "" + prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS));
-        if (mTimerRunning) {
-            mEndTime = prefs_start.getLong("endTime", 0);
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
-
-            if (mTimeLeftInMillis < 0) {
-//                mTimeLeftInMillis = 0;
-//                mTimerRunning = false;
-//                updateCountDownText();
-//                updateButtons();
-            } else {
-                startTimer();
-
-            }
-
-        }
-        updateButtons();
     }
-
-
-
 }

@@ -16,31 +16,49 @@
         android:layout_centerVertical="true"
         android:text="00:00"
         android:textColor="@android:color/black"
-        android:textSize="60sp"
+        android:textSize="70sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.52" />
 
     <Button
-        android:id="@+id/button_start_pause"
-        android:layout_width="116dp"
-        android:layout_height="58dp"
+        android:id="@+id/button_start"
+        android:layout_width="129dp"
+        android:layout_height="71dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="#FF58AdF1"
+        android:backgroundTint="#0D82DF"
         android:text="start"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:cornerRadius="25dp"
+        app:cornerRadius="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+        app:layout_constraintVertical_bias="0.689" />
+
+    <Button
+        android:id="@+id/button_pause"
+        android:layout_width="129dp"
+        android:layout_height="71dp"
+        android:layout_below="@+id/text_view_countdown"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#0D82DF"
+        android:text="Pause"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.351" />
 
     <Button
         android:id="@+id/button_save"
@@ -63,23 +81,22 @@
 
     <Button
         android:id="@+id/button_reset"
-        android:layout_width="116dp"
-        android:layout_height="58dp"
+        android:layout_width="129dp"
+        android:layout_height="71dp"
         android:layout_below="@+id/text_view_countdown"
-        android:layout_toEndOf="@+id/button_start_pause"
-        android:backgroundTint="#FF58ADF1"
+        android:layout_toEndOf="@+id/button_start"
+        android:backgroundTint="#0D82DF"
         android:text="reset"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:visibility="invisible"
-        app:cornerRadius="25dp"
+        app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.351" />
 
     <Spinner
         android:id="@+id/spinner"
