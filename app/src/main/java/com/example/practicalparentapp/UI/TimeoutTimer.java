@@ -52,7 +52,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private long mTimeLeftInMillis, mEndTime;
     private boolean mTimerRunning;
 
-    private SharedPreferences prefs;
+    // private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        START_TIME_IN_MILLIS = 10000;
+                        START_TIME_IN_MILLIS = 60000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateCountDownText();
                         break;
@@ -243,7 +243,6 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void startTimer() {
         spinner = findViewById(R.id.spinner);
-        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -345,24 +344,24 @@ public class TimeoutTimer extends AppCompatActivity {
         mTextViewCountDown.setText(timeLeftFormatted);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferences pref_stop = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref_stop.edit();
-        editor.putLong("millisLeft", mTimeLeftInMillis);
-        editor.putLong("endTime", mEndTime);
-        editor.apply();
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        SharedPreferences pref_stop = getSharedPreferences("prefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref_stop.edit();
+//        editor.putLong("millisLeft", mTimeLeftInMillis);
+//        editor.putLong("endTime", System.currentTimeMillis() + mTimeLeftInMillis);
+//        editor.apply();
+//
+//        if (mCountDownTimer != null) {
+//            mCountDownTimer.cancel();
+//        }
+//    }
 
-        if (mCountDownTimer != null) {
-            mCountDownTimer.cancel();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences pref_start = getSharedPreferences("prefs", MODE_PRIVATE);
-        updateCountDownText();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        SharedPreferences pref_start = getSharedPreferences("prefs", MODE_PRIVATE);
+//        startTimer();
+//    }
 }
