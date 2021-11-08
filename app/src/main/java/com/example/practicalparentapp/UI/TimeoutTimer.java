@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,10 +31,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.practicalparentapp.R;
 
+import java.io.IOException;
 import java.util.Locale;
+import java.util.UUID;
 
 public class TimeoutTimer extends AppCompatActivity {
 
@@ -60,9 +64,28 @@ public class TimeoutTimer extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        notificationManager = NotificationManagerCompat.from(this);
-        alarmSound = MediaPlayer.create(this, R.raw.sunny);
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (!getIntent().getBooleanExtra("clickedNotification", false)) {
+            notificationManager = NotificationManagerCompat.from(this);
+            alarmSound = MediaPlayer.create(this, R.raw.sunny);
+            vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        }
+
+        // If the intent called is from clicking the notification
+        Log.d("D_MSG", "I was clicked. 3");
+        if (getIntent().getBooleanExtra("clickedNotification", false)) {
+            Log.d("D_MSG", "I was clicked. 90");
+            vibrator.cancel();
+            alarmSound.stop();
+            try {
+                alarmSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getIntent().putExtra("clickedNotification", false);
+            finish();
+        }
+
+
         // function for the Dropdown Menu for selecting the number of minutes to timeout
         timeoutDropdown();
 
@@ -75,17 +98,12 @@ public class TimeoutTimer extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
+
                 finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        alarmSound.stop();
-        vibrator.cancel();
     }
 
     private void setupSpinner() {
@@ -102,9 +120,7 @@ public class TimeoutTimer extends AppCompatActivity {
                             pauseTimer();
                             resetTimer();
                         }
-
-//                        setInputVisiblityToTrue();
-                        START_TIME_IN_MILLIS = 60000;
+                        START_TIME_IN_MILLIS = 10000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateButtons();
                         updateCountDownText();
@@ -114,7 +130,6 @@ public class TimeoutTimer extends AppCompatActivity {
                             pauseTimer();
                             resetTimer();
                         }
-//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 120000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateButtons();
@@ -125,7 +140,6 @@ public class TimeoutTimer extends AppCompatActivity {
                             pauseTimer();
                             resetTimer();
                         }
-//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 180000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateButtons();
@@ -136,7 +150,6 @@ public class TimeoutTimer extends AppCompatActivity {
                             pauseTimer();
                             resetTimer();
                         }
-//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 300000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateButtons();
@@ -147,7 +160,6 @@ public class TimeoutTimer extends AppCompatActivity {
                             pauseTimer();
                             resetTimer();
                         }
-//                        setInputVisiblityToTrue();
                         START_TIME_IN_MILLIS = 600000;
                         mTimeLeftInMillis= START_TIME_IN_MILLIS;
                         updateButtons();
@@ -314,22 +326,23 @@ public class TimeoutTimer extends AppCompatActivity {
         alarmSound.start();
 
         // Setting up the notification
-        Intent activityIntent = new Intent(this, TimeoutTimer.class);
+        Intent intent = new Intent(this, TimeoutTimer.class);
+        intent.putExtra("clickedNotification", true);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
-                0, activityIntent, 0);
+                UUID.randomUUID().hashCode(), intent, 0);
 
         Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent actionIntent = PendingIntent.getBroadcast(this,
-                0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                UUID.randomUUID().hashCode(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this, App.ChannelID)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle("Timer is Up!")
                 .setContentText("Your set timer is now up. Click OK to stop the timer.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentIntent(contentIntent)
-                .setColor(Color.BLUE)
+                .setColor(Color.parseColor("#FF58ADF1"))
                 .setAutoCancel(true)
                 .addAction(R.mipmap.ic_launcher, "OK", actionIntent)
                 .build();
@@ -360,8 +373,9 @@ public class TimeoutTimer extends AppCompatActivity {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
-        String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
-
+        String timeLeftFormatted;
+        timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
+
     }
 }

@@ -17,7 +17,6 @@
             android:exported="false" />
         <activity
             android:name=".UI.TimeoutTimer"
-            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".UI.CoinFlip"

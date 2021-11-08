@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/text_view_countdown"
-        android:layout_width="162dp"
+        android:layout_width="wrap_content"
         android:layout_height="78dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -30,7 +30,7 @@
         android:layout_height="58dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="#FF58ADF1"
+        android:backgroundTint="#FF58AdF1"
         android:text="start"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -127,15 +127,15 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="181dp"
-        android:layout_height="149dp"
+        android:layout_width="166dp"
+        android:layout_height="147dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
-        app:srcCompat="@drawable/clock_img" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/clock_transparent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
