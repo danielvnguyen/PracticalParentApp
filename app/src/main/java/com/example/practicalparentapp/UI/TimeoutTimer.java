@@ -38,7 +38,7 @@ import java.util.UUID;
 
 public class TimeoutTimer extends AppCompatActivity {
 
-    private long START_TIME_IN_MILLIS;
+    private long START_TIME_IN_MILLIS = 60000;
     private TextView mTextViewCountDown, timeText;
     private Button mButtonStartPause, mButtonReset, mButtonSave;
     private Button mButton_one, mButton_two, mButton_three, mButton_five, mButton_ten, mButton_custom;
@@ -262,42 +262,6 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonSave = findViewById(R.id.button_save);
         mButtonSave.setVisibility(View.INVISIBLE);
     }
-
-//                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-//                        mButtonStartPause.setVisibility(View.INVISIBLE);
-//                        timeText = findViewById(R.id.textTime);
-//                        timeText.setVisibility(View.VISIBLE);
-//                        inputTime = findViewById(R.id.editTextNumber);
-//                        inputTime.setVisibility(View.VISIBLE);
-//                        inputTime.setOnKeyListener(new View.OnKeyListener() {
-//                            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                                // To respond to when the user clicks the 'Enter' key
-//                                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//                                    int minutes = Integer.parseInt(inputTime.getText().toString());
-//                                    setInputVisiblityToTrue();
-//                                    START_TIME_IN_MILLIS = minutes * 60 * 1000;
-//                                    mTimeLeftInMillis = START_TIME_IN_MILLIS;
-//                                    updateCountDownText();
-//
-//                                    // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
-//                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//                                }
-//                                return false;
-//                            }
-//                        });
-//                        mButtonSave = findViewById(R.id.button_save);
-//                        mButtonSave.setVisibility(View.VISIBLE);
-//                        mButtonSave.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                int minutes = Integer.parseInt(inputTime.getText().toString());
-//                                setInputVisiblityToTrue();
-//                                START_TIME_IN_MILLIS = minutes * 60 * 1000;
-//                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-//                                updateCountDownText();
-//                            }
-//                        });
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
