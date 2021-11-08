@@ -13,6 +13,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -40,7 +41,10 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class TimeoutTimer extends AppCompatActivity {
-
+    private boolean isSelected;
+    private SharedPreferences prefs;
+    private static final String HAG= "internalsOfSpinner";
+    private static final String TAG= "TimeoutTimer";
     private long START_TIME_IN_MILLIS;
     private TextView mTextViewCountDown, timeText;
     private Button mButtonStartPause, mButtonReset, mButtonSave;
@@ -54,11 +58,14 @@ public class TimeoutTimer extends AppCompatActivity {
     private boolean mTimerRunning;
 
     private long mTimeLeftInMillis;
+    private long mEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
+        Log.d(TAG, "it started onCreate"+ mTimeLeftInMillis);
 
         setTitle("Timeout Timer");
         ActionBar actionBar = getSupportActionBar();
@@ -90,7 +97,7 @@ public class TimeoutTimer extends AppCompatActivity {
         timeoutDropdown();
 
         updateCountDownText();
-
+        Log.d(TAG, "it started onCreate + after updateCountDown" + mTimeLeftInMillis);
         setupSpinner();
     }
 
@@ -111,112 +118,215 @@ public class TimeoutTimer extends AppCompatActivity {
         mySpinner.setAdapter(new SpinnerAdapter(this, R.layout.spinner_dropdown,
                 getResources().getStringArray(R.array.timeout_minutes)));
 
-        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i) {
-                    case 0:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        START_TIME_IN_MILLIS = 10000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateButtons();
-                        updateCountDownText();
-                        break;
-                    case 1:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        START_TIME_IN_MILLIS = 120000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateButtons();
-                        updateCountDownText();
-                        break;
-                    case 2:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        START_TIME_IN_MILLIS = 180000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateButtons();
-                        updateCountDownText();
-                        break;
-                    case 3:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        START_TIME_IN_MILLIS = 300000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateButtons();
-                        updateCountDownText();
-                        break;
-                    case 4:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        START_TIME_IN_MILLIS = 600000;
-                        mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                        updateButtons();
-                        updateCountDownText();
-                        break;
-                    case 5:
-                        if (mTimerRunning) {
-                            pauseTimer();
-                            resetTimer();
-                        }
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        mButtonStartPause.setVisibility(View.INVISIBLE);
-                        timeText = findViewById(R.id.textTime);
-                        timeText.setVisibility(View.VISIBLE);
-                        inputTime = findViewById(R.id.editTextNumber);
-                        inputTime.setVisibility(View.VISIBLE);
-                        inputTime.setOnKeyListener(new View.OnKeyListener() {
-                            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                // To respond to when the user clicks the 'Enter' key
-                                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                                    int minutes = Integer.parseInt(inputTime.getText().toString());
-                                    setInputVisiblityToTrue();
-                                    START_TIME_IN_MILLIS = minutes*60*1000;
-                                    mTimeLeftInMillis= START_TIME_IN_MILLIS;
-                                    updateCountDownText();
+        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
+        mTimeLeftInMillis = prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS);
 
-                                    // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
-                                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                                }
-                                return false;
+        SharedPreferences.Editor editor = prefs_start.edit();
+
+
+
+            mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            int j=i;
+                            if (prefs_start.getBoolean("isSelected",false)) {
+                                j=prefs_start.getInt("spinnerSelection",-6);
+                                Log.d(TAG, "this is the J:" + j);
+
+                                editor.putBoolean("isSelected",false);
+                                editor.apply();
                             }
-                        });
-                        mButtonSave = findViewById(R.id.button_save);
-                        mButtonSave.setVisibility(View.VISIBLE);
-                        mButtonSave.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int minutes = Integer.parseInt(inputTime.getText().toString());
-                                setInputVisiblityToTrue();
-                                START_TIME_IN_MILLIS = minutes*60*1000;
-                                mTimeLeftInMillis= START_TIME_IN_MILLIS;
+                    switch (j) {
+                        case 0:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=0) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+                                Log.d(HAG, "firstIfStatement");
+
+                            }
+                            if ( prefs_start.getInt("getSelection",-2)!=0) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",0);
+                                editor.apply();
+                                START_TIME_IN_MILLIS = 60000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                updateButtons();
                                 updateCountDownText();
+                                Log.d(HAG, "secondIfStatement");
+                                break;
                             }
-                        });
-                        break;
-                    default:
-                        break;
+                            else if (prefs_start.getInt("getSelection",-1)==0){
+
+                                updateButtons();
+                                updateCountDownText();
+                                Log.d(HAG, "thirdIfStatement");
+                                break;
+                            }
+
+                        case 1:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=1) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+
+                            }
+                            if (prefs_start.getInt("getSelection",-2)!=1) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",1);
+                                editor.apply();
+                                START_TIME_IN_MILLIS = 120000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+                            else if (prefs_start.getInt("getSelection",-1)==1){
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+
+                        case 2:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=2) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+
+                            }
+                            if (prefs_start.getInt("getSelection",-2)!=2) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",2);
+                                editor.apply();
+                                START_TIME_IN_MILLIS = 180000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+                            else if (prefs_start.getInt("getSelection",-1)==2) {
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+
+                        case 3:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=3) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+
+                            }
+                            if (prefs_start.getInt("getSelection",-2)!=3) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",3);
+                                editor.apply();
+                                START_TIME_IN_MILLIS = 300000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+                            else if (prefs_start.getInt("getSelection",-1)==3) {
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+
+                        case 4:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=4) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+
+                            }
+                            if (prefs_start.getInt("getSelection",-2)!=4) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",4);
+                                editor.apply();
+                                START_TIME_IN_MILLIS = 600000;
+                                mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+                            else if (prefs_start.getInt("getSelection",-1)==4){
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                        }
+
+                        case 5:
+                            if (mTimerRunning && prefs_start.getInt("getSelection",-1)!=5) {
+                                pauseTimer();
+                                resetTimer();
+                                updateButtons();
+
+                            }
+                            if (prefs_start.getInt("getSelection",-2)!=5) {
+                                editor.putInt("spinnerSelection",j);
+                                editor.putInt("getSelection",5);
+                                editor.apply();
+
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                mButtonStartPause.setVisibility(View.INVISIBLE);
+                                timeText = findViewById(R.id.textTime);
+                                timeText.setVisibility(View.VISIBLE);
+                                inputTime = findViewById(R.id.editTextNumber);
+                                inputTime.setVisibility(View.VISIBLE);
+                                inputTime.setOnKeyListener(new View.OnKeyListener() {
+                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                        // To respond to when the user clicks the 'Enter' key
+                                        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                                            int minutes = Integer.parseInt(inputTime.getText().toString());
+                                            setInputVisiblityToTrue();
+                                            START_TIME_IN_MILLIS = minutes * 60 * 1000;
+                                            mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                            updateCountDownText();
+
+                                            // To automatically hide the virtual keyboard once the user clicks the 'Enter' button
+                                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                        }
+                                        return false;
+                                    }
+                                });
+                                mButtonSave = findViewById(R.id.button_save);
+                                mButtonSave.setVisibility(View.VISIBLE);
+                                mButtonSave.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        int minutes = Integer.parseInt(inputTime.getText().toString());
+                                        setInputVisiblityToTrue();
+                                        START_TIME_IN_MILLIS = minutes * 60 * 1000;
+                                        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                                        updateCountDownText();
+                                    }
+                                });
+                                break;
+                            }
+                            else if (prefs_start.getInt("getSelection",-1)==5) {
+                                updateButtons();
+                                updateCountDownText();
+                                break;
+                            }
+
+
+                        default:
+                            break;
+                    }
+
                 }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-    }
+                }
+            });
+
+        }
+
     private void updateButtons() {
         if (mTimerRunning) {
             mButtonReset.setVisibility(View.INVISIBLE);
@@ -261,7 +371,8 @@ public class TimeoutTimer extends AppCompatActivity {
 
         mButtonStartPause=findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
-        mTimerRunning = false;
+        // changed this NOW
+//        mTimerRunning = false;
 
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,6 +399,7 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -295,10 +407,11 @@ public class TimeoutTimer extends AppCompatActivity {
                 if (convertTimeToSecond(mTimeLeftInMillis) == 0) {
                     mTimeLeftInMillis = START_TIME_IN_MILLIS;
                     updateCountDownText();
-                    setupAlarmVibrate();
-                } else {
-                    updateCountDownText();
+//                    setupAlarmVibrate();
                 }
+//                else {
+                updateCountDownText();
+//                }
             }
 
             @Override
@@ -361,6 +474,10 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void resetTimer() {
+        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs_start.edit();
+        editor.putInt("getSelection",-3);
+        editor.apply();
         mTimeLeftInMillis=START_TIME_IN_MILLIS;
         mCountDownTimer.cancel();
         updateCountDownText();
@@ -378,4 +495,64 @@ public class TimeoutTimer extends AppCompatActivity {
         mTextViewCountDown.setText(timeLeftFormatted);
 
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        alarmSound.stop();
+        vibrator.cancel();
+
+
+
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putBoolean("status",true);
+        editor.putBoolean("isSelected",true);
+//        editor.putInt("getSelection",);
+        editor.putLong("endTime", mEndTime);
+        editor.apply();
+        Log.d("MSG", "" + prefs.getLong("millisLeft", START_TIME_IN_MILLIS));
+        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
+        Log.d(TAG, "it stopped");
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs_start = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        mTimeLeftInMillis = prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS);
+        mTimerRunning = prefs_start.getBoolean("timerRunning", false);
+        Log.d(TAG, "it started onStart");
+        updateCountDownText();
+        updateButtons();
+        Log.d("MSG", "" + prefs_start.getLong("millisLeft", START_TIME_IN_MILLIS));
+        if (mTimerRunning) {
+            mEndTime = prefs_start.getLong("endTime", 0);
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
+            if (mTimeLeftInMillis < 0) {
+//                mTimeLeftInMillis = 0;
+//                mTimerRunning = false;
+//                updateCountDownText();
+//                updateButtons();
+            } else {
+                startTimer();
+
+            }
+
+        }
+        updateButtons();
+    }
+
+
+
 }
