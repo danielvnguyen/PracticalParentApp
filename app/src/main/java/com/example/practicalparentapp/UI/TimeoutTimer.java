@@ -117,7 +117,6 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         });
 
-
         mButton_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +126,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
                 START_TIME_IN_MILLIS = 60000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                changeLayout();
                 updateButtons();
                 updateCountDownText();
                 lastSelector=1;
@@ -144,6 +144,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
                 START_TIME_IN_MILLIS = 120000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                changeLayout();
                 updateButtons();
                 updateCountDownText();
                 lastSelector=2;
@@ -161,6 +162,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
                 START_TIME_IN_MILLIS = 180000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                changeLayout();
                 updateButtons();
                 updateCountDownText();
                 lastSelector=3;
@@ -178,6 +180,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
                 START_TIME_IN_MILLIS = 300000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                changeLayout();
                 updateButtons();
                 updateCountDownText();
                 lastSelector=5;
@@ -195,6 +198,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
                 START_TIME_IN_MILLIS = 600000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                changeLayout();
                 updateButtons();
                 updateCountDownText();
                 lastSelector=10;
@@ -209,7 +213,6 @@ public class TimeoutTimer extends AppCompatActivity {
                     pauseTimer();
                     resetTimer();
                 }
-
                 mTextViewCountDown.setVisibility(View.INVISIBLE);
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 timeText = findViewById(R.id.textTime);
@@ -249,17 +252,26 @@ public class TimeoutTimer extends AppCompatActivity {
                 });
 
                 isCustom=true;
-
             }
         });
 
-
     }
 
+    private void changeLayout() {
+        mTextViewCountDown.setVisibility(View.VISIBLE);
+        mButtonStartPause.setVisibility(View.VISIBLE);
+        mButtonSave = findViewById(R.id.button_save);
+        mButtonSave.setVisibility(View.INVISIBLE);
+        inputTime = findViewById(R.id.editTextNumber);
+        inputTime.setVisibility(View.INVISIBLE);
+        timeText = findViewById(R.id.textTime);
+        timeText.setVisibility(View.INVISIBLE);
+    }
 
     private void setInputVisiblityToTrue() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
+        mButtonReset.setVisibility(View.INVISIBLE);
         timeText = findViewById(R.id.textTime);
         timeText.setVisibility(View.INVISIBLE);
         inputTime = findViewById(R.id.editTextNumber);
