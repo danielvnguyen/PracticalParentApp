@@ -18,10 +18,8 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/enter_pos2"
         app:layout_constraintTop_toBottomOf="@+id/tails_btn"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
@@ -52,21 +50,20 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextContrastCheck" />
 
-    <EditText
-        android:id="@+id/enter_pos1"
-        android:layout_width="100dp"
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
+        android:backgroundTint="@color/white"
+        android:text="@string/confirm"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toStartOf="@+id/flip_button"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
-        app:layout_constraintVertical_bias="0.718"
-        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/heads_btn"
+        app:layout_constraintVertical_bias="0.884"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/enter_pos2"
@@ -78,27 +75,27 @@
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toEndOf="@+id/enter_pos1"
         app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
-        app:layout_constraintVertical_bias="0.718"
+        app:layout_constraintVertical_bias="0.92"
         tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/confirm_btn"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/enter_pos1"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="108dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/confirm"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/flip_button"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_child"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_posTV"
+        app:layout_constraintVertical_bias="0.92"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
     <ListView
         android:id="@+id/flipHistory"
@@ -123,10 +120,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heads"
-        app:layout_constraintVertical_bias="0.256"
+        app:layout_constraintVertical_bias="0.294"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/tails_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/tails"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.752"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck"
         tools:visibility="invisible" />
 
     <Button
@@ -139,22 +152,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/flip_button"
         app:layout_constraintEnd_toStartOf="@+id/tails_btn"
         app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_child"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextContrastCheck"
-        tools:visibility="invisible" />
-
-    <Button
-        android:id="@+id/tails_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="@string/tails"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.749"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_child"
         app:layout_constraintVertical_bias="0.0"
