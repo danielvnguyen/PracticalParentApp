@@ -58,7 +58,6 @@ public class TimeoutTimer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
 
@@ -315,6 +314,7 @@ public class TimeoutTimer extends AppCompatActivity {
 //        if (lastSelector==0) {
 //            mTimeLeftInMillis = START_TIME_IN_MILLIS;
 //        }
+        Log.d("HER", "I'm here " + (mCountDownTimer == null));
         mCountDownTimer.cancel();
         mTimerRunning = false;
         updateCountDownText();
@@ -359,6 +359,7 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
+        Log.d("WHERE", "StartTimer");
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
