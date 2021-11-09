@@ -39,17 +39,26 @@ public class ChildrenManager {
         return instance;
     }
 
-    // string list of children that are stored
     private ArrayList<Child> childList = new ArrayList<>();
 
-    //add a child to the list
     public void addChildToList(Context context, Child newChild) {
         childList.add(newChild);
         saveChildList(context, childList);
     }
 
+    public boolean isChildListEmpty() {
+        return childList.isEmpty();
+    }
+
     public Child getChild(Integer index) {
         return childList.get(index);
+    }
+
+    public boolean isChildExist(Integer index) {
+        if (index >= childList.size() || index < 0) {
+            return true;
+        }
+        return getChild(index) == null;
     }
 
     public ArrayList<Child> getChildList() {
@@ -61,7 +70,6 @@ public class ChildrenManager {
     }
 
     public void removeChild(Context context, Integer index) {
-        //if there's a valid child index, remove it
         if (index <= childList.size()) childList.remove(getChild(index));
         saveChildList(context, childList);
     }
@@ -113,7 +121,7 @@ public class ChildrenManager {
     }
 
 
-    //create Gson object to allow saving
+    //create gson object to allow saving
     private static Gson createGson() {
         return new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
