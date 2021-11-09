@@ -8,4 +8,16 @@
     <string name="delete">Delete</string>
     <string name="what_is_your_child_s_name">What is your child\'s name?</string>
     <string name="add_child">Add Child</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="_00_00">00:00</string>
+    <string name="reset">reset</string>
+    <string name="enter_number_custom">Enter the time (in whole number minutes) that you wish to set:</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="_5">5</string>
+    <string name="_10">10</string>
+    <string name="custom">Custom</string>
 </resources>
