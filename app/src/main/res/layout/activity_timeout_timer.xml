@@ -10,10 +10,11 @@
 
     <TextView
         android:id="@+id/text_view_countdown"
-        android:layout_width="162dp"
+        android:layout_width="180dp"
         android:layout_height="78dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:fontFamily="@font/merienda_one"
         android:text="00:00"
         android:textColor="@android:color/black"
         android:textSize="60sp"
@@ -35,6 +36,7 @@
         android:text="start"
         android:textColor="#000000"
         android:textSize="16sp"
+        android:visibility="invisible"
         app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,8 +82,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.619"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.619" />
 
     <TextView
         android:id="@+id/textTime"
