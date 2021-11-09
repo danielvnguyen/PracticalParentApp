@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -55,6 +56,13 @@ public class TimeoutTimer extends AppCompatActivity {
     private long lastSelector;
     private long mTimeLeftInMillis;
     private long mEndTime;
+
+
+    @Override
+    protected void onUserLeaveHint() {
+        finish();
+        super.onUserLeaveHint();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,6 +295,11 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void resetTimer() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("cancel", true);
+        mCountDownTimer.cancel();
+        editor.apply();
         if (lastSelector!=-1) {
             if (lastSelector==1 && !isCustom) {
                 mTimeLeftInMillis=10000;
@@ -313,9 +326,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
 //        if (lastSelector==0) {
 //            mTimeLeftInMillis = START_TIME_IN_MILLIS;
-//        }
-        Log.d("HER", "I'm here " + (mCountDownTimer == null));
-        mCountDownTimer.cancel();
+//
         mTimerRunning = false;
         updateCountDownText();
         mButtonStartPause.setVisibility(View.VISIBLE);
@@ -359,7 +370,6 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
-        Log.d("WHERE", "StartTimer");
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
@@ -376,7 +386,15 @@ public class TimeoutTimer extends AppCompatActivity {
                 updateCountDownText();
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 mButtonReset.setVisibility(View.INVISIBLE);
-                setupAlarmVibrate();
+
+                Log.d("OK", "onFinished");
+                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                if (!prefs.getBoolean("cancel", false)) {
+                    setupAlarmVibrate();
+                }
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("cancel", false);
+                editor.apply();
             }
         } .start();
 
@@ -386,6 +404,7 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setText("Pause");
         mButtonReset.setVisibility(View.VISIBLE);
     }
+
 
     private int convertTimeToSecond(long time) {
         double temp_time = pow(10, (int)log10(time));
@@ -425,7 +444,11 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void pauseTimer() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("cancel", true);
         mCountDownTimer.cancel();
+        editor.apply();
         mTimerRunning = false;
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText("Resume");
