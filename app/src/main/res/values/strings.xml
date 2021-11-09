@@ -8,16 +8,16 @@
     <string name="delete">Delete</string>
     <string name="what_is_your_child_s_name">What is your child\'s name?</string>
     <string name="add_child">Add Child</string>
-    <string name="tap_to_flip_coin">Flip the coin</string>
-    <string name="heads_side_of_coin">Heads side of coin</string>
-    <string name="enter_pos_string">Enter the positions of your kids:<br/>
-        Ex. Child #1 would be position 1.<br/>
-        Press confirm, then pick heads/tails.</string>
-    <string name="ask_child">Child _, choose heads or tails, then press "FLIP THE COIN"</string>
-    <string name="heads">HEADS</string>
-    <string name="tails">TAILS</string>
-    <string name="confirm">Confirm</string>
-    <string name="white_box_msg">White box for user clarity</string>
-    <string name="created_by_daniel_danny_emmanuel_and_tej">Created by Daniel, Danny, Emmanuel, and Tejeshwar</string>
-    <string name="practical_parent_app">Practical Parent App</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="_00_00">00:00</string>
+    <string name="reset">reset</string>
+    <string name="enter_number_custom">Enter the time (in whole number minutes) that you wish to set:</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="_5">5</string>
+    <string name="_10">10</string>
+    <string name="custom">Custom</string>
 </resources>
