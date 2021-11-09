@@ -129,7 +129,7 @@ public class TimeoutTimer extends AppCompatActivity {
                     pauseTimer();
                     resetTimer();
                 }
-                START_TIME_IN_MILLIS = 10000;
+                START_TIME_IN_MILLIS = 60000;
                 mTimeLeftInMillis = START_TIME_IN_MILLIS;
                 changeLayout();
                 updateCountDownText();
@@ -302,7 +302,7 @@ public class TimeoutTimer extends AppCompatActivity {
         editor.apply();
         if (lastSelector!=-1) {
             if (lastSelector==1 && !isCustom) {
-                mTimeLeftInMillis=10000;
+                mTimeLeftInMillis=60000;
             }
             if (lastSelector==2 && !isCustom) {
                 mTimeLeftInMillis=120000;

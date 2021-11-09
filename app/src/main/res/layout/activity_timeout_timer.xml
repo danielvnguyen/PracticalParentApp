@@ -148,7 +148,7 @@
         android:layout_height="73dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/merienda_one"
-        android:text=" 1"
+        android:text="1"
         app:cornerRadius="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
