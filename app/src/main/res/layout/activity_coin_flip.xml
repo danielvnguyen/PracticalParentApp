@@ -18,8 +18,10 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toEndOf="@+id/enter_pos2"
         app:layout_constraintTop_toBottomOf="@+id/tails_btn"
+        app:layout_constraintVertical_bias="0.142"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
@@ -123,23 +125,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heads"
-        app:layout_constraintVertical_bias="0.294"
-        tools:visibility="invisible" />
-
-    <Button
-        android:id="@+id/tails_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="@string/tails"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.752"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_child"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextContrastCheck"
+        app:layout_constraintVertical_bias="0.207"
         tools:visibility="invisible" />
 
     <Button
@@ -152,6 +138,22 @@
         app:layout_constraintBottom_toBottomOf="@+id/flip_button"
         app:layout_constraintEnd_toStartOf="@+id/tails_btn"
         app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/tails_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/tails"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.755"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_child"
         app:layout_constraintVertical_bias="0.0"
