@@ -92,7 +92,6 @@ public class NewChildActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemID = item.getItemId();
 
-        // If the back button is pressed triggered cancel warning
         if (itemID == android.R.id.home) {
             finish();
             return true;

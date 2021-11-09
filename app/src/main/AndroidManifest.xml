@@ -14,19 +14,25 @@
         android:theme="@style/Theme.PracticalParentApp">
         <activity
             android:name=".UI.NewChildActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.TimeoutTimer"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.CoinFlip"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.ConfigureChildren"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.MainMenu"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
