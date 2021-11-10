@@ -29,6 +29,7 @@ public class ChildrenManager {
 
     private static ChildrenManager instance;
     private static final String FILE_NAME = "childList.json";
+    private ArrayList<Child> childList = new ArrayList<>();
 
     private ChildrenManager(Context context) {
         setChildList(context);
@@ -38,8 +39,6 @@ public class ChildrenManager {
         if (instance == null) instance = new ChildrenManager(context);
         return instance;
     }
-
-    private ArrayList<Child> childList = new ArrayList<>();
 
     public void addChildToList(Context context, Child newChild) {
         childList.add(newChild);

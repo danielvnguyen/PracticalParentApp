@@ -48,6 +48,8 @@ public class CoinFlip extends AppCompatActivity {
     private boolean hasConfiguredChildren = true;
     private ArrayList<String> listItems;
     private ArrayAdapter<String> adapter;
+    private static final Random random = new Random();
+    private ImageView coin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,9 +205,6 @@ public class CoinFlip extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlip.class);
     }
-
-    private static final Random random = new Random();
-    private ImageView coin;
 
     @SuppressLint("SetTextI18n")
     private void setUpFlipBtn() {
