@@ -1,10 +1,14 @@
 package com.example.practicalparentapp.UI;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+/**
+ * This class handles creating the notification.
+ */
 public class App extends Application {
     public static final String ChannelID = "The Timer is now up.";
 
@@ -15,6 +19,7 @@ public class App extends Application {
         createNotificationChannel();
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(

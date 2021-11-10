@@ -3,6 +3,7 @@
     package="com.example.practicalparentapp">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".UI.App"
         android:allowBackup="true"
@@ -13,22 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
+            android:name=".UI.ConfigureTasks"
+            android:exported="false" />
+        <activity
             android:name=".UI.NewChildActivity"
             android:exported="false"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked" />
         <activity
             android:name=".UI.TimeoutTimer"
             android:exported="false"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked" />
         <activity
             android:name=".UI.CoinFlip"
             android:exported="false"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".UI.ConfigureChildren"
             android:exported="false"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked" />
         <activity
             android:name=".UI.MainMenu"
             android:exported="true"
@@ -39,7 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".UI.NotificationReceiver" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

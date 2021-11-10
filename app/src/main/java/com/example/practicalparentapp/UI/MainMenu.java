@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import com.example.practicalparentapp.R;
 
+/**
+ * This class handles the main menu screen.
+ * Supports button functionality for all of the
+ * necessary activities.
+ */
 public class MainMenu extends AppCompatActivity {
 
     @Override
