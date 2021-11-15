@@ -35,6 +35,8 @@ import java.util.Random;
  * and children management.
  */
 public class CoinFlip extends AppCompatActivity {
+    private static final Random random = new Random();
+    private ImageView coin;
     private MediaPlayer coinSound;
     private ChildrenManager childrenManager;
     private TextView enterPosTV;
@@ -48,6 +50,8 @@ public class CoinFlip extends AppCompatActivity {
     private boolean hasConfiguredChildren = true;
     private ArrayList<String> listItems;
     private ArrayAdapter<String> adapter;
+    public static final String POSITION_ONE = "Child one";
+    public static final String POSITION_TWO = "Child two";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class CoinFlip extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, listItems);
         ListView flipHistory = findViewById(R.id.flipHistory);
         flipHistory.setAdapter(adapter);
+
         childrenManager = ChildrenManager.getInstance(this);
 
         enterPosTV = findViewById(R.id.enter_posTV);
@@ -94,6 +99,25 @@ public class CoinFlip extends AppCompatActivity {
         setUpFlipBtn();
         setUpHeadsBtn();
         setUpTailsBtn();
+        setUpChangeChildBtn();
+    }
+
+    /*
+    - This button shows up everytime after a child is asked to choose heads/tails (after initial setup
+    , since need the positions of the children in order to queue them)
+    - When this button is pressed, display a queue for whose turn it is (i guess at least a list of 2)
+        - So how should i display the queue? Another activity?
+    - Current child (even if chosen) should be moved to the end of the queue, and next child is up.
+    - If nobody is selected, nothing is changed (Still default)
+     */
+    private void setUpChangeChildBtn() {
+        Button btn = findViewById(R.id.change_child_btn);
+        btn.setOnClickListener((v) -> {
+            Intent intent = CoinFlipQueue.makeIntent(this);
+            intent.putExtra(POSITION_ONE, Integer.parseInt(enterPosOne.getText().toString()) - 1);
+            intent.putExtra(POSITION_TWO, Integer.parseInt(enterPosTwo.getText().toString()) - 1);
+            startActivity(intent);
+        });
     }
 
     private void setUpTailsBtn() {
@@ -117,9 +141,9 @@ public class CoinFlip extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setUpConfirmBtn() {
         Button confirmBtn = findViewById(R.id.confirm_btn);
-        Button flipBtn = findViewById(R.id.flip_button);
         Button tailsBtn = findViewById(R.id.tails_btn);
         Button headsBtn = findViewById(R.id.heads_btn);
+        Button changeBtn = findViewById(R.id.change_child_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
@@ -133,12 +157,13 @@ public class CoinFlip extends AppCompatActivity {
                         ", choose heads or tails, then press \"FLIP THE COIN\"");
                 childrenManager.getChild(currentPosOne).setFlippedLast(true);
 
-                flipBtn.setEnabled(true);
                 tailsBtn.setEnabled(true);
                 headsBtn.setEnabled(true);
                 headsBtn.setVisibility(View.VISIBLE);
                 tailsBtn.setVisibility(View.VISIBLE);
                 askChildChoice.setVisibility(View.VISIBLE);
+                changeBtn.setVisibility(View.VISIBLE);
+
                 enterPosTV.setVisibility(View.INVISIBLE);
                 enterPosOne.setVisibility(View.INVISIBLE);
                 enterPosTwo.setVisibility(View.INVISIBLE);
@@ -203,9 +228,6 @@ public class CoinFlip extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlip.class);
     }
-
-    private static final Random random = new Random();
-    private ImageView coin;
 
     @SuppressLint("SetTextI18n")
     private void setUpFlipBtn() {
