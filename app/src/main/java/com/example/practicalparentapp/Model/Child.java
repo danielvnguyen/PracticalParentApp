@@ -7,10 +7,25 @@ package com.example.practicalparentapp.Model;
  */
 public class Child {
     private String name;
+    private  String imgUrl;
     private boolean flippedLast = false;
 
     public Child(String name) {
+
         this.name = name;
+        this.imgUrl=imgUrl;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public Child(int id, byte[] pp) {
+        this.getName();
     }
 
     public String getName() {
