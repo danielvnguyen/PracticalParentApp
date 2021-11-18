@@ -32,6 +32,7 @@ public class CoinFlipQueue extends AppCompatActivity {
     private Child childOne;
     private Child childTwo;
     private EditText enterPos;
+    private ArrayList<Child> childList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class CoinFlipQueue extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         childrenManager = ChildrenManager.getInstance(this);
+        childList = childrenManager.getChildList();
 
         childQueueList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, childQueueList);
@@ -63,25 +65,23 @@ public class CoinFlipQueue extends AppCompatActivity {
     private void populateQueue() {
         childQueueList.clear();
         if (childOne.isFlippedLast()) {
-            childQueueList.add(childOne.getName());
             childQueueList.add(childTwo.getName());
+            childQueueList.add(childOne.getName());
         }
         else if (childTwo.isFlippedLast()){
-            childQueueList.add(childTwo.getName());
             childQueueList.add(childOne.getName());
+            childQueueList.add(childTwo.getName());
         }
         //if no flip has happened yet; default order
         else {
-            childQueueList.add(childTwo.getName());
             childQueueList.add(childOne.getName());
+            childQueueList.add(childTwo.getName());
         }
         adapter.notifyDataSetChanged();
     }
 
-    //this class should update the queue manually, and make the changes to CoinFlip.
-    //Will probably need to utilize ChildrenManager, to update the FlippedLast attribute.
-    //Keep in mind, coin flip only for 2 children, so FlippedLast should work.
-    //Also keep in mind, positions is relevant to configured order, not queue order.
+    //Note: coin flip only for 2 children, so FlippedLast should work.
+    //Note: positions is relevant to configured order, not queue order.
     private void setUpConfirmChangeBtn() {
         Button btn = findViewById(R.id.confirm_change_btn);
         TextView position = findViewById(R.id.position_to_change);
@@ -89,16 +89,17 @@ public class CoinFlipQueue extends AppCompatActivity {
             if (validateInput(enterPos)) {
                 int childPos = Integer.parseInt(position.getText().toString()) - 1;
 
-                childrenManager.getChild(childPos).setFlippedLast(false);
-                //need to change the other child's to true tho
-                if (childrenManager.isChildExist(childPos + 1)) {
-                    childrenManager.getChild(childPos + 1).setFlippedLast(true);
-                }
-                else if (childrenManager.isChildExist(childPos - 1)) {
-                    childrenManager.getChild(childPos - 1).setFlippedLast(true);
+                //Update setFlippedLast values
+                for (int i = 0; i < childList.size(); i++) {
+                    childrenManager.getChild(i).setFlippedLast(true);
                 }
 
+                childrenManager.getChild(childPos).setFlippedLast(false);
+
                 Toast.makeText(getApplicationContext(), "Coin Flip Queue updated!", Toast.LENGTH_SHORT).show();
+
+                //set OldCoinFlip to true so CoinFlip class knows.
+                childrenManager.setOldCoinFlip(true);
                 finish();
             }
         });

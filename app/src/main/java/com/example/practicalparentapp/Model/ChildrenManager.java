@@ -29,6 +29,7 @@ public class ChildrenManager {
 
     private static ChildrenManager instance;
     private static final String FILE_NAME = "childList.json";
+    private boolean isOldCoinFlip = false;
 
     private ChildrenManager(Context context) {
         setChildList(context);
@@ -135,5 +136,13 @@ public class ChildrenManager {
                         return LocalDateTime.parse(jsonReader.nextString());
                     }
                 }).create();
+    }
+
+    public boolean isOldCoinFlip() {
+        return isOldCoinFlip;
+    }
+
+    public void setOldCoinFlip(boolean oldCoinFlip) {
+        isOldCoinFlip = oldCoinFlip;
     }
 }
