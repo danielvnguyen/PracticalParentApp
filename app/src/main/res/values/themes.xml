@@ -14,9 +14,16 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="spinnerStyle" parent="android:Widget.TextView.SpinnerItem">
+    <style name="spinnerStyle" parent="android:Widget.TextView.SpinnerItem"></style>
+
+    <style name="spinnerDropDownStyle" parent="android:Widget.TextView.SpinnerItem"></style>
+
+    <style name="Theme.PracticalParentApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="spinnerDropDownStyle" parent="android:Widget.TextView.SpinnerItem">
-    </style>
+    <style name="Theme.PracticalParentApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PracticalParentApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

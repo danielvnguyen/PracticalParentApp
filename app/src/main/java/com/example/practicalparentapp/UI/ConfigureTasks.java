@@ -2,6 +2,9 @@ package com.example.practicalparentapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.practicalparentapp.R;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.Objects;
@@ -22,6 +25,9 @@ public class ConfigureTasks extends AppCompatActivity {
         setContentView(R.layout.activity_configure_tasks);
     }
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ConfigureTasks.class);
+    }
     @Override
     public void onBackPressed() {
         finish();
