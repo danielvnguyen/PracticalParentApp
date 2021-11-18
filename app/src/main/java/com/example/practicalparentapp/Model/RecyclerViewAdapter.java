@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,9 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
 
         LayoutInflater inflater = LayoutInflater.from(context);
         @SuppressLint("ViewHolder") View childView = inflater.inflate(resource, parent, false);
+
+        ImageView childImage = childView.findViewById(R.id.child_image);
+        childImage.setImageBitmap();
 
         TextView nameText = childView.findViewById(R.id.childNameTV);
         nameText.setText(name);

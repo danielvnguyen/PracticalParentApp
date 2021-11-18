@@ -7,13 +7,13 @@ package com.example.practicalparentapp.Model;
  */
 public class Child {
     private String name;
-    private  String imgUrl;
     private boolean flippedLast = false;
+    private String imgUrl;
 
     public Child(String name) {
 
         this.name = name;
-        this.imgUrl=imgUrl;
+        this.imgUrl = imgUrl;
     }
 
     public String getImgUrl() {

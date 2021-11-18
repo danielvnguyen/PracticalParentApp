@@ -83,8 +83,6 @@ public class NewChildActivity extends AppCompatActivity {
         });
 
 
-
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         childrenManager = ChildrenManager.getInstance(this);
@@ -93,7 +91,8 @@ public class NewChildActivity extends AppCompatActivity {
         setUpSaveBtn();
         setUpDeleteBtn();
     }
-    private byte[]convertImageViewToByteArray(ImageView imageView){
+
+    private byte[] convertImageViewToByteArray(ImageView imageView){
         Bitmap bitmap=((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,80,byteArrayOutputStream);

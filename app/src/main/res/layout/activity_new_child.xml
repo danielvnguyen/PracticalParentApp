@@ -7,21 +7,6 @@
     android:background="@drawable/bg2"
     tools:context=".UI.NewChildActivity">
 
-    <TextView
-        android:id="@+id/what_is_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/what_is_your_child_s_name"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23000002"
-        tools:ignore="TextContrastCheck" />
-
     <EditText
         android:id="@+id/child_name_input"
         android:layout_width="wrap_content"
@@ -32,10 +17,27 @@
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/what_is_name"
-        app:layout_constraintVertical_bias="0.100000024"
+        app:layout_constraintVertical_bias="0.09"
         tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/what_is_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/what_is_your_child_s_name"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.16"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/save_btn"
@@ -46,8 +48,10 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/child_name_input" />
+        app:layout_constraintTop_toBottomOf="@+id/child_name_input"
+        app:layout_constraintVertical_bias="0.595" />
 
     <Button
         android:id="@+id/delete_btn"
@@ -61,10 +65,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/child_name_input"
-        app:layout_constraintVertical_bias="0.97"
+        app:layout_constraintVertical_bias="0.976"
         tools:ignore="TextContrastCheck"
-        tools:visibility="visible"
-        />
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageViewNewChildActivityProfilePicture"
@@ -72,30 +75,26 @@
         android:layout_height="168dp"
         android:layout_gravity="center"
 
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="9dp"
         android:src="@drawable/ic_profile_picture"
-        app:layout_constraintBottom_toTopOf="@+id/what_is_name"
-        app:layout_constraintEnd_toStartOf="@+id/what_is_name"
+        app:layout_constraintBottom_toTopOf="@+id/delete_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/child_name_input"
+        app:layout_constraintVertical_bias="0.428"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/imageViewNewChildActivityProfilePictureSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="266dp"
-        android:layout_marginBottom="83dp"
-        android:text="Save picture"
-        app:layout_constraintBottom_toTopOf="@+id/what_is_name"
+        android:backgroundTint="@color/white"
+        android:text="@string/save_picture"
+        app:layout_constraintBottom_toTopOf="@+id/delete_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewNewChildActivityProfilePicture"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/child_name_input"
+        tools:ignore="TextContrastCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
