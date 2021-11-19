@@ -2,6 +2,8 @@ package com.example.practicalparentapp.UI;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -27,6 +29,8 @@ public class MainMenu extends AppCompatActivity {
         setUpTimeoutTimerBtn();
 
         setUpConfigureTasksBtn();
+
+
     }
 
     private void setUpTimeoutTimerBtn() {
@@ -55,11 +59,17 @@ public class MainMenu extends AppCompatActivity {
 
     private void setUpConfigureTasksBtn() {
         Button btn = findViewById(R.id.configureTaskBtn);
-        btn.setOnClickListener((v) -> {
-            Intent intent = ConfigureTasks.makeIntent(this);
-            startActivity(intent);
+        btn.setOnClickListener((v2) -> {
+            Intent intent2 = ConfigureTasks.makeIntent(this);
+            startActivity(intent2);
         });
     }
+
+
+
+
+
+
 
 
 }

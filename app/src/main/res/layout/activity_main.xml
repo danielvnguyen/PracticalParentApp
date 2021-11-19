@@ -131,7 +131,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#FBFBFB"
-        android:text="Button"
+        android:text="Tasks"
         android:textColorHighlight="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
