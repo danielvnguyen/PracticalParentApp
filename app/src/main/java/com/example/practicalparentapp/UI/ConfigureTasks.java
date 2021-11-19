@@ -6,6 +6,7 @@ import com.example.practicalparentapp.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import java.util.Objects;
 
@@ -17,12 +18,30 @@ import java.util.Objects;
  */
 public class ConfigureTasks extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Your Tasks");
         setContentView(R.layout.activity_configure_tasks);
+    }
+
+    private void setUpConfigureTasksBtn() {
+        Button btn = findViewById(R.id.configureTaskBtn);
+        btn.setOnClickListener((v) -> {
+            Intent intent = ConfigureTasks.makeIntent(this);
+            startActivity(intent);
+        });
+    }
+
+    private void setUpAddTaskBtn() {
+        Button btn = findViewById(R.id.addTask);
+        btn.setOnClickListener((v) -> {
+            Intent intent = AddTask.makeIntent(this);
+            startActivity(intent);
+        });
     }
 
     public static Intent makeIntent(Context context) {
