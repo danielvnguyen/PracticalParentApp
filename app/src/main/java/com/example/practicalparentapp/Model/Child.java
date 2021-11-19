@@ -8,32 +8,29 @@ package com.example.practicalparentapp.Model;
 public class Child {
     private String name;
     private boolean flippedLast = false;
-    private String imgUrl;
+    private byte[] childImage;
 
-    public Child(String name) {
+    public Child(String name, byte[] image) {
 
         this.name = name;
-        this.imgUrl = imgUrl;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+        this.childImage = image;
     }
 
     public Child(int id, byte[] pp) {
         this.getName();
     }
 
+    public byte[] getChildImage() {
+        return childImage;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void editChild(String name) {
+    public void editChild(String name, byte[] image) {
         this.name = name;
+        this.childImage = image;
     }
 
     public boolean isFlippedLast() {

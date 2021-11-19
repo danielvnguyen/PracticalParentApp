@@ -70,29 +70,29 @@
         tools:visibility="visible" />
 
     <ImageView
-        android:id="@+id/imageViewNewChildActivityProfilePicture"
+        android:id="@+id/choose_img_btn"
         android:layout_width="107dp"
         android:layout_height="168dp"
         android:layout_gravity="center"
 
-        android:src="@drawable/ic_profile_picture"
+        android:src="@drawable/defaultimage"
         app:layout_constraintBottom_toTopOf="@+id/delete_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/child_name_input"
         app:layout_constraintVertical_bias="0.428"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <Button
-        android:id="@+id/imageViewNewChildActivityProfilePictureSave"
+        android:id="@+id/save_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:text="@string/save_picture"
         app:layout_constraintBottom_toTopOf="@+id/delete_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewNewChildActivityProfilePicture"
+        app:layout_constraintStart_toEndOf="@+id/choose_img_btn"
         app:layout_constraintTop_toBottomOf="@+id/child_name_input"
         tools:ignore="TextContrastCheck" />
 

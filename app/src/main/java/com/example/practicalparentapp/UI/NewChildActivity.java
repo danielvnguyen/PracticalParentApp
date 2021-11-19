@@ -12,11 +12,14 @@ import com.example.practicalparentapp.Model.RecyclerViewAdapter;
 import com.example.practicalparentapp.R;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +38,7 @@ import java.util.Objects;
 /**
  * This class manages the parent's children.
  * Supports adding, deleting, and editing.
+ * Also supports adding/editing a child's image.
  */
 public class NewChildActivity extends AppCompatActivity {
 
@@ -44,52 +48,101 @@ public class NewChildActivity extends AppCompatActivity {
     private Child editedChild;
     private EditText childNameInput;
     private Button deleteBtn;
+    private ImageView childImageInput;
+    private byte[] imageToSave;
+    private DataBaseManager manager;
 
-    ImageView imageViewProfilePicture;
-    Button imageViewPictureSave;
-    DataBaseManager manager;
-
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_child);
-        imageViewPictureSave=findViewById(R.id.imageViewNewChildActivityProfilePictureSave);
-
-        imageViewProfilePicture = findViewById(R.id.imageViewNewChildActivityProfilePicture);
-
-
-        imageViewProfilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                chooseProfilePicture();
-            }
-
-        });
-        imageViewPictureSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                byte[] bytesPictureSave=convertImageViewToByteArray(imageViewProfilePicture);
-                manager=new DataBaseManager(NewChildActivity.this);
-                if(manager.save(1,bytesPictureSave)){
-                    Toast.makeText(NewChildActivity.this,"Picture is saved successfully",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(NewChildActivity.this,"Picture is NOT saved successfully",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
         childrenManager = ChildrenManager.getInstance(this);
+        manager = new DataBaseManager(NewChildActivity.this);
+
+        //let imageToSave be default image initially
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.defaultimage);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        imageToSave = stream.toByteArray();
 
         setInterface();
         setUpSaveBtn();
         setUpDeleteBtn();
+        setUpChooseImage();
+        setUpSaveImage();
+    }
+
+    private void setInterface() {
+        Button saveImgBtn = findViewById(R.id.save_img_btn);
+        saveImgBtn.setEnabled(false);
+        childNameInput = findViewById(R.id.child_name_input);
+        childImageInput = findViewById(R.id.choose_img_btn);
+        deleteBtn = findViewById(R.id.delete_btn);
+
+        //check if child being edited
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isEditingChild = (Boolean) extras.get(RecyclerViewAdapter.STRING_EXTRA);
+            editChildIndex = (Integer) extras.get(RecyclerViewAdapter.POSITION_EXTRA);
+        }
+
+        if (isEditingChild) {
+            setTitle("Editing a child");
+            deleteBtn.setVisibility(View.VISIBLE);
+            editedChild = childrenManager.getChildList().get(editChildIndex);
+            byte[] editChildImg = editedChild.getChildImage();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(editChildImg, 0, editChildImg.length);
+            childImageInput.setImageBitmap(bitmap);
+            childNameInput.setText(editedChild.getName());
+        }
+        else {
+            setTitle("Adding a new child");
+        }
+    }
+
+    private void setUpSaveBtn() {
+        Button btn = findViewById(R.id.save_btn);
+        btn.setOnClickListener(view -> {
+            //update child info if was editing mode
+            if (isEditingChild) {
+                editedChild.editChild(childNameInput.getText().toString(), imageToSave);
+                ChildrenManager.saveChildList(this, childrenManager.getChildList());
+            }
+            //create new child and add to list
+            else {
+                Child newChild = new Child(childNameInput.getText().toString(), imageToSave);
+                childrenManager.addChildToList(this, newChild);
+            }
+            Toast.makeText(getApplicationContext(),"Child has been saved!", Toast.LENGTH_SHORT).show();
+            finish();
+        });
+    }
+
+    //Should lock this button until imageToSave is uploaded
+    private void setUpSaveImage() {
+        Button saveImgBtn = findViewById(R.id.save_img_btn);
+        saveImgBtn.setOnClickListener((v) -> {
+            imageToSave = convertImageViewToByteArray(childImageInput);
+
+            if(manager.save(1, imageToSave)){
+                Toast.makeText(NewChildActivity.this,"Picture saved successfully",Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(NewChildActivity.this,"Picture NOT saved successfully",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setUpChooseImage() {
+        ImageView chooseImage = findViewById(R.id.choose_img_btn);
+        Button saveImgBtn = findViewById(R.id.save_img_btn);
+        chooseImage.setOnClickListener((v) -> {
+            chooseProfilePicture();
+            saveImgBtn.setEnabled(true);
+        });
     }
 
     private byte[] convertImageViewToByteArray(ImageView imageView){
@@ -114,23 +167,17 @@ public class NewChildActivity extends AppCompatActivity {
         AlertDialog alertDialogProfilePicture = builder.create();
         alertDialogProfilePicture.show();
 
-        imageViewADPPCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkAndRequestPermissions())
-                {
-                    takePictureFromCamera();
-                    alertDialogProfilePicture.cancel();
-                }
+        imageViewADPPCamera.setOnClickListener(view -> {
+            if (checkAndRequestPermissions())
+            {
+                takePictureFromCamera();
+                alertDialogProfilePicture.cancel();
             }
         });
 
-        imageViewADPPGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePictureFromGallery();
-                alertDialogProfilePicture.cancel();
-            }
+        imageViewADPPGallery.setOnClickListener(view -> {
+            takePictureFromGallery();
+            alertDialogProfilePicture.cancel();
         });
     }
 
@@ -146,14 +193,14 @@ public class NewChildActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImageUri = data.getData();
-                    imageViewProfilePicture.setImageURI(selectedImageUri);
+                    childImageInput.setImageURI(selectedImageUri);
                 }
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmapImage = (Bitmap) bundle.get("data");
-                    imageViewProfilePicture.setImageBitmap(bitmapImage);
+                    childImageInput.setImageBitmap(bitmapImage);
                 }
                 break;
         }
@@ -163,11 +210,8 @@ public class NewChildActivity extends AppCompatActivity {
         if(takePicture.resolveActivity(getPackageManager())!=null)
         {
             startActivityForResult(takePicture, 2);
-
-
         }
     }
-
 
     private boolean checkAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= 27) {
@@ -187,45 +231,6 @@ public class NewChildActivity extends AppCompatActivity {
             takePictureFromCamera();
         } else
             Toast.makeText(NewChildActivity.this, "Permission not Granted", Toast.LENGTH_SHORT).show();
-    }
-
-
-    private void setInterface() {
-        childNameInput = findViewById(R.id.child_name_input);
-        deleteBtn = findViewById(R.id.delete_btn);
-
-        //check if child being edited
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            isEditingChild = (Boolean) extras.get(RecyclerViewAdapter.STRING_EXTRA);
-            editChildIndex = (Integer) extras.get(RecyclerViewAdapter.POSITION_EXTRA);
-        }
-
-        if (isEditingChild) {
-            setTitle("Configuring a child");
-            deleteBtn.setVisibility(View.VISIBLE);
-            editedChild = childrenManager.getChildList().get(editChildIndex);
-            childNameInput.setText(editedChild.getName());
-        }
-        else {
-            setTitle("Adding a new child");
-        }
-    }
-
-    private void setUpSaveBtn() {
-        Button btn = findViewById(R.id.save_btn);
-        btn.setOnClickListener(view -> {
-            if (isEditingChild) {
-                editedChild.editChild(childNameInput.getText().toString());
-                ChildrenManager.saveChildList(this, childrenManager.getChildList());
-            }
-            else {
-                Child newChild = new Child(childNameInput.getText().toString());
-                childrenManager.addChildToList(this, newChild);
-            }
-            Toast.makeText(getApplicationContext(),"Child has been saved!", Toast.LENGTH_SHORT).show();
-            finish();
-        });
     }
 
     private void setUpDeleteBtn() {
