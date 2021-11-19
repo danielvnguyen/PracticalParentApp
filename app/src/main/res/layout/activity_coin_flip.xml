@@ -178,4 +178,17 @@
         app:layout_constraintVertical_bias="0.0"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/current_child_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toStartOf="@+id/flip_button"
+        app:layout_constraintStart_toStartOf="@+id/enter_pos1"
+        app:layout_constraintTop_toBottomOf="@+id/heads_btn"
+        app:srcCompat="@drawable/defaultimage"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

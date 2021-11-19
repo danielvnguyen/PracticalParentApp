@@ -35,6 +35,7 @@
         android:id="@+id/queue_TV"
         android:layout_width="211dp"
         android:layout_height="101dp"
+        android:layout_marginBottom="50dp"
         android:background="@color/white"
         android:text="@string/coin_flip_queue_instructions"
         android:textAlignment="center"

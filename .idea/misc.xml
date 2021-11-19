@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic.xml" value="0.1" />
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic_camera.xml" value="0.1" />
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic_gallery.xml" value="0.1" />
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic_profile_picture.xml" value="0.1" />
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/layout/activity_new_child.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/cloning iter2/app/src/main/res/layout/alert_dialog_profile_picture.xml" value="0.1796875" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/activity_configure_children.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/PracticalParentApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
