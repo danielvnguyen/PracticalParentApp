@@ -26,15 +26,11 @@ public class ConfigureTasks extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Your Tasks");
         setContentView(R.layout.activity_configure_tasks);
+
+        setUpAddTaskBtn();
     }
 
-    private void setUpConfigureTasksBtn() {
-        Button btn = findViewById(R.id.configureTaskBtn);
-        btn.setOnClickListener((v) -> {
-            Intent intent = ConfigureTasks.makeIntent(this);
-            startActivity(intent);
-        });
-    }
+
 
     private void setUpAddTaskBtn() {
         Button btn = findViewById(R.id.addTask);
