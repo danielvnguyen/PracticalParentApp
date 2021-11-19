@@ -159,8 +159,6 @@ public class CoinFlip extends AppCompatActivity {
         Button headsBtn = findViewById(R.id.heads_btn);
         Button changeBtn = findViewById(R.id.change_child_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
-        //ImageView currentImg = findViewById(R.id.current_child_img);
-
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
 

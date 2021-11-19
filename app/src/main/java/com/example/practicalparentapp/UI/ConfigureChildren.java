@@ -75,5 +75,7 @@ public class ConfigureChildren extends AppCompatActivity {
         ListView childListLV = findViewById(R.id.list_of_children);
         listAdapter = new RecyclerViewAdapter(this, R.layout.adapter, childrenManager.getChildList());
         childListLV.setAdapter(listAdapter);
+
+
     }
 }
