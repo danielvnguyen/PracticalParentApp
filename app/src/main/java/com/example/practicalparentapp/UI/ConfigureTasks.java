@@ -70,6 +70,8 @@ public class ConfigureTasks extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
+
         finish();
     }
 }

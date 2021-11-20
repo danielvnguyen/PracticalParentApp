@@ -23,10 +23,10 @@ public class TaskAdder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_adder);
 
-        confirmTask = findViewById(R.id.confirmTask);
+        confirmTask = findViewById(R.id.taskComplete);
 
-        enterTask = (EditText) findViewById(R.id.enterTask);
-        enterChild = (EditText) findViewById(R.id.enterChild);
+        enterTask = (EditText) findViewById(R.id.editTask);
+        enterChild = (EditText) findViewById(R.id.editChild);
 
         confirmTask.setOnClickListener((v2) -> {
             Intent intent = ConfigureTasks.makeIntent(this);

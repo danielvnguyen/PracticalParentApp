@@ -14,11 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
+            android:name=".TaskTap"
+            android:exported="false" />
+        <activity
             android:name=".TaskAdder"
             android:exported="false" />
         <activity
             android:name=".UI.ConfigureTasks"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UI.MainMenu" />
         <activity
             android:name=".UI.NewChildActivity"
             android:exported="false"
