@@ -25,7 +25,7 @@ public class ConfigureTasks extends AppCompatActivity {
 
     public static String name;
     public static String task;
-    public static int numOfTasks;
+
 
     public static ArrayList<ToDo> toDoList = new ArrayList<>();
 
@@ -39,20 +39,9 @@ public class ConfigureTasks extends AppCompatActivity {
         setUpAddTaskBtn();
 
 
-//        if (toDoList.size()!=0) {
-//            toDoList.add;
-//        }
-        ArrayList<ToDo> list = new ArrayList<>();
         ToDoListAdapter adapter = new ToDoListAdapter(this,R.layout.adapter_view_layout, toDoList);
         toDoListView.setAdapter(adapter);
 
-//        ToDo child = new ToDo (name,task);
-
-//        while (i!=0;) {
-//
-//        }
-
-//        toDoList.add(child);
     }
 
 
@@ -69,9 +58,5 @@ public class ConfigureTasks extends AppCompatActivity {
         return new Intent(context, ConfigureTasks.class);
     }
     @Override
-    public void onBackPressed() {
-
-
-        finish();
-    }
+    public void onBackPressed() { finish(); }
 }
