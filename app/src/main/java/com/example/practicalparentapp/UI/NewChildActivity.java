@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
-import com.example.practicalparentapp.Model.RecyclerViewAdapter;
+import com.example.practicalparentapp.Model.ChildListViewAdapter;
 import com.example.practicalparentapp.R;
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -77,8 +77,8 @@ public class NewChildActivity extends AppCompatActivity {
         //check if child being edited
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            isEditingChild = (Boolean) extras.get(RecyclerViewAdapter.STRING_EXTRA);
-            editChildIndex = (Integer) extras.get(RecyclerViewAdapter.POSITION_EXTRA);
+            isEditingChild = (Boolean) extras.get(ChildListViewAdapter.STRING_EXTRA);
+            editChildIndex = (Integer) extras.get(ChildListViewAdapter.POSITION_EXTRA);
         }
 
         if (isEditingChild) {

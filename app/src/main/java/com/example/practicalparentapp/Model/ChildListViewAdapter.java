@@ -23,14 +23,14 @@ import java.util.ArrayList;
  * configured children. Supports editing
  * the children's names when clicked on.
  */
-public class RecyclerViewAdapter extends ArrayAdapter<Child>{
+public class ChildListViewAdapter extends ArrayAdapter<Child>{
 
     private final Context context;
     private final Integer resource;
     public static final String STRING_EXTRA = "Is edit";
     public static final String POSITION_EXTRA = "Child position";
 
-    public RecyclerViewAdapter(Context context, Integer resource, ArrayList<Child> childList) {
+    public ChildListViewAdapter(Context context, Integer resource, ArrayList<Child> childList) {
         super(context, resource, childList);
         this.context = context;
         this.resource = resource;

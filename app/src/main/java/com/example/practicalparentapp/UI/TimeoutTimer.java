@@ -25,6 +25,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.practicalparentapp.Model.NotificationClass;
+import com.example.practicalparentapp.Model.NotificationReceiver;
 import com.example.practicalparentapp.R;
 import java.io.IOException;
 import java.util.Locale;
@@ -79,7 +82,6 @@ public class TimeoutTimer extends AppCompatActivity {
             vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         }
 
-        // If the intent called is from clicking the notification
         if (getIntent().getBooleanExtra("clickedNotification", false)) {
             Log.d("D_MSG", "I was clicked. 90");
             vibrator.cancel();
@@ -338,7 +340,6 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         } .start();
 
-        // The lines below happen when the pause button has been clicked
         mTimerRunning = true;
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.pause);
@@ -348,7 +349,6 @@ public class TimeoutTimer extends AppCompatActivity {
     private void setupAlarmVibrate() {
         alarmSound.start();
 
-        // Setting up the notification
         Intent intent = new Intent(this, TimeoutTimer.class);
         intent.putExtra("clickedNotification", true);
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent contentIntent = PendingIntent.getActivity(this,
@@ -358,7 +358,7 @@ public class TimeoutTimer extends AppCompatActivity {
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent actionIntent = PendingIntent.getBroadcast(this,
                 UUID.randomUUID().hashCode(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(this, App.ChannelID)
+        Notification notification = new NotificationCompat.Builder(this, NotificationClass.ChannelID)
                 .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle("Timer is Up!")
                 .setContentText("Your set timer is now up. Click OK to stop the timer.")
@@ -372,7 +372,6 @@ public class TimeoutTimer extends AppCompatActivity {
 
         notificationManager.notify(1, notification);
 
-        // Setting up the Vibration functionality when the timer reaches 00:00
         vibrator.vibrate(VibrationEffect.createOneShot(40000, VibrationEffect.DEFAULT_AMPLITUDE));
     }
 

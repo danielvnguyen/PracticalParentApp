@@ -15,7 +15,7 @@
         tools:ignore="ScopedStorage" />
 
     <application
-        android:name=".UI.App"
+        android:name=".Model.NotificationClass"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".UI.NotificationReceiver" />
+        <receiver android:name=".Model.NotificationReceiver" />
 
         <meta-data
             android:name="preloaded_fonts"

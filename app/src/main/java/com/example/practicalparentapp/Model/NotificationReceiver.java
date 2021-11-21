@@ -1,8 +1,11 @@
-package com.example.practicalparentapp.UI;
+package com.example.practicalparentapp.Model;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.practicalparentapp.UI.TimeoutTimer;
+
 import java.io.IOException;
 
 /**

@@ -56,7 +56,6 @@ public class CoinFlipQueue extends AppCompatActivity {
         setUpConfirmChangeBtn();
     }
 
-    //Note: adds in bottom to top order.
     private void populateQueue() {
         childQueueList.clear();
         if (childOne.isFlippedLast()) {
@@ -67,7 +66,6 @@ public class CoinFlipQueue extends AppCompatActivity {
             childQueueList.add(childOne);
             childQueueList.add(childTwo);
         }
-        //if no flip has happened yet; default order
         else {
             childQueueList.add(childOne);
             childQueueList.add(childTwo);
@@ -79,8 +77,6 @@ public class CoinFlipQueue extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    //Note: coin flip only for 2 children, so FlippedLast should work.
-    //Note: positions is relevant to configured order, not queue order.
     private void setUpConfirmChangeBtn() {
         Button btn = findViewById(R.id.confirm_change_btn);
         TextView position = findViewById(R.id.position_to_change);
@@ -88,7 +84,6 @@ public class CoinFlipQueue extends AppCompatActivity {
             if (validateInput(enterPos)) {
                 int childPos = Integer.parseInt(position.getText().toString()) - 1;
 
-                //Update setFlippedLast values
                 for (int i = 0; i < childList.size(); i++) {
                     childrenManager.getChild(i).setFlippedLast(true);
                 }
@@ -97,7 +92,6 @@ public class CoinFlipQueue extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Coin Flip Queue updated!", Toast.LENGTH_SHORT).show();
 
-                //set OldCoinFlip to true so CoinFlip class knows.
                 childrenManager.setOldCoinFlip(true);
                 finish();
             }
