@@ -2,7 +2,6 @@ package com.example.practicalparentapp.Model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,28 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.example.practicalparentapp.R;
-import com.example.practicalparentapp.UI.NewChildActivity;
-
 import java.util.ArrayList;
 
 /**
- * This class handles adapting the list of
- * configured children. Supports editing
- * the children's names when clicked on.
+ * This class handles the list adapter
+ * for the coin flip queue.
  */
-public class RecyclerViewAdapter extends ArrayAdapter<Child>{
-
+public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
     private final Context context;
     private final Integer resource;
-    public static final String STRING_EXTRA = "Is edit";
-    public static final String POSITION_EXTRA = "Child position";
 
-    public RecyclerViewAdapter(Context context, Integer resource, ArrayList<Child> childList) {
-        super(context, resource, childList);
+    public CoinFlipQueueAdapter(Context context, Integer resource, ArrayList<Child> queueList) {
+        super(context, resource, queueList);
         this.context = context;
         this.resource = resource;
     }
@@ -51,13 +42,6 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
 
         TextView nameText = childView.findViewById(R.id.childNameTV);
         nameText.setText(name);
-
-        childView.setOnClickListener(view -> {
-            Intent intent = NewChildActivity.makeIntent(context);
-            intent.putExtra(STRING_EXTRA, true);
-            intent.putExtra(POSITION_EXTRA, position);
-            context.startActivity(intent);
-        });
 
         return childView;
     }

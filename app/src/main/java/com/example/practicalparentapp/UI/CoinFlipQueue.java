@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
+import com.example.practicalparentapp.Model.CoinFlipQueueAdapter;
 import com.example.practicalparentapp.R;
 
 import android.content.Context;
@@ -27,8 +28,7 @@ import java.util.Objects;
  */
 public class CoinFlipQueue extends AppCompatActivity {
     private ChildrenManager childrenManager;
-    private ArrayList<String> childQueueList;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Child> childQueueList;
     private Child childOne;
     private Child childTwo;
     private EditText enterPos;
@@ -43,13 +43,8 @@ public class CoinFlipQueue extends AppCompatActivity {
 
         childrenManager = ChildrenManager.getInstance(this);
         childList = childrenManager.getChildList();
-
         childQueueList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, childQueueList);
-        ListView list = findViewById(R.id.coin_flip_queue_list);
-        list.setAdapter(adapter);
 
-        //need to get the positional data from CoinFlip class. PutExtra?
         enterPos = findViewById(R.id.position_to_change);
         Bundle extras = getIntent().getExtras();
         Integer positionOne = (Integer) extras.get(CoinFlip.POSITION_ONE);
@@ -65,18 +60,22 @@ public class CoinFlipQueue extends AppCompatActivity {
     private void populateQueue() {
         childQueueList.clear();
         if (childOne.isFlippedLast()) {
-            childQueueList.add(childTwo.getName());
-            childQueueList.add(childOne.getName());
+            childQueueList.add(childTwo);
+            childQueueList.add(childOne);
         }
         else if (childTwo.isFlippedLast()){
-            childQueueList.add(childOne.getName());
-            childQueueList.add(childTwo.getName());
+            childQueueList.add(childOne);
+            childQueueList.add(childTwo);
         }
         //if no flip has happened yet; default order
         else {
-            childQueueList.add(childOne.getName());
-            childQueueList.add(childTwo.getName());
+            childQueueList.add(childOne);
+            childQueueList.add(childTwo);
         }
+
+        ListView list = findViewById(R.id.coin_flip_queue_list);
+        ArrayAdapter<Child> adapter = new CoinFlipQueueAdapter(this, R.layout.adapter, childQueueList);
+        list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
