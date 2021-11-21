@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskManager {
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks;
     public static final String TASKS_FILE_NAME = "tasks.json";
 
     private static TaskManager instance;

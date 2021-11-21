@@ -56,8 +56,6 @@ public class ConfigureTasks extends AppCompatActivity {
         setUpAddTaskBtn();
     }
 
-
-
     private void clickCallback(boolean populateListView) {
         if (!populateListView) {
             toDoListView = findViewById(R.id.taskListView);
