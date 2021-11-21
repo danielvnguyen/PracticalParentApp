@@ -6,6 +6,7 @@ import com.example.practicalparentapp.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.Objects;
 
@@ -23,11 +24,18 @@ public class HelpScreen extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, CoinFlip.class);
+        return new Intent(context, HelpScreen.class);
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemID = item.getItemId();
+
+        if (itemID == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

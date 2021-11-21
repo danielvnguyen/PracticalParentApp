@@ -85,8 +85,7 @@ public class NewChildActivity extends AppCompatActivity {
             setTitle("Editing a child");
             deleteBtn.setVisibility(View.VISIBLE);
             editedChild = childrenManager.getChildList().get(editChildIndex);
-            byte[] editChildImg = editedChild.getChildImage();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(editChildImg, 0, editChildImg.length);
+            Bitmap bitmap = editedChild.getChildImage();
             childImageInput.setImageBitmap(bitmap);
             childNameInput.setText(editedChild.getName());
         }

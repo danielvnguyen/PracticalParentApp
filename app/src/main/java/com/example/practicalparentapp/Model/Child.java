@@ -1,5 +1,8 @@
 package com.example.practicalparentapp.Model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 /**
  * Keeps track of the parent's children.
  * Data includes the child's name and whether
@@ -16,12 +19,8 @@ public class Child {
         this.childImage = image;
     }
 
-    public Child(int id, byte[] pp) {
-        this.getName();
-    }
-
-    public byte[] getChildImage() {
-        return childImage;
+    public Bitmap getChildImage() {
+        return BitmapFactory.decodeByteArray(childImage, 0, childImage.length);
     }
 
     public String getName() {

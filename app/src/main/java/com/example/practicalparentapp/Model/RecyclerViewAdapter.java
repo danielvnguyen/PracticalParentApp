@@ -43,8 +43,7 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         String name = getItem(position).getName();
-        byte[] image = getItem(position).getChildImage();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        Bitmap bitmap = getItem(position).getChildImage();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         @SuppressLint("ViewHolder") View childView = inflater.inflate(resource, parent, false);

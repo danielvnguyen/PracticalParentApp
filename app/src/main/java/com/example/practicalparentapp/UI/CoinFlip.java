@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -111,6 +112,8 @@ public class CoinFlip extends AppCompatActivity {
         if (childrenManager.isOldCoinFlip()) {
 
             TextView askChildChoice = findViewById(R.id.current_child);
+            ImageView childImage = findViewById(R.id.current_child_img);
+
             for (int i = 0; i < childList.size(); i++) {
                 if (!childrenManager.getChild(i).isFlippedLast()) {
                     currentChild = childrenManager.getChild(i);
@@ -118,6 +121,8 @@ public class CoinFlip extends AppCompatActivity {
             }
             askChildChoice.setText(currentChild.getName() +
                     ", choose heads or tails, then press \"FLIP THE COIN\"");
+            Bitmap bitmap = currentChild.getChildImage();
+            childImage.setImageBitmap(bitmap);
         }
     }
 
@@ -156,6 +161,8 @@ public class CoinFlip extends AppCompatActivity {
         Button headsBtn = findViewById(R.id.heads_btn);
         Button changeBtn = findViewById(R.id.change_child_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
+        ImageView childImage = findViewById(R.id.current_child_img);
+
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
 
@@ -167,6 +174,9 @@ public class CoinFlip extends AppCompatActivity {
                 askChildChoice.setText(childOne.getName() +
                         ", choose heads or tails, then press \"FLIP THE COIN\"");
                 childrenManager.getChild(currentPosOne).setFlippedLast(false);
+                childImage.setVisibility(View.VISIBLE);
+                Bitmap bitmap = childOne.getChildImage();
+                childImage.setImageBitmap(bitmap);
                 currentChild = childOne;
 
                 tailsBtn.setEnabled(true);
@@ -247,6 +257,7 @@ public class CoinFlip extends AppCompatActivity {
         TextView askChildChoice = findViewById(R.id.current_child);
         ImageView coinsImage = findViewById(R.id.heads);
         Button flipBtn = findViewById(R.id.flip_button);
+        ImageView childImage = findViewById(R.id.current_child_img);
 
         flipBtn.setOnClickListener((v) -> {
             setCoin(coinsImage);
@@ -273,6 +284,7 @@ public class CoinFlip extends AppCompatActivity {
                     childTwo.setFlippedLast(false);
                     childOne.setFlippedLast(true);
                     currentChild = childTwo;
+                    childImage.setImageBitmap(currentChild.getChildImage());
                 }
                 else if (childTwo == currentChild) {
                     askChildChoice.setText(childOne.getName() +
@@ -280,6 +292,7 @@ public class CoinFlip extends AppCompatActivity {
                     childOne.setFlippedLast(false);
                     childTwo.setFlippedLast(true);
                     currentChild = childOne;
+                    childImage.setImageBitmap(currentChild.getChildImage());
                 }
 
                 flipBtn.setEnabled(false);
