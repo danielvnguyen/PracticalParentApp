@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,12 +17,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.practicalparentapp.Model.Child;
+import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.TaskManager;
 import com.example.practicalparentapp.R;
 
 public class TaskEdit extends AppCompatActivity {
 
     private TaskManager taskManager;
+    private ChildrenManager childrenManager;
+    private int pos;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskEdit.class);
@@ -30,12 +36,14 @@ public class TaskEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_edit);
+        setTitle("Editing Task");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        taskManager = TaskManager.getInstance();
+        taskManager = TaskManager.getInstance(this);
+        childrenManager = ChildrenManager.getInstance(this);
         editFields();
     }
 
@@ -49,35 +57,51 @@ public class TaskEdit extends AppCompatActivity {
     }
 
     private void editFields() {
-        EditText editedChildName = findViewById(R.id.editChildName);
+        TextView childName = findViewById(R.id.childName);
         EditText editedChildTask = findViewById(R.id.editChildTask);
         Button confirm = findViewById(R.id.confirmTask);
         Button cancel = findViewById(R.id.cancel);
         Button remove = findViewById(R.id.removeTask);
+        confirm.setText("Confirm Turn");
 
-//        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = prefs.edit();
+        pos = getIntent().getIntExtra("position", -1);
 
-        int pos = getIntent().getIntExtra("position", -1);
-//        if (pos == 0) {
-//            if (prefs.getInt("posChild", -1) == -1)
-//                editor.putInt("posChild", taskManager.size()-1);
-//            editor.apply();
-//        }
+        Child childWithTurn = new Child(taskManager.get(TaskEdit.this, pos).getChild().getName());
+        childName.setText("It is currently " + childWithTurn.getName() + "'s turn to:");
+        editedChildTask.setText(taskManager.get(TaskEdit.this, pos).getTaskName());
+        editedChildTask.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
-        editedChildName.setText(taskManager.get(pos).getChild().getName());
-        editedChildTask.setText(taskManager.get(pos).getTaskName());
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                confirm.setText("Save Changes");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int index = prefs.getInt("posChild", -1);
+                if (confirm.getText().toString().equals("Save Changes")) {
+                    Toast.makeText(TaskEdit.this, "Your changes have now been saved", Toast.LENGTH_SHORT).show();
+                    taskManager.get(TaskEdit.this, pos).setTaskName(editedChildTask.getText().toString());
+                    Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+                    startActivity(intent);
+                } else {
+                    int childPosition = childrenManager.getChildIndex(childWithTurn);
+                    if (childPosition == childrenManager.size() - 1) {
+                        childPosition = 0;
+                    } else {
+                        childPosition += 1;
+                    }
 
-                Toast.makeText(TaskEdit.this, "Your changes have now been saved", Toast.LENGTH_SHORT).show();
-                taskManager.get(pos).getChild().editChild(editedChildName.getText().toString());
-                taskManager.get(pos).setTaskName(editedChildTask.getText().toString());
-                Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
-                startActivity(intent);
+                    taskManager.get(TaskEdit.this, pos).setChild(childrenManager.getChild(childPosition));
+                    Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -93,13 +117,12 @@ public class TaskEdit extends AppCompatActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskManager.remove(pos);
+                taskManager.remove(TaskEdit.this, pos);
                 Toast.makeText(TaskEdit.this, "Your task has now been deleted", Toast.LENGTH_SHORT).show();
                 Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
                 startActivity(intent);
             }
         });
     }
-
-
 }
+

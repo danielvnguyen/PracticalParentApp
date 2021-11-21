@@ -43,7 +43,7 @@ public class ConfigureTasks extends AppCompatActivity {
 
         setContentView(R.layout.activity_configure_tasks);
 
-        taskManager = TaskManager.getInstance();
+        taskManager = TaskManager.getInstance(this);
         tasksList = new ArrayList<>();
 
         // To handle the clicking of an item in the list
@@ -65,7 +65,7 @@ public class ConfigureTasks extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                     Toast.makeText(ConfigureTasks.this, "No tasks has been created." +
-                            "\nClick the Add button to create a task.", Toast.LENGTH_SHORT).show();
+                            "\nClick the Add button to create a task.", Toast.LENGTH_LONG).show();
                 }
             });
         } else {
@@ -88,17 +88,10 @@ public class ConfigureTasks extends AppCompatActivity {
             return false;
         } else {
             for (int i = 0; i < taskManager.size(); i++) {
-                tasksList.add(taskManager.get(i).toString());
+                tasksList.add(taskManager.get(ConfigureTasks.this, i).toString());
             }
         }
         return true;
-    }
-
-    private void setupTasksState() {
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("isTaskEmpty", true);
-        editor.apply();
     }
 
 
@@ -114,9 +107,6 @@ public class ConfigureTasks extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, ConfigureTasks.class);
     }
-
-//    @Override
-//    public void onBackPressed() { finish(); }
 
     private class ToDoListAdapter extends ArrayAdapter<String> {
         public ToDoListAdapter() {
