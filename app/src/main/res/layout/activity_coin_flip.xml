@@ -16,13 +16,15 @@
         android:backgroundTint="@color/white"
         android:text="@string/tap_to_flip_coin"
         android:textColor="#000000"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toEndOf="@+id/enter_pos2"
         app:layout_constraintTop_toBottomOf="@+id/tails_btn"
         app:layout_constraintVertical_bias="0.142"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="TextContrastCheck"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/heads"
@@ -159,5 +161,34 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextContrastCheck"
         tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/change_child_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/change_child"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toEndOf="@+id/enter_pos2"
+        app:layout_constraintTop_toBottomOf="@+id/flip_button"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/current_child_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toStartOf="@+id/flip_button"
+        app:layout_constraintStart_toStartOf="@+id/enter_pos1"
+        app:layout_constraintTop_toBottomOf="@+id/heads_btn"
+        app:srcCompat="@drawable/defaultimage"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

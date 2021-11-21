@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
+            android:name=".UI.CoinFlipQueue"
+            android:exported="false" />
+        <activity
             android:name=".UI.ConfigureTasks"
             android:exported="false" />
         <activity

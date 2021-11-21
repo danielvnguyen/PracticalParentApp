@@ -35,6 +35,8 @@ import java.util.Random;
  * and children management.
  */
 public class CoinFlip extends AppCompatActivity {
+    private static final Random random = new Random();
+    private ImageView coin;
     private MediaPlayer coinSound;
     private ChildrenManager childrenManager;
     private TextView enterPosTV;
@@ -48,8 +50,9 @@ public class CoinFlip extends AppCompatActivity {
     private boolean hasConfiguredChildren = true;
     private ArrayList<String> listItems;
     private ArrayAdapter<String> adapter;
-    private static final Random random = new Random();
-    private ImageView coin;
+    public static final String POSITION_ONE = "Child one";
+    public static final String POSITION_TWO = "Child two";
+    private ArrayList<Child> childList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,14 @@ public class CoinFlip extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Flip Coin");
 
+        childrenManager = ChildrenManager.getInstance(this);
+        childList = childrenManager.getChildList();
+
         listItems = new ArrayList<>();
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, listItems);
         ListView flipHistory = findViewById(R.id.flipHistory);
         flipHistory.setAdapter(adapter);
-        childrenManager = ChildrenManager.getInstance(this);
 
         enterPosTV = findViewById(R.id.enter_posTV);
         enterPosOne = findViewById(R.id.enter_pos1);
@@ -96,6 +101,37 @@ public class CoinFlip extends AppCompatActivity {
         setUpFlipBtn();
         setUpHeadsBtn();
         setUpTailsBtn();
+        setUpChangeChildBtn();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (childrenManager.isOldCoinFlip()) {
+            /*
+            - get textview and update it + currentChild.
+            - go through childList and see which child is 'false'.
+             */
+            TextView askChildChoice = findViewById(R.id.current_child);
+            for (int i = 0; i < childList.size(); i++) {
+                if (!childrenManager.getChild(i).isFlippedLast()) {
+                    currentChild = childrenManager.getChild(i);
+                }
+            }
+            askChildChoice.setText(currentChild.getName() +
+                    ", choose heads or tails, then press \"FLIP THE COIN\"");
+        }
+    }
+
+    private void setUpChangeChildBtn() {
+        Button btn = findViewById(R.id.change_child_btn);
+        btn.setOnClickListener((v) -> {
+            Intent intent = CoinFlipQueue.makeIntent(this);
+            intent.putExtra(POSITION_ONE, Integer.parseInt(enterPosOne.getText().toString()) - 1);
+            intent.putExtra(POSITION_TWO, Integer.parseInt(enterPosTwo.getText().toString()) - 1);
+            startActivity(intent);
+        });
     }
 
     private void setUpTailsBtn() {
@@ -119,9 +155,9 @@ public class CoinFlip extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setUpConfirmBtn() {
         Button confirmBtn = findViewById(R.id.confirm_btn);
-        Button flipBtn = findViewById(R.id.flip_button);
         Button tailsBtn = findViewById(R.id.tails_btn);
         Button headsBtn = findViewById(R.id.heads_btn);
+        Button changeBtn = findViewById(R.id.change_child_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
@@ -133,14 +169,17 @@ public class CoinFlip extends AppCompatActivity {
 
                 askChildChoice.setText(childOne.getName() +
                         ", choose heads or tails, then press \"FLIP THE COIN\"");
-                childrenManager.getChild(currentPosOne).setFlippedLast(true);
+                childrenManager.getChild(currentPosOne).setFlippedLast(false);
+                currentChild = childOne;
 
-                flipBtn.setEnabled(true);
                 tailsBtn.setEnabled(true);
                 headsBtn.setEnabled(true);
                 headsBtn.setVisibility(View.VISIBLE);
                 tailsBtn.setVisibility(View.VISIBLE);
                 askChildChoice.setVisibility(View.VISIBLE);
+                changeBtn.setVisibility(View.VISIBLE);
+                
+
                 enterPosTV.setVisibility(View.INVISIBLE);
                 enterPosOne.setVisibility(View.INVISIBLE);
                 enterPosTwo.setVisibility(View.INVISIBLE);
@@ -219,21 +258,7 @@ public class CoinFlip extends AppCompatActivity {
             String flipTime = getCreationTime();
 
             if (hasConfiguredChildren) {
-
-                if (childOne.isFlippedLast()) {
-                    askChildChoice.setText(childTwo.getName() +
-                            ", choose heads or tails, then press \"FLIP THE COIN\"");
-                    childTwo.setFlippedLast(true);
-                    childOne.setFlippedLast(false);
-                    currentChild = childOne;
-                }
-                else if (childTwo.isFlippedLast()) {
-                    askChildChoice.setText(childOne.getName() +
-                            ", choose heads or tails, then press \"FLIP THE COIN\"");
-                    childOne.setFlippedLast(true);
-                    childTwo.setFlippedLast(false);
-                    currentChild = childTwo;
-                }
+                currentChild.setFlippedLast(true);
 
                 if (resultOfFlip.equals(childChoice)) {
                     listItems.add(flipTime + " | " + currentChild.getName() + " chose " + childChoice +
@@ -244,6 +269,22 @@ public class CoinFlip extends AppCompatActivity {
                             " and the result was " + resultOfFlip + ": ❌ Lost!");
                 }
                 adapter.notifyDataSetChanged();
+
+                //if child one just flipped
+                if (childOne == currentChild) {
+                    askChildChoice.setText(childTwo.getName() +
+                            ", choose heads or tails, then press \"FLIP THE COIN\"");
+                    childTwo.setFlippedLast(false);
+                    childOne.setFlippedLast(true);
+                    currentChild = childTwo;
+                }
+                else if (childTwo == currentChild) {
+                    askChildChoice.setText(childOne.getName() +
+                            ", choose heads or tails, then press \"FLIP THE COIN\"");
+                    childOne.setFlippedLast(false);
+                    childTwo.setFlippedLast(true);
+                    currentChild = childOne;
+                }
 
                 flipBtn.setEnabled(false);
             }

@@ -33,4 +33,7 @@
     <string name="created_by_daniel_danny_emmanuel_and_tej">Created by Daniel, Danny, Emmanuel, and Tejeshwar</string>
     <string name="practical_parent_app">Practical Parent App</string>
     <string name="save_picture">Save picture</string>
+    <string name="change_child">Change Child</string>
+    <string name="confirm_change">Confirm Change</string>
+    <string name="coin_flip_queue_instructions">If you want to move a different child to first, enter their position and press \'Confirm Change\'</string>
 </resources>
