@@ -19,7 +19,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -115,7 +114,8 @@ public class NewChildActivity extends AppCompatActivity {
                 Child newChild = new Child(childNameInput.getText().toString(), imageToSave);
                 childrenManager.addChildToList(this, newChild);
             }
-            Toast.makeText(getApplicationContext(),"Child has been saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Child has been saved!",
+                    Toast.LENGTH_SHORT).show();
             finish();
         });
     }
@@ -127,11 +127,13 @@ public class NewChildActivity extends AppCompatActivity {
             imageToSave = convertImageViewToByteArray(childImageInput);
 
             if(manager.save(1, imageToSave)){
-                Toast.makeText(NewChildActivity.this,"Picture saved successfully",Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewChildActivity.this,
+                        "Picture saved successfully",Toast.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(NewChildActivity.this,"Picture NOT saved successfully",Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewChildActivity.this,
+                        "Picture NOT saved successfully",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -182,7 +184,8 @@ public class NewChildActivity extends AppCompatActivity {
     }
 
     private void takePictureFromGallery() {
-        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, 1);
     }
 
@@ -192,12 +195,14 @@ public class NewChildActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
+                    assert data != null;
                     Uri selectedImageUri = data.getData();
                     childImageInput.setImageURI(selectedImageUri);
                 }
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
+                    assert data != null;
                     Bundle bundle = data.getExtras();
                     Bitmap bitmapImage = (Bitmap) bundle.get("data");
                     childImageInput.setImageBitmap(bitmapImage);
@@ -205,6 +210,7 @@ public class NewChildActivity extends AppCompatActivity {
                 break;
         }
     }
+    @SuppressLint("QueryPermissionsNeeded")
     private void takePictureFromCamera() {
         Intent takePicture=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePicture.resolveActivity(getPackageManager())!=null)
@@ -213,11 +219,14 @@ public class NewChildActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private boolean checkAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= 27) {
-            int cameraPermission = ActivityCompat.checkSelfPermission(NewChildActivity.this, Manifest.permission.CAMERA);
+            int cameraPermission = ActivityCompat.checkSelfPermission(
+                    NewChildActivity.this, Manifest.permission.CAMERA);
             if (cameraPermission == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(NewChildActivity.this, new String[]{Manifest.permission.CAMERA}, 20);
+                ActivityCompat.requestPermissions(NewChildActivity.this,
+                        new String[]{Manifest.permission.CAMERA}, 20);
                 return false;
             }
         }
@@ -230,7 +239,8 @@ public class NewChildActivity extends AppCompatActivity {
         if (requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             takePictureFromCamera();
         } else
-            Toast.makeText(NewChildActivity.this, "Permission not Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NewChildActivity.this, "Permission not Granted",
+                    Toast.LENGTH_SHORT).show();
     }
 
     private void setUpDeleteBtn() {
