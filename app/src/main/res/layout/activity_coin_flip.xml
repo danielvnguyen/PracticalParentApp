@@ -9,23 +9,6 @@
     tools:layout_editor_absoluteX="-7dp"
     tools:layout_editor_absoluteY="93dp">
 
-    <Button
-        android:id="@+id/flip_button"
-        android:layout_width="166dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/tap_to_flip_coin"
-        android:textColor="#000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
-        app:layout_constraintStart_toEndOf="@+id/enter_pos2"
-        app:layout_constraintTop_toBottomOf="@+id/tails_btn"
-        app:layout_constraintVertical_bias="0.142"
-        tools:ignore="TextContrastCheck"
-        tools:visibility="visible" />
-
     <ImageView
         android:id="@+id/heads"
         android:layout_width="match_parent"
@@ -124,26 +107,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heads"
-        app:layout_constraintVertical_bias="0.207"
-        tools:visibility="invisible" />
-
-    <Button
-        android:id="@+id/heads_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="@string/heads"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/flip_button"
-        app:layout_constraintEnd_toStartOf="@+id/tails_btn"
-        app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_child"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextContrastCheck"
+        app:layout_constraintVertical_bias="0.153"
         tools:visibility="invisible" />
 
     <Button
@@ -155,12 +122,45 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.755"
+        app:layout_constraintHorizontal_bias="0.752"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_child"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextContrastCheck"
         tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/heads_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/heads"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/flip_button"
+        app:layout_constraintEnd_toStartOf="@+id/tails_btn"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_child"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/flip_button"
+        android:layout_width="166dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/tap_to_flip_coin"
+        android:textColor="#000000"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toEndOf="@+id/enter_pos2"
+        app:layout_constraintTop_toBottomOf="@+id/tails_btn"
+        app:layout_constraintVertical_bias="0.296"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/change_child_btn"
@@ -185,10 +185,28 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/flipHistory"
         app:layout_constraintEnd_toStartOf="@+id/flip_button"
+        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="@+id/enter_pos1"
         app:layout_constraintTop_toBottomOf="@+id/heads_btn"
+        app:layout_constraintVertical_bias="0.244"
         app:srcCompat="@drawable/defaultimage"
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/clear_history_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF4545"
+        android:text="@string/clear_history"
+        android:textColor="#212121"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/flipHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_pos1"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

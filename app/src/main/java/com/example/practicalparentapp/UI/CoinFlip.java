@@ -22,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
+import com.example.practicalparentapp.Model.History;
+import com.example.practicalparentapp.Model.HistoryListViewAdapter;
+import com.example.practicalparentapp.Model.HistoryManager;
 import com.example.practicalparentapp.R;
 
 import java.time.LocalDateTime;
@@ -49,11 +52,11 @@ public class CoinFlip extends AppCompatActivity {
     private String resultOfFlip;
     private String childChoice;
     private boolean hasConfiguredChildren = true;
-    private ArrayList<String> listItems;
-    private ArrayAdapter<String> adapter;
     public static final String POSITION_ONE = "Child one";
     public static final String POSITION_TWO = "Child two";
     private ArrayList<Child> childList;
+    private HistoryManager historyManager;
+    private ArrayAdapter<History> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +65,15 @@ public class CoinFlip extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Flip Coin");
 
+        historyManager = HistoryManager.getInstance(this);
+
+        ListView flipHistory = findViewById(R.id.flipHistory);
+        listAdapter = new HistoryListViewAdapter(this, R.layout.coin_flip_history_adapter,
+                historyManager.getHistoryList());
+        flipHistory.setAdapter(listAdapter);
+
         childrenManager = ChildrenManager.getInstance(this);
         childList = childrenManager.getChildList();
-
-        listItems = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, listItems);
-        ListView flipHistory = findViewById(R.id.flipHistory);
-        flipHistory.setAdapter(adapter);
 
         enterPosTV = findViewById(R.id.enter_posTV);
         enterPosOne = findViewById(R.id.enter_pos1);
@@ -79,6 +83,7 @@ public class CoinFlip extends AppCompatActivity {
         Button confirmBtn = findViewById(R.id.confirm_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
         Button flipBtn = findViewById(R.id.flip_button);
+        Button clearHistoryBtn = findViewById(R.id.clear_history_btn);
 
         tailsBtn.setEnabled(false);
         headsBtn.setEnabled(false);
@@ -87,12 +92,13 @@ public class CoinFlip extends AppCompatActivity {
         tailsBtn.setVisibility(View.INVISIBLE);
         askChildChoice.setVisibility(View.INVISIBLE);
 
-        //if no configured children, enable the coin flip button.
         if (childrenManager.isChildListEmpty()) {
             enterPosTV.setVisibility(View.INVISIBLE);
             enterPosOne.setVisibility(View.INVISIBLE);
             enterPosTwo.setVisibility(View.INVISIBLE);
             confirmBtn.setVisibility(View.INVISIBLE);
+            flipHistory.setVisibility(View.INVISIBLE);
+            clearHistoryBtn.setVisibility(View.INVISIBLE);
             hasConfiguredChildren = false;
             flipBtn.setEnabled(true);
         }
@@ -103,6 +109,7 @@ public class CoinFlip extends AppCompatActivity {
         setUpHeadsBtn();
         setUpTailsBtn();
         setUpChangeChildBtn();
+        setUpClearHistoryBtn();
     }
 
     @SuppressLint("SetTextI18n")
@@ -162,6 +169,7 @@ public class CoinFlip extends AppCompatActivity {
         Button changeBtn = findViewById(R.id.change_child_btn);
         TextView askChildChoice = findViewById(R.id.current_child);
         ImageView childImage = findViewById(R.id.current_child_img);
+        Button clearHistoryBtn = findViewById(R.id.clear_history_btn);
 
         confirmBtn.setOnClickListener((v) -> {
             if (!hasConfiguredChildren || validateInput(enterPosOne, enterPosTwo)) {
@@ -185,7 +193,7 @@ public class CoinFlip extends AppCompatActivity {
                 tailsBtn.setVisibility(View.VISIBLE);
                 askChildChoice.setVisibility(View.VISIBLE);
                 changeBtn.setVisibility(View.VISIBLE);
-                
+                clearHistoryBtn.setVisibility(View.VISIBLE);
 
                 enterPosTV.setVisibility(View.INVISIBLE);
                 enterPosOne.setVisibility(View.INVISIBLE);
@@ -267,16 +275,20 @@ public class CoinFlip extends AppCompatActivity {
 
             if (hasConfiguredChildren) {
                 currentChild.setFlippedLast(true);
+                String wonFlipInfo = (flipTime + " | " + currentChild.getName() + " chose " + childChoice +
+                        " and the result was " + resultOfFlip + ": ✅ Won!");
+                String lostFlipInfo = (flipTime + " | " + currentChild.getName() + " chose " + childChoice +
+                        " and the result was " + resultOfFlip + ": ❌ Lost!");
 
+                History newHistory;
                 if (resultOfFlip.equals(childChoice)) {
-                    listItems.add(flipTime + " | " + currentChild.getName() + " chose " + childChoice +
-                            " and the result was " + resultOfFlip + ": ✅ Won!");
+                    newHistory = new History(wonFlipInfo, currentChild);
                 }
                 else {
-                    listItems.add(flipTime + " | " + currentChild.getName() + " chose " + childChoice +
-                            " and the result was " + resultOfFlip + ": ❌ Lost!");
+                    newHistory = new History(lostFlipInfo, currentChild);
                 }
-                adapter.notifyDataSetChanged();
+                historyManager.addHistoryToList(this, newHistory);
+                listAdapter.notifyDataSetChanged();
 
                 if (childOne == currentChild) {
                     askChildChoice.setText(childTwo.getName() +
@@ -351,6 +363,14 @@ public class CoinFlip extends AppCompatActivity {
 
     private void setUpSounds() {
         coinSound = MediaPlayer.create(getApplicationContext(), R.raw.coin_flip_sound);
+    }
+
+    private void setUpClearHistoryBtn() {
+        Button clearHistoryBtn = findViewById(R.id.clear_history_btn);
+        clearHistoryBtn.setOnClickListener((v) -> {
+            historyManager.getHistoryList().clear();
+            listAdapter.notifyDataSetChanged();
+        });
     }
 }
 
