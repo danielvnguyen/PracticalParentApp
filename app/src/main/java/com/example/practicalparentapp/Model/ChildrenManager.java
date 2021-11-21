@@ -60,7 +60,7 @@ public class ChildrenManager {
 
     public int getChildIndex(Child child) {
         for (int i = 0; i < childList.size(); i++) {
-            if (childList.get(i).getName().equals(child.getName())) {
+            if (childList.get(i).getName().equalsIgnoreCase(child.getName())) {
                 return i;
             }
         }
