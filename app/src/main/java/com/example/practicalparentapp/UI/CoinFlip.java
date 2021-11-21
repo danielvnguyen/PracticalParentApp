@@ -178,7 +178,7 @@ public class CoinFlip extends AppCompatActivity {
                 tailsBtn.setVisibility(View.VISIBLE);
                 askChildChoice.setVisibility(View.VISIBLE);
                 changeBtn.setVisibility(View.VISIBLE);
-                //.setVisibility(View.VISIBLE);
+                
 
                 enterPosTV.setVisibility(View.INVISIBLE);
                 enterPosOne.setVisibility(View.INVISIBLE);
