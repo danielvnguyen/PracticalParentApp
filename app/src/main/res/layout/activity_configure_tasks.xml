@@ -7,11 +7,19 @@
     tools:context=".UI.ConfigureTasks">
 
     <ListView
+        android:id="@+id/taskListView"
         android:layout_width="409dp"
         android:layout_height="729dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        android:id="@+id/taskListView">
+        tools:layout_editor_absoluteY="1dp">
 
     </ListView>
 
@@ -22,5 +30,25 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:text="Add Task" />
+
+    <TextView
+        android:id="@+id/noTasks"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="666dp"
+        android:text="\nNo Tasks Yet"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        tools:visibility="invisible" />
 
 </RelativeLayout>

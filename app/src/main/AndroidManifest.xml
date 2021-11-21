@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
-            android:name=".TaskTap"
+            android:name=".UI.TaskEdit"
             android:exported="false" />
         <activity
-            android:name=".TaskAdder"
+            android:name=".UI.TaskAdder"
             android:exported="false" />
         <activity
             android:name=".UI.ConfigureTasks"

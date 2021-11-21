@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskAdder">
+    tools:context=".UI.TaskAdder">
 
     <EditText
-        android:id="@+id/editTask"
+        android:id="@+id/editChildName"
         android:layout_width="393dp"
         android:layout_height="94dp"
         android:ems="10"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.061" />
 
     <EditText
-        android:id="@+id/editChild"
+        android:id="@+id/editChildTask"
         android:layout_width="321dp"
         android:layout_height="49dp"
         android:ems="10"
@@ -32,11 +32,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTask"
+        app:layout_constraintTop_toBottomOf="@+id/editChildName"
         app:layout_constraintVertical_bias="0.156" />
 
     <Button
-        android:id="@+id/taskComplete"
+        android:id="@+id/confirmTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
@@ -44,6 +44,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editChild"
+        app:layout_constraintTop_toBottomOf="@+id/editChildTask"
         app:layout_constraintVertical_bias="0.157" />
 </androidx.constraintlayout.widget.ConstraintLayout>
