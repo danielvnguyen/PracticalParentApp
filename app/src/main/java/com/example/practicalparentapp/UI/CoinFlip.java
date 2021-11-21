@@ -109,10 +109,7 @@ public class CoinFlip extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (childrenManager.isOldCoinFlip()) {
-            /*
-            - get textview and update it + currentChild.
-            - go through childList and see which child is 'false'.
-             */
+
             TextView askChildChoice = findViewById(R.id.current_child);
             for (int i = 0; i < childList.size(); i++) {
                 if (!childrenManager.getChild(i).isFlippedLast()) {
@@ -270,7 +267,6 @@ public class CoinFlip extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
 
-                //if child one just flipped
                 if (childOne == currentChild) {
                     askChildChoice.setText(childTwo.getName() +
                             ", choose heads or tails, then press \"FLIP THE COIN\"");

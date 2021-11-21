@@ -19,10 +19,17 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpConfigChildrenBtn();
-
         setUpCoinFlipBtn();
-
         setUpTimeoutTimerBtn();
+        setUpHelpScreenBtn();
+    }
+
+    private void setUpHelpScreenBtn() {
+        Button helpBtn = findViewById(R.id.help_screen_btn);
+        helpBtn.setOnClickListener((v) -> {
+            Intent intent = HelpScreen.makeIntent(this);
+            startActivity(intent);
+        });
     }
 
     private void setUpTimeoutTimerBtn() {

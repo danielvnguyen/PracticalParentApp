@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PracticalParentApp</string>
     <string name="timeout_txt">Timeout Timer</string>
     <string name="flip_coin_txt">Flip A Coin</string>
@@ -36,4 +36,11 @@
     <string name="change_child">Change Child</string>
     <string name="confirm_change">Confirm Change</string>
     <string name="coin_flip_queue_instructions">If you want to move a different child to first, enter their position and press \'Confirm Change\'</string>
+    <string name="help_screen">Help Screen</string>
+    <string name="copyright_information">Copyright Information</string>
+    <string name="the_developers">The Developers</string>
+    <string name="dev_info_text" tools:ignore="TypographyDashes">Our team name is 276-2021-7-Iron. The developers are Daniyal Nussipakynov, Tejeshwar Multani, Daniel Nguyen, and Emmanuel Ekene Okonkwo.</string>
+    <string name="citations_info_text">Heads/Tails Coin: https://www.shutterstock.com/search/coin+heads+tails <br/>
+    Wallpaper 1: https://www.pinterest.ca/sa3717171/baby-blue-wallpaper/ <br/>
+    Wallpaper 2: https://www.pinterest.ca/pin/817614507349568393/</string>
 </resources>

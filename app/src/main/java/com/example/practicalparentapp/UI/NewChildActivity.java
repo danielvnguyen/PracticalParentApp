@@ -5,12 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.RecyclerViewAdapter;
 import com.example.practicalparentapp.R;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
@@ -49,7 +46,6 @@ public class NewChildActivity extends AppCompatActivity {
     private Button deleteBtn;
     private ImageView childImageInput;
     private byte[] imageToSave;
-    private DataBaseManager manager;
 
     @SuppressLint("WrongThread")
     @Override
@@ -58,9 +54,7 @@ public class NewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_child);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         childrenManager = ChildrenManager.getInstance(this);
-        manager = new DataBaseManager(NewChildActivity.this);
 
-        //let imageToSave be default image initially
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.defaultimage);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -104,12 +98,10 @@ public class NewChildActivity extends AppCompatActivity {
     private void setUpSaveBtn() {
         Button btn = findViewById(R.id.save_btn);
         btn.setOnClickListener(view -> {
-            //update child info if was editing mode
             if (isEditingChild) {
                 editedChild.editChild(childNameInput.getText().toString(), imageToSave);
                 ChildrenManager.saveChildList(this, childrenManager.getChildList());
             }
-            //create new child and add to list
             else {
                 Child newChild = new Child(childNameInput.getText().toString(), imageToSave);
                 childrenManager.addChildToList(this, newChild);
@@ -120,21 +112,11 @@ public class NewChildActivity extends AppCompatActivity {
         });
     }
 
-    //Should lock this button until imageToSave is uploaded
     private void setUpSaveImage() {
         Button saveImgBtn = findViewById(R.id.save_img_btn);
         saveImgBtn.setOnClickListener((v) -> {
             imageToSave = convertImageViewToByteArray(childImageInput);
-
-            if(manager.save(1, imageToSave)){
-                Toast.makeText(NewChildActivity.this,
-                        "Picture saved successfully",Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(NewChildActivity.this,
-                        "Picture NOT saved successfully",Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(NewChildActivity.this, "Image saved!",Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -183,6 +165,7 @@ public class NewChildActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressWarnings("deprecation")
     private void takePictureFromGallery() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -210,6 +193,8 @@ public class NewChildActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @SuppressWarnings("deprecation")
     @SuppressLint("QueryPermissionsNeeded")
     private void takePictureFromCamera() {
         Intent takePicture=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
