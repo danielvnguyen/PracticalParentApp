@@ -110,7 +110,9 @@ public class TaskEdit extends AppCompatActivity {
                     Toast.makeText(TaskEdit.this, "Your changes have now been saved", Toast.LENGTH_SHORT).show();
                 }
                 taskManager.get(TaskEdit.this, pos).setTaskName(editedChildTask.getText().toString());
+                finish();
                 Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+                intent.putExtra("TaskEdit", true);
                 startActivity(intent);
             } else {
                 if (!childrenManager.doesChildExist(childWithTurn)) {
@@ -122,21 +124,27 @@ public class TaskEdit extends AppCompatActivity {
                     taskManager.get(TaskEdit.this, pos).setTaskName(editedChildTask.getText().toString());
                 }
                 taskManager.get(TaskEdit.this, pos).setChild(childrenManager.getChild(childPosition));
+                finish();
                 Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+                intent.putExtra("TaskEdit", true);
                 startActivity(intent);
             }
         });
 
         cancel.setOnClickListener(view -> {
             Toast.makeText(TaskEdit.this, "Your changes have now been discarded", Toast.LENGTH_SHORT).show();
+            finish();
             Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+            intent.putExtra("TaskEdit", true);
             startActivity(intent);
         });
 
         remove.setOnClickListener(view -> {
             taskManager.remove(TaskEdit.this, pos);
             Toast.makeText(TaskEdit.this, "Your task has now been deleted", Toast.LENGTH_SHORT).show();
+            finish();
             Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
+            intent.putExtra("TaskEdit", true);
             startActivity(intent);
         });
     }

@@ -29,6 +29,7 @@ public class ConfigureTasks extends AppCompatActivity {
     public static ArrayList<String> tasksList;
     private TaskManager taskManager;
     private ListView toDoListView;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +39,30 @@ public class ConfigureTasks extends AppCompatActivity {
 
         setContentView(R.layout.activity_configure_tasks);
 
+        if (getIntent().getBooleanExtra("TaskAdder", false)) {
+            finish();
+        }
+        if (getIntent().getBooleanExtra("TaskEdit", false)) {
+            finish();
+        }
+
+        updateTasks();
+        setUpAddTaskBtn();
+    }
+
+    private void updateTasks() {
         taskManager = TaskManager.getInstance(this);
         tasksList = new ArrayList<>();
-
         clickCallBack(populateListView());
-
-        ArrayAdapter<String> adapter = new ToDoListAdapter();
+        adapter = new ToDoListAdapter();
         toDoListView = findViewById(R.id.taskListView);
         toDoListView.setAdapter(adapter);
+    }
 
-        setUpAddTaskBtn();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTasks();
     }
 
     private void clickCallBack(boolean populateListView) {

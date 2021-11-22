@@ -16,6 +16,8 @@ import com.example.practicalparentapp.Model.TaskManager;
 import com.example.practicalparentapp.R;
 import com.example.practicalparentapp.Model.Task;
 
+import java.util.Objects;
+
 /**
  * This class handles adding tasks
  * to the ConfigureTasks activity.
@@ -32,10 +34,7 @@ public class TaskAdder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_adder);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         taskManager = TaskManager.getInstance(this);
         childrenManager = ChildrenManager.getInstance(this);
@@ -67,9 +66,10 @@ public class TaskAdder extends AppCompatActivity {
             } else {
                 Task task = new Task(task_name, child);
                 taskManager.add(TaskAdder.this, task);
-
                 Intent intent = ConfigureTasks.makeIntent(this);
+                intent.putExtra("TaskAdder", true);
                 startActivity(intent);
+                finish();
             }
         });
     }
