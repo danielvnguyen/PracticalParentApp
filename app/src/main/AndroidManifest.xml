@@ -23,6 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
+
+        <activity
+            android:name=".UI.TaskEdit"
+            android:exported="false" />
+        <activity
+            android:name=".UI.TaskAdder"
+            android:exported="false" />
         <activity
             android:name=".UI.HelpScreen"
             android:exported="false" />

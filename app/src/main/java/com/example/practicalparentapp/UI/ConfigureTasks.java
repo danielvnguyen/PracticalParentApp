@@ -2,28 +2,20 @@ package com.example.practicalparentapp.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.practicalparentapp.Model.TaskManager;
 import com.example.practicalparentapp.R;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * This class displays a list of tasks to the parent.
@@ -47,7 +39,7 @@ public class ConfigureTasks extends AppCompatActivity {
         tasksList = new ArrayList<>();
 
         // To handle the clicking of an item in the list
-        clickCallback(populateListView());
+        clickCallBack(populateListView());
 
         ArrayAdapter<String> adapter = new ToDoListAdapter();
         toDoListView = findViewById(R.id.taskListView);
@@ -56,25 +48,17 @@ public class ConfigureTasks extends AppCompatActivity {
         setUpAddTaskBtn();
     }
 
-    private void clickCallback(boolean populateListView) {
+    private void clickCallBack(boolean populateListView) {
         if (!populateListView) {
             toDoListView = findViewById(R.id.taskListView);
-            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                    Toast.makeText(ConfigureTasks.this, "No tasks has been created." +
-                            "\nClick the Add button to create a task.", Toast.LENGTH_LONG).show();
-                }
-            });
+            toDoListView.setOnItemClickListener((parent, viewClicked, position, id) -> Toast.makeText(ConfigureTasks.this, "No tasks has been created." +
+                    "\nClick the Add button to create a task.", Toast.LENGTH_LONG).show());
         } else {
             toDoListView = findViewById(R.id.taskListView);
-            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                    Intent intent = TaskEdit.makeIntent(ConfigureTasks.this);
-                    intent.putExtra("position", position);
-                    startActivity(intent);
-                }
+            toDoListView.setOnItemClickListener((parent, viewClicked, position, id) -> {
+                Intent intent = TaskEdit.makeIntent(ConfigureTasks.this);
+                intent.putExtra("position", position);
+                startActivity(intent);
             });
         }
     }
@@ -115,7 +99,6 @@ public class ConfigureTasks extends AppCompatActivity {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View itemView = convertView;
-            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
             if (taskManager.size() == 0) {
                 if (itemView == null) {

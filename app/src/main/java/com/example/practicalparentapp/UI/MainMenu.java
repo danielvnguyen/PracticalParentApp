@@ -22,6 +22,15 @@ public class MainMenu extends AppCompatActivity {
         setUpCoinFlipBtn();
         setUpTimeoutTimerBtn();
         setUpHelpScreenBtn();
+        setUpConfigureTasksBtn();
+    }
+
+    private void setUpConfigureTasksBtn() {
+        Button btn = findViewById(R.id.configureTaskBtn);
+        btn.setOnClickListener((v2) -> {
+            Intent intent2 = ConfigureTasks.makeIntent(this);
+            startActivity(intent2);
+        });
     }
 
     private void setUpHelpScreenBtn() {
