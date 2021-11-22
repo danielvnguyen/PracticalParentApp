@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/configure"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/light_background"
     tools:context=".UI.ConfigureTasks">
 
     <ListView
         android:id="@+id/taskListView"
         android:layout_width="match_parent"
-        android:layout_height="667dp"
+        android:layout_height="653dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -17,7 +19,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="78dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
@@ -25,11 +27,17 @@
 
     <Button
         android:id="@+id/addTaskBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="127dp"
+        android:layout_height="64dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="3dp"
+        android:backgroundTint="#75CEDA"
         android:text="@string/add_task"
+        app:cornerRadius="15dp"
+        app:strokeColor="#1879A5"
+        app:strokeWidth="4dp"
         tools:ignore="RtlHardcoded,TextContrastCheck" />
 
 </RelativeLayout>
