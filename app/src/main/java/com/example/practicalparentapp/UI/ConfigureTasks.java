@@ -128,8 +128,8 @@ public class ConfigureTasks extends AppCompatActivity {
                 TextView tvName = itemView.findViewById(R.id.childName);
                 TextView tvTask = itemView.findViewById(R.id.taskToDo);
 
-                tvName.setText(childTask[0]);
-                tvTask.setText(childTask[1]);
+                tvName.setText(String.format("Child: %s", childTask[0]));
+                tvTask.setText(String.format("Task: %s", childTask[1]));
             }
             return itemView;
         }
