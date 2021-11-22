@@ -58,7 +58,6 @@ public class TaskAdder extends AppCompatActivity {
 
         confirmTask.setOnClickListener((v2) -> {
             String task_name = enterTask.getText().toString();
-            //Child child = new Child(enterChild.getText().toString());
             Child child = childrenManager.getChildByName(enterChild.getText().toString());
 
             if (childrenManager.getChildIndex(child) == -1) {

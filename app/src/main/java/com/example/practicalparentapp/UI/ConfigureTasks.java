@@ -8,6 +8,7 @@ import com.example.practicalparentapp.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class displays a list of tasks to the parent.
@@ -31,6 +33,7 @@ public class ConfigureTasks extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Your Tasks");
 
         setContentView(R.layout.activity_configure_tasks);
@@ -115,5 +118,17 @@ public class ConfigureTasks extends AppCompatActivity {
             }
             return itemView;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemID = item.getItemId();
+
+        if (itemID == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

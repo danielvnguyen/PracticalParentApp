@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="Add Task" />
+        android:text="@string/add_task"
+        tools:ignore="RtlHardcoded,TextContrastCheck" />
 
 </RelativeLayout>

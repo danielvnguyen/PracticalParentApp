@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,10 +9,12 @@
         android:id="@+id/imageviewADPPCamera"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:src="@drawable/ic_camera" />
+        android:src="@drawable/ic_camera"
+        tools:ignore="ContentDescription" />
     <ImageView
         android:id="@+id/imageviewADPPGallery"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:src="@drawable/ic_gallery" />
+        android:src="@drawable/ic_gallery"
+        tools:ignore="ContentDescription" />
 </LinearLayout>
