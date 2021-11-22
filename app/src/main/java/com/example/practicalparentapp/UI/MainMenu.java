@@ -1,12 +1,8 @@
 package com.example.practicalparentapp.UI;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.Button;
 import com.example.practicalparentapp.R;
 
@@ -23,12 +19,17 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpConfigChildrenBtn();
-
         setUpCoinFlipBtn();
-
         setUpTimeoutTimerBtn();
+        setUpHelpScreenBtn();
+    }
 
-        setUpConfigureTasksBtn();
+    private void setUpHelpScreenBtn() {
+        Button helpBtn = findViewById(R.id.help_screen_btn);
+        helpBtn.setOnClickListener((v) -> {
+            Intent intent = HelpScreen.makeIntent(this);
+            startActivity(intent);
+        });
     }
 
     private void setUpTimeoutTimerBtn() {
@@ -51,14 +52,6 @@ public class MainMenu extends AppCompatActivity {
         Button btn = findViewById(R.id.configureChildrenBtn);
         btn.setOnClickListener((v2) -> {
             Intent intent2 = ConfigureChildren.makeIntent(this);
-            startActivity(intent2);
-        });
-    }
-
-    private void setUpConfigureTasksBtn() {
-        Button btn = findViewById(R.id.configureTaskBtn);
-        btn.setOnClickListener((v2) -> {
-            Intent intent2 = ConfigureTasks.makeIntent(this);
             startActivity(intent2);
         });
     }

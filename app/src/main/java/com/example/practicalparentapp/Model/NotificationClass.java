@@ -1,4 +1,4 @@
-package com.example.practicalparentapp.UI;
+package com.example.practicalparentapp.Model;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -9,7 +9,7 @@ import android.os.Build;
 /**
  * This class handles creating the notification.
  */
-public class App extends Application {
+public class NotificationClass extends Application {
     public static final String ChannelID = "The Timer is now up.";
 
     @Override

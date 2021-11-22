@@ -1,6 +1,7 @@
 package com.example.practicalparentapp.Model;
 
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -29,6 +30,8 @@ public class ChildrenManager {
 
     private static ChildrenManager instance;
     private static final String FILE_NAME = "childList.json";
+    private ArrayList<Child> childList = new ArrayList<>();
+    private boolean isOldCoinFlip = false;
 
     private ChildrenManager(Context context) {
         setChildList(context);
@@ -38,8 +41,6 @@ public class ChildrenManager {
         if (instance == null) instance = new ChildrenManager(context);
         return instance;
     }
-
-    private ArrayList<Child> childList = new ArrayList<>();
 
     public void addChildToList(Context context, Child newChild) {
         childList.add(newChild);
@@ -157,5 +158,13 @@ public class ChildrenManager {
                         return LocalDateTime.parse(jsonReader.nextString());
                     }
                 }).create();
+    }
+
+    public boolean isOldCoinFlip() {
+        return isOldCoinFlip;
+    }
+
+    public void setOldCoinFlip(boolean oldCoinFlip) {
+        isOldCoinFlip = oldCoinFlip;
     }
 }
