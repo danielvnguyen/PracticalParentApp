@@ -43,13 +43,12 @@ public class ChildrenManager {
     }
 
     public Child getChildByName(String childName) {
-        int childPosition = 0;
         for (int i = 0; i < childList.size(); i++) {
-            if (getChild(i).getName().equals(childName)) {
-                childPosition = i;
+            if (getChild(i).getName().equalsIgnoreCase(childName)) {
+                return getChild(i);
             }
         }
-        return getChild(childPosition);
+        return null;
     }
 
     public void addChildToList(Context context, Child newChild) {

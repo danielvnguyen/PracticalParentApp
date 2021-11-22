@@ -60,10 +60,10 @@ public class TaskAdder extends AppCompatActivity {
             String task_name = enterTask.getText().toString();
             Child child = childrenManager.getChildByName(enterChild.getText().toString());
 
-            if (childrenManager.getChildIndex(child) == -1) {
-                Toast.makeText(TaskAdder.this,  child.getName()
+            if (child == null) {
+                Toast.makeText(TaskAdder.this,  enterChild.getText().toString()
                         + " has not been configured as a child.\n" + "Please, configure " +
-                        child.getName() + " as a child and try again.", Toast.LENGTH_LONG).show();
+                        enterChild.getText().toString() + " as a child and try again.", Toast.LENGTH_LONG).show();
             } else {
                 Task task = new Task(task_name, child);
                 taskManager.add(TaskAdder.this, task);
