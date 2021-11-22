@@ -6,38 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg1"
     tools:context=".UI.MainMenu"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-29dp">
-
-    <Button
-        android:id="@+id/timeoutBtn"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/timeout_txt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flipCoinBtn"
-        app:layout_constraintVertical_bias="0.004" />
-
-    <Button
-        android:id="@+id/configureChildrenBtn"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/configure_children_txt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.234" />
+    tools:layout_editor_absoluteX="10dp"
+    tools:layout_editor_absoluteY="33dp">
 
     <Button
         android:id="@+id/flipCoinBtn"
@@ -50,36 +20,25 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/configureChildrenBtn"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintVertical_bias="0.037" />
 
-    <ImageView
-        android:id="@+id/flipImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <Button
+        android:id="@+id/configureChildrenBtn"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/configure_children_txt"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@+id/flipCoinBtn"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuTitle"
-        app:layout_constraintVertical_bias="0.39"
-        app:srcCompat="@drawable/heads"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/timeImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@+id/timeoutBtn"
-        app:layout_constraintTop_toBottomOf="@+id/flipImg"
-        app:layout_constraintVertical_bias="0.114"
-        app:srcCompat="@android:drawable/ic_lock_idle_alarm"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.318" />
 
     <ImageView
         android:id="@+id/addImg"
@@ -87,26 +46,53 @@
         android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/flipImg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toEndOf="@+id/configureChildrenBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924"
+        app:layout_constraintVertical_bias="0.917"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
-    <TextView
-        android:id="@+id/creditsTV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="@string/created_by_daniel_danny_emmanuel_and_tej"
-        android:textAlignment="center"
+    <Button
+        android:id="@+id/timeoutBtn"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/timeout_txt"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flipCoinBtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/timeImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.552"
+        app:layout_constraintStart_toEndOf="@+id/timeoutBtn"
+        app:layout_constraintTop_toBottomOf="@+id/flipImg"
+        app:layout_constraintVertical_bias="0.103"
+        app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/flipImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.552"
+        app:layout_constraintStart_toEndOf="@+id/flipCoinBtn"
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuTitle"
+        app:layout_constraintVertical_bias="0.349"
+        app:srcCompat="@drawable/heads"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/mainMenuTitle"
@@ -126,19 +112,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/configureTaskBtn"
+        android:id="@+id/help_screen_btn"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#FBFBFB"
-        android:text="Tasks"
-        android:textColorHighlight="#000000"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/help_screen"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeoutBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:id="@+id/help_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.552"
+        app:layout_constraintStart_toEndOf="@+id/help_screen_btn"
+        app:layout_constraintTop_toBottomOf="@+id/timeImg"
+        app:srcCompat="@android:drawable/ic_menu_help"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

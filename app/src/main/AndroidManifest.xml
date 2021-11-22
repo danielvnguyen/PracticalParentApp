@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.practicalparentapp">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="30"
+        tools:ignore="ScopedStorage" />
 
     <application
-        android:name=".UI.App"
+        android:name=".Model.NotificationClass"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,10 +24,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp">
         <activity
-            android:name=".UI.TaskEdit"
+            android:name=".UI.HelpScreen"
             android:exported="false" />
         <activity
-            android:name=".UI.TaskAdder"
+            android:name=".UI.CoinFlipQueue"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ConfigureTasks"
             android:exported="false" />
         <activity
             android:name=".UI.ConfigureTasks"
@@ -51,7 +64,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".UI.NotificationReceiver" />
+        <receiver android:name=".Model.NotificationReceiver" />
 
         <meta-data
             android:name="preloaded_fonts"

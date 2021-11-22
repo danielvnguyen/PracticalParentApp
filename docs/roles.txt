@@ -1,5 +1,11 @@
 Roles for Iteration 1:
-- Daniel Nguyen: Scrum Master
-- Tejeshwar Multani: Repository Manager
-- Daniyal Nussipakynov: Product Leader
-- Emmanuel Okonkwo: Team Member
+- Product Owner: Daniyal Nussipakynov
+- Scrum Master: Daniel Nguyen
+- Repository Manager: Tejeshwar Multani
+- Team Member: Emmanuel Okonkwo
+
+Roles for Iteration 2:
+- Product Owner: Emmanuel Okonkwo
+- Scrum Master: Daniyal Nussipakynov
+- Repository Manager: Daniel Nguyen
+- Team Member: Tejeshwar Multani

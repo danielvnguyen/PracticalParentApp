@@ -5,16 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
-        android:id="@+id/childNameTV"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:text="@string/child_name"
-        android:textAlignment="viewStart"
+        android:id="@+id/history_TV"
+        android:layout_width="355dp"
+        android:layout_height="53dp"
+        android:text="@string/history_text"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,14 +20,14 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/child_image"
-        android:layout_width="59dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/childNameTV"
+        android:id="@+id/history_child_image"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/childNameTV"
+        app:layout_constraintStart_toEndOf="@+id/history_TV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/defaultimage"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

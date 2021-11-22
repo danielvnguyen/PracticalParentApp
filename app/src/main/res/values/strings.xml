@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PracticalParentApp</string>
     <string name="timeout_txt">Timeout Timer</string>
     <string name="flip_coin_txt">Flip A Coin</string>
@@ -32,13 +32,19 @@
     <string name="white_box_msg">White box for user clarity</string>
     <string name="created_by_daniel_danny_emmanuel_and_tej">Created by Daniel, Danny, Emmanuel, and Tejeshwar</string>
     <string name="practical_parent_app">Practical Parent App</string>
-    <string name="title_activity_to_do">activity_to_do</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="save_picture">Save picture</string>
+    <string name="change_child">Change Child</string>
+    <string name="confirm_change">Confirm Change</string>
+    <string name="coin_flip_queue_instructions">Enter the position of the child to go next. (Same position as initially configured)</string>
+    <string name="help_screen">Help Screen</string>
+    <string name="copyright_information">Copyright Information</string>
+    <string name="the_developers">The Developers</string>
+    <string name="dev_info_text" tools:ignore="TypographyDashes">
+        Our team name is 276-2021-7-Iron. The developers are Daniyal Nussipakynov, Tejeshwar Multani, Daniel Nguyen, and Emmanuel Ekene Okonkwo.</string>
+    <string name="citations_info_text">
+        Heads/Tails Coin: https://www.shutterstock.com/search/coin+heads+tails \n<br/>
+        Wallpaper 1: https://www.pinterest.ca/sa3717171/baby-blue-wallpaper/ \n<br/>
+        Wallpaper 2: https://www.pinterest.ca/pin/817614507349568393/</string>
+    <string name="history_text">History Text</string>
+    <string name="clear_history">Clear History</string>
 </resources>

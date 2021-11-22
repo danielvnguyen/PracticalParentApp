@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.example.practicalparentapp.R;
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
-import com.example.practicalparentapp.Model.RecyclerViewAdapter;
+import com.example.practicalparentapp.Model.ChildListViewAdapter;
 
 import java.util.Objects;
 
@@ -73,7 +73,7 @@ public class ConfigureChildren extends AppCompatActivity {
 
     private void setUpList() {
         ListView childListLV = findViewById(R.id.list_of_children);
-        listAdapter = new RecyclerViewAdapter(this, R.layout.adapter, childrenManager.getChildList());
+        listAdapter = new ChildListViewAdapter(this, R.layout.adapter, childrenManager.getChildList());
         childListLV.setAdapter(listAdapter);
     }
 }

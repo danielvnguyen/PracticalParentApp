@@ -3,10 +3,12 @@ package com.example.practicalparentapp.Model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,14 +23,14 @@ import java.util.ArrayList;
  * configured children. Supports editing
  * the children's names when clicked on.
  */
-public class RecyclerViewAdapter extends ArrayAdapter<Child>{
+public class ChildListViewAdapter extends ArrayAdapter<Child>{
 
     private final Context context;
     private final Integer resource;
     public static final String STRING_EXTRA = "Is edit";
     public static final String POSITION_EXTRA = "Child position";
 
-    public RecyclerViewAdapter(Context context, Integer resource, ArrayList<Child> childList) {
+    public ChildListViewAdapter(Context context, Integer resource, ArrayList<Child> childList) {
         super(context, resource, childList);
         this.context = context;
         this.resource = resource;
@@ -39,9 +41,13 @@ public class RecyclerViewAdapter extends ArrayAdapter<Child>{
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         String name = getItem(position).getName();
+        Bitmap bitmap = getItem(position).getChildImage();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         @SuppressLint("ViewHolder") View childView = inflater.inflate(resource, parent, false);
+
+        ImageView childImage = childView.findViewById(R.id.child_image);
+        childImage.setImageBitmap(bitmap);
 
         TextView nameText = childView.findViewById(R.id.childNameTV);
         nameText.setText(name);
