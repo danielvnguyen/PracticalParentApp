@@ -85,19 +85,35 @@ public class TaskEdit extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int childPosition = childrenManager.getChildIndex(childWithTurn);
+                if (childPosition == childrenManager.size() - 1) {
+                    childPosition = 0;
+                } else if (childPosition == -1) {
+                    childPosition = 0;
+                } else {
+                    childPosition += 1;
+                }
+
                 if (confirm.getText().toString().equals("Save Changes")) {
-                    Toast.makeText(TaskEdit.this, "Your changes have now been saved", Toast.LENGTH_SHORT).show();
+                    if (!childrenManager.doesChildExist(childWithTurn)) {
+                        Toast.makeText(TaskEdit.this, "You already deleted " + childWithTurn.getName()
+                                + " from the list of children.", Toast.LENGTH_LONG).show();
+                        taskManager.get(TaskEdit.this, pos).setChild(childrenManager.getChild(childPosition));
+                    } else {
+                        Toast.makeText(TaskEdit.this, "Your changes have now been saved", Toast.LENGTH_SHORT).show();
+                    }
                     taskManager.get(TaskEdit.this, pos).setTaskName(editedChildTask.getText().toString());
                     Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
                     startActivity(intent);
                 } else {
-                    int childPosition = childrenManager.getChildIndex(childWithTurn);
-                    if (childPosition == childrenManager.size() - 1) {
-                        childPosition = 0;
+                    if (!childrenManager.doesChildExist(childWithTurn)) {
+                        Toast.makeText(TaskEdit.this, "You already deleted " + childWithTurn.getName()
+                                + " from the list of children.", Toast.LENGTH_LONG).show();
                     } else {
-                        childPosition += 1;
+                        Toast.makeText(TaskEdit.this, "It's now " + childrenManager.getChild(childPosition).getName()
+                                + "'s turn." , Toast.LENGTH_SHORT).show();
+                        taskManager.get(TaskEdit.this, pos).setTaskName(editedChildTask.getText().toString());
                     }
-
                     taskManager.get(TaskEdit.this, pos).setChild(childrenManager.getChild(childPosition));
                     Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
                     startActivity(intent);

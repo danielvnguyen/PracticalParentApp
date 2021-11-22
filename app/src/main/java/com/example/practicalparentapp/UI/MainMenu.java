@@ -29,8 +29,6 @@ public class MainMenu extends AppCompatActivity {
         setUpTimeoutTimerBtn();
 
         setUpConfigureTasksBtn();
-
-
     }
 
     private void setUpTimeoutTimerBtn() {
@@ -64,12 +62,4 @@ public class MainMenu extends AppCompatActivity {
             startActivity(intent2);
         });
     }
-
-
-
-
-
-
-
-
 }

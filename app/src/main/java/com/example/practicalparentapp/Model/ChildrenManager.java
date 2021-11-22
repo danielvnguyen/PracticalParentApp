@@ -67,6 +67,15 @@ public class ChildrenManager {
         return -1;
     }
 
+    public boolean doesChildExist(Child child) {
+        for (int i = 0; i < childList.size(); i++) {
+            if (childList.get(i).getName().equals(child.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isChildExist(Integer index) {
         if (index >= childList.size() || index < 0) {
             return true;
