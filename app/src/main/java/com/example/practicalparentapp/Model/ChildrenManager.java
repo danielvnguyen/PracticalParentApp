@@ -51,8 +51,30 @@ public class ChildrenManager {
         return childList.isEmpty();
     }
 
+    public int size() {
+        return childList.size();
+    }
+
     public Child getChild(Integer index) {
         return childList.get(index);
+    }
+
+    public int getChildIndex(Child child) {
+        for (int i = 0; i < childList.size(); i++) {
+            if (childList.get(i).getName().equalsIgnoreCase(child.getName())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean doesChildExist(Child child) {
+        for (int i = 0; i < childList.size(); i++) {
+            if (childList.get(i).getName().equals(child.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isChildExist(Integer index) {

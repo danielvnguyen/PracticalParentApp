@@ -32,6 +32,15 @@
     <string name="white_box_msg">White box for user clarity</string>
     <string name="created_by_daniel_danny_emmanuel_and_tej">Created by Daniel, Danny, Emmanuel, and Tejeshwar</string>
     <string name="practical_parent_app">Practical Parent App</string>
+    <string name="title_activity_to_do">activity_to_do</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="save_picture">Save picture</string>
     <string name="change_child">Change Child</string>
     <string name="confirm_change">Confirm Change</string>
