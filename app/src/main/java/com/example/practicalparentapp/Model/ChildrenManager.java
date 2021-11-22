@@ -77,6 +77,7 @@ public class ChildrenManager {
         return -1;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean doesChildExist(Child child) {
         for (int i = 0; i < childList.size(); i++) {
             if (childList.get(i).getName().equals(child.getName())) {

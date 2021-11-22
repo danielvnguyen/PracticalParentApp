@@ -29,7 +29,6 @@ public class ConfigureTasks extends AppCompatActivity {
     public static ArrayList<String> tasksList;
     private TaskManager taskManager;
     private ListView toDoListView;
-    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class ConfigureTasks extends AppCompatActivity {
         taskManager = TaskManager.getInstance(this);
         tasksList = new ArrayList<>();
         clickCallBack(populateListView());
-        adapter = new ToDoListAdapter();
+        ArrayAdapter<String> adapter = new ToDoListAdapter();
         toDoListView = findViewById(R.id.taskListView);
         toDoListView.setAdapter(adapter);
     }
