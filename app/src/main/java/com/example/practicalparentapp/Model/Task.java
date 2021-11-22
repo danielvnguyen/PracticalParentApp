@@ -2,6 +2,10 @@ package com.example.practicalparentapp.Model;
 
 import androidx.annotation.NonNull;
 
+/**
+ * This class handles the functionality
+ * of the Task.
+ */
 public class Task {
 
     private String task_name;

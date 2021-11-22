@@ -42,6 +42,16 @@ public class ChildrenManager {
         return instance;
     }
 
+    public Child getChildByName(String childName) {
+        int childPosition = 0;
+        for (int i = 0; i < childList.size(); i++) {
+            if (getChild(i).getName().equals(childName)) {
+                childPosition = i;
+            }
+        }
+        return getChild(childPosition);
+    }
+
     public void addChildToList(Context context, Child newChild) {
         childList.add(newChild);
         saveChildList(context, childList);

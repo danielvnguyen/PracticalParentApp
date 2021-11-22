@@ -57,4 +57,10 @@
     <string name="history_text">History Text</string>
     <string name="clear_history">Clear History</string>
     <string name="tasks">Tasks</string>
+    <string name="enter_task">Enter Task</string>
+    <string name="confirm_turn">Confirm Turn</string>
+    <string name="remove_task">Remove Task</string>
+    <string name="cancel">Cancel</string>
+    <string name="ntextview">\nTextView</string>
+    <string name="enter_child">Enter Child</string>
 </resources>

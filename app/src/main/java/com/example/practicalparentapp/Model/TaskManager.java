@@ -2,7 +2,6 @@ package com.example.practicalparentapp.Model;
 
 import android.content.Context;
 
-import com.example.practicalparentapp.UI.TaskAdder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -20,13 +19,17 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * This class handles the tasks
+ * that will populate the task list.
+ */
 public class TaskManager {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
     public static final String TASKS_FILE_NAME = "tasks.json";
 
     private static TaskManager instance;
 
-    private TaskManager(Context context) { tasks = loadTasks(context); };
+    private TaskManager(Context context) { tasks = loadTasks(context); }
 
     public static TaskManager getInstance(Context context){
         if (instance == null) {

@@ -23,6 +23,10 @@ public class Child {
         return BitmapFactory.decodeByteArray(childImage, 0, childImage.length);
     }
 
+    public byte[] getChildImageInBytes() {
+        return childImage;
+    }
+
     public String getName() {
         return name;
     }

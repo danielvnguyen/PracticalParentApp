@@ -38,7 +38,6 @@ public class ConfigureTasks extends AppCompatActivity {
         taskManager = TaskManager.getInstance(this);
         tasksList = new ArrayList<>();
 
-        // To handle the clicking of an item in the list
         clickCallBack(populateListView());
 
         ArrayAdapter<String> adapter = new ToDoListAdapter();
@@ -63,7 +62,6 @@ public class ConfigureTasks extends AppCompatActivity {
         }
     }
 
-
     private boolean populateListView() {
         if(taskManager.size() == 0) {
             tasksList.add("");
@@ -76,7 +74,6 @@ public class ConfigureTasks extends AppCompatActivity {
         return true;
     }
 
-
     private void setUpAddTaskBtn() {
         Button btn = findViewById(R.id.addTaskBtn);
         btn.setOnClickListener((v2) -> {
@@ -84,7 +81,6 @@ public class ConfigureTasks extends AppCompatActivity {
             startActivity(intent2);
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ConfigureTasks.class);
