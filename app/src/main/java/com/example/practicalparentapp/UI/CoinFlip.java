@@ -236,7 +236,7 @@ public class CoinFlip extends AppCompatActivity {
         int itemID = item.getItemId();
 
         if (itemID == android.R.id.home) {
-            onBackPressed();
+            finish();
             return true;
         }
 
@@ -249,11 +249,6 @@ public class CoinFlip extends AppCompatActivity {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL dd @ h:mma");
         return formatter.format(startTime);
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 
     public static Intent makeIntent(Context context) {

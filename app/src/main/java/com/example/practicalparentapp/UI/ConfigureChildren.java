@@ -38,16 +38,11 @@ public class ConfigureChildren extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemID = item.getItemId();
 
         if (itemID == android.R.id.home) {
-            onBackPressed();
+            finish();
             return true;
         }
 
