@@ -29,40 +29,49 @@
     <Button
         android:id="@+id/confirmTask"
         android:layout_width="190dp"
-        android:layout_height="57dp"
+        android:layout_height="62dp"
         android:backgroundTint="#FFFFFF"
         android:text="@string/confirm_turn"
+        app:cornerRadius="25dp"
         app:layout_constraintBottom_toTopOf="@+id/removeTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cancel"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintVertical_bias="0.428"
+        app:strokeColor="#CFCACA"
+        app:strokeWidth="4dp" />
 
     <Button
         android:id="@+id/removeTask"
         android:layout_width="190dp"
-        android:layout_height="57dp"
+        android:layout_height="62dp"
         android:backgroundTint="#FFFFFF"
         android:text="@string/remove_task"
+        app:cornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.747" />
+        app:layout_constraintVertical_bias="0.883"
+        app:strokeColor="#CFCACA"
+        app:strokeWidth="4dp" />
 
     <Button
         android:id="@+id/cancel"
         android:layout_width="190dp"
-        android:layout_height="57dp"
+        android:layout_height="62dp"
         android:backgroundTint="#FFFFFF"
         android:text="@string/cancel"
+        app:cornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.164" />
+        app:layout_constraintVertical_bias="0.164"
+        app:strokeColor="#CFCACA"
+        app:strokeWidth="4dp" />
 
     <ImageView
         android:id="@+id/childImg"
