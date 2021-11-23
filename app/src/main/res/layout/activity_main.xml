@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toEndOf="@+id/configureChildrenBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.876"
+        app:layout_constraintVertical_bias="0.832"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
@@ -27,10 +27,12 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toEndOf="@+id/help_screen_btn"
         app:layout_constraintTop_toBottomOf="@+id/timeImg"
+        app:layout_constraintVertical_bias="0.01999998"
         app:srcCompat="@android:drawable/ic_menu_help"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
@@ -43,7 +45,7 @@
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toEndOf="@+id/configureTaskBtn"
         app:layout_constraintTop_toBottomOf="@+id/timeImg"
-        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_bias="0.63"
         app:srcCompat="@android:drawable/checkbox_on_background"
         tools:ignore="ContentDescription" />
 
@@ -55,8 +57,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toEndOf="@+id/flipCoinBtn"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuTitle"
-        app:layout_constraintVertical_bias="0.305"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.283"
         app:srcCompat="@drawable/heads"
         tools:ignore="ContentDescription" />
 
@@ -69,26 +71,9 @@
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toEndOf="@+id/timeoutBtn"
         app:layout_constraintTop_toBottomOf="@+id/flipImg"
-        app:layout_constraintVertical_bias="0.052"
+        app:layout_constraintVertical_bias="0.045"
         app:srcCompat="@android:drawable/ic_lock_idle_alarm"
         tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/mainMenuTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:fontFamily="sans-serif"
-        android:text="@string/practical_parent_app"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="44.38sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/help_screen_btn"
@@ -106,21 +91,6 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/configureChildrenBtn"
-        android:layout_width="170dp"
-        android:layout_height="80dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/configure_children_txt"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.233" />
-
-    <Button
         android:id="@+id/flipCoinBtn"
         android:layout_width="170dp"
         android:layout_height="80dp"
@@ -134,7 +104,7 @@
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/configureChildrenBtn"
-        app:layout_constraintVertical_bias="0.041" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/timeoutBtn"
@@ -149,7 +119,7 @@
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flipCoinBtn"
-        app:layout_constraintVertical_bias="0.002" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/configureTaskBtn"
@@ -166,5 +136,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeoutBtn"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/configureChildrenBtn"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/configure_children_txt"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.156" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
