@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/b_w"
+    android:background="@drawable/bbp"
+
     tools:context=".UI.TaskEdit">
 
     <EditText
@@ -13,87 +14,72 @@
         android:layout_width="333dp"
         android:layout_height="76dp"
         android:ems="10"
-        android:hint="@string/enter_task"
+        android:hint="Enter Task"
         android:inputType="text"
-        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538"
-        tools:ignore="Autofill,TextContrastCheck" />
+        app:layout_constraintVertical_bias="0.538" />
 
     <Button
         android:id="@+id/confirmTask"
         android:layout_width="190dp"
-        android:layout_height="62dp"
-        android:backgroundTint="#55AFF6"
-        android:text="@string/confirm_turn"
-        android:textColor="#000000"
-        app:cornerRadius="25dp"
+        android:layout_height="57dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Confirm Turn"
         app:layout_constraintBottom_toTopOf="@+id/removeTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cancel"
-        app:layout_constraintVertical_bias="0.428"
-        app:strokeColor="#2198CD"
-        app:strokeWidth="4dp" />
+        app:layout_constraintVertical_bias="0.428" />
 
     <Button
         android:id="@+id/removeTask"
         android:layout_width="190dp"
-        android:layout_height="62dp"
-        android:backgroundTint="#55AFF6"
-        android:text="@string/remove_task"
-        android:textColor="#000000"
-        app:cornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.839"
-        app:strokeColor="#2198CD"
-        app:strokeWidth="4dp" />
-
-    <Button
-        android:id="@+id/cancel"
-        android:layout_width="190dp"
-        android:layout_height="62dp"
-        android:backgroundTint="#55AFF6"
-        android:text="@string/cancel"
-        android:textColor="#000000"
-        app:cornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.164"
-        app:strokeColor="#2198CD"
-        app:strokeWidth="4dp"
-        tools:ignore="TextContrastCheck" />
-
-    <ImageView
-        android:id="@+id/childImg"
-        android:layout_width="216dp"
-        android:layout_height="188dp"
+        android:layout_height="57dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Remove Task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editChildTask"
+        app:layout_constraintVertical_bias="0.747" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="190dp"
+        android:layout_height="57dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editChildTask"
+        app:layout_constraintVertical_bias="0.164" />
+
+    <ImageView
+        android:id="@+id/childImg"
+        android:layout_width="210dp"
+        android:layout_height="191dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057"
-        tools:ignore="ContentDescription,ImageContrastCheck"
+        app:layout_constraintVertical_bias="0.09"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/childName"
         android:layout_width="333dp"
         android:layout_height="wrap_content"
-        android:text="@string/ntextview"
-        android:textColor="#000000"
+        android:text="\nTextView"
+        android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,3 +88,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.426" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
