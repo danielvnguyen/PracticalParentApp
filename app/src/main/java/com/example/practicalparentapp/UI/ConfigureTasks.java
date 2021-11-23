@@ -44,7 +44,6 @@ public class ConfigureTasks extends AppCompatActivity {
         if (getIntent().getBooleanExtra("TaskEdit", false)) {
             finish();
         }
-
         updateTasks();
         setUpAddTaskBtn();
     }
@@ -107,6 +106,7 @@ public class ConfigureTasks extends AppCompatActivity {
         public ToDoListAdapter() {
             super(ConfigureTasks.this, R.layout.adapter_view_no_task, tasksList);
         }
+
 
         @NonNull
         @Override
