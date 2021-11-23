@@ -41,9 +41,11 @@ public class ConfigureTasks extends AppCompatActivity {
         if (getIntent().getBooleanExtra("TaskAdder", false)) {
             finish();
         }
+
         if (getIntent().getBooleanExtra("TaskEdit", false)) {
             finish();
         }
+
         updateTasks();
         setUpAddTaskBtn();
     }
