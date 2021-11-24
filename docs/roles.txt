@@ -9,3 +9,9 @@ Roles for Iteration 2:
 - Scrum Master: Daniyal Nussipakynov
 - Repository Manager: Daniel Nguyen
 - Team Member: Tejeshwar Multani
+
+Roles for Iteration 3:
+- Product Owner: Tejeshwar Multani
+- Scrum Master: Emmanuel Okonkwo
+- Repository Manager: Daniyal Nussipakynov
+- Team Member: Daniel Nguyen
