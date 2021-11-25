@@ -8,14 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This class handles the 'Take Breath' activity
@@ -32,13 +34,16 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         void handleEnter() {}
         void handleExit() {}
+        //user holds button?
         void handleClickOn() {}
+        //user releases button?
         void handleClickOff() {}
     }
 
     public final State inhaleState = new InhaleState();
     public final State exhaleState = new ExhaleState();
     private State currentState = new IdleState();
+
     private ImageView generalButton;
     private Integer numOfBreaths;
     private TextView helpText;
@@ -87,7 +92,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         int inputNum = Integer.parseInt(inputString);
 
-        if (inputNum < 0 || inputNum > 10) {
+        if (inputNum < 1 || inputNum > 10) {
             Toast.makeText(getApplicationContext(),
                     "Your number is not between 1-10!", Toast.LENGTH_SHORT).show();
             return false;
@@ -117,13 +122,38 @@ public class TakeBreathActivity extends AppCompatActivity {
     // ************************************************************
 
     private class InhaleState extends State {
+        int timeHeld = 0;
+        TimerTask tt;
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
         @Override
         void handleEnter() {
             generalButton.setImageResource(R.drawable.in_button);
             helpText.setText("Breath in while holding the 'In' button");
             inputNumBreaths.setVisibility(View.INVISIBLE);
+
+            tt = new TimerTask() {
+                @Override
+                public void run() {
+                    timeHeld++;
+                    System.out.println(timeHeld);
+                }
+            };
+
+            generalButton.setOnTouchListener((view, motionEvent) -> {
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        //Start
+                        Timer timer = new Timer();
+                        timer.scheduleAtFixedRate(tt, 0, 1000);
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //End
+                        break;
+                }
+                return false;
+            });
         }
     }
 
