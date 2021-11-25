@@ -51,11 +51,12 @@
     <string name="dev_info_text" tools:ignore="TypographyDashes">
         Our team name is 276-2021-7-Iron. The developers are Daniyal Nussipakynov, Tejeshwar Multani, Daniel Nguyen, and Emmanuel Ekene Okonkwo.</string>
     <string name="citations_info_text">
-        Heads/Tails Coin: https://www.shutterstock.com/search/coin+heads+tails \n<br/>\n<br/>
-        Wallpaper 1: https://www.pinterest.ca/sa3717171/baby-blue-wallpaper/ \n<br/>\n<br/>
-        Wallpaper 2: https://www.pinterest.ca/pin/817614507349568393/ \n<br/>\n<br/>
-        Wallpaper 3: https://www.pexels.com/photo/blue-sky-281260/ \n<br/>\n<br/>
-        Wallpaper 4: https://all-free-download.com/free-vector/download/abstract_background_266991.html</string>
+        Heads/Tails Coin: https://www.shutterstock.com/search/coin+heads+tails \n<br />
+        Wallpaper 1: https://www.pinterest.ca/sa3717171/baby-blue-wallpaper/ \n<br />
+        Wallpaper 2: https://www.pinterest.ca/pin/817614507349568393/ \n<br />
+        Wallpaper 3: https://www.pexels.com/photo/blue-sky-281260/ \n<br />
+        Wallpaper 4: https://all-free-download.com/free-vector/download/abstract_background_266991.html \n<br />
+        Relax Icon: https://www.pngitem.com/middle/woowT_person-silhouette-in-posture-icono-relax-png-transparent/ </string>
     <string name="history_text">History Text</string>
     <string name="clear_history">Clear History</string>
     <string name="tasks">Tasks</string>
@@ -70,4 +71,5 @@
     <string name="textview1" tools:ignore="Typos">TextView1</string>
     <string name="child_text_view">The_Child</string>
     <string name="n_n_n_n_n_n_n_nno_tasks_added_yet_n_nplease_click_on_the_add_task_n_button_to_add_and_assign_a_task_n_to_a_child">\n\n\n\n\n\n\n\nNo Tasks Added Yet.\n\nPlease, click on the Add Task\n Button to add and assign a task\n to a child</string>
+    <string name="take_a_breath">Take a Breath</string>
 </resources>

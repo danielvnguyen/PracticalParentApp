@@ -23,6 +23,15 @@ public class MainMenu extends AppCompatActivity {
         setUpTimeoutTimerBtn();
         setUpHelpScreenBtn();
         setUpConfigureTasksBtn();
+        setUpTakeBreathBtn();
+    }
+
+    private void setUpTakeBreathBtn() {
+        Button breathBtn = findViewById(R.id.take_breath_btn);
+        breathBtn.setOnClickListener((v) -> {
+            Intent intent = TakeBreathActivity.makeIntent(this);
+            startActivity(intent);
+        });
     }
 
     private void setUpConfigureTasksBtn() {
