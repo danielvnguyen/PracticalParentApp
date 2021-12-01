@@ -49,7 +49,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     private Integer numOfBreaths;
     private TextView helpText;
     private EditText inputNumBreaths;
-    private int breathsToDo;
+    private Integer breathsToDo;
     private long secondsHeld;
     private long secondsDuration;
     private SharedPreferences.Editor editor;
@@ -179,7 +179,7 @@ public class TakeBreathActivity extends AppCompatActivity {
             noButton.setVisibility(View.INVISIBLE);
 
             inButton.setVisibility(View.VISIBLE);
-            helpText.setText("Breath in while holding the 'In' button");
+            helpText.setText(R.string.inhale_txt);
             inputNumBreaths.setVisibility(View.INVISIBLE);
             resetSeconds();
 
@@ -190,14 +190,13 @@ public class TakeBreathActivity extends AppCompatActivity {
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
-                    //Need to automatically do this at 10 seconds.
-                    if (secondsDuration >= 3000) {
+
+                    if (secondsDuration >= 3000 && secondsDuration < 10000) {
                         setState(exhaleState);
                     }
                     else {
                         resetSeconds();
                         timerHandler.removeCallbacks(timerRunnable);
-                        timerHandler.postDelayed(timerRunnable, 10000);
                     }
                 }
                 return true;
@@ -214,9 +213,9 @@ public class TakeBreathActivity extends AppCompatActivity {
     private class ExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> {
+            numOfBreaths++;
             if (numOfBreaths < breathsToDo) {
                 setState(inhaleState);
-                numOfBreaths++;
             }
             else {
                 setState(askMoreState);
@@ -227,7 +226,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleEnter() {
             outButton.setVisibility(View.VISIBLE);
-            helpText.setText("Now breathe out while holding the 'Out' button");
+            helpText.setText(R.string.exhale_txt);
             resetSeconds();
 
             outButton.setOnTouchListener((view, motionEvent) -> {
@@ -237,12 +236,11 @@ public class TakeBreathActivity extends AppCompatActivity {
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
-                    //Need to automatically do this at 10 seconds.
-                    if (secondsDuration >= 3000) {
+
+                    if (secondsDuration >= 3000 && secondsDuration < 10000) {
                         numOfBreaths++;
 
-                        //Check if user has completed all breaths
-                        if (numOfBreaths == breathsToDo) {
+                        if (numOfBreaths.equals(breathsToDo)) {
                             goodJobButton.setVisibility(View.VISIBLE);
                             helpText.setVisibility(View.INVISIBLE);
                         }
@@ -253,7 +251,6 @@ public class TakeBreathActivity extends AppCompatActivity {
                     else {
                         resetSeconds();
                         timerHandler.removeCallbacks(timerRunnable);
-                        timerHandler.postDelayed(timerRunnable, 10000);
                     }
                 }
 
@@ -273,7 +270,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleEnter() {
             goodJobButton.setVisibility(View.INVISIBLE);
             helpText.setVisibility(View.VISIBLE);
-            helpText.setText("Would you like to take more breaths?");
+            helpText.setText(R.string.ask_more_txt);
             resetSeconds();
 
             Button yesButton = findViewById(R.id.yesBtn);
@@ -291,6 +288,5 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private class IdleState extends State {
-        //Does nothing
     }
 }
