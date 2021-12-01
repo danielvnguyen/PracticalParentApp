@@ -5,6 +5,7 @@ import com.example.practicalparentapp.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -46,6 +47,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     private int breathsToDo;
     private long secondsHeld;
     private long secondsDuration;
+    private SharedPreferences.Editor editor;
 
     public void setState(State newState) {
         currentState.handleExit();
@@ -57,6 +59,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Plain old Android Code (Non-State code)
     // ***********************************************************
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +67,16 @@ public class TakeBreathActivity extends AppCompatActivity {
         setTitle(R.string.take_a_breath);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        //Initialize
+        SharedPreferences prefs = getSharedPreferences("myPref", MODE_PRIVATE);
+        editor = prefs.edit();
+
+        inputNumBreaths = findViewById(R.id.input_num_ET);
+        breathsToDo = prefs.getInt("breathsToDo", 0);
+        inputNumBreaths.setText(breathsToDo + "");
+
         generalButton = findViewById(R.id.begin_btn);
         helpText = findViewById(R.id.input_breaths_TV);
-        inputNumBreaths = findViewById(R.id.input_num_ET);
         secondsHeld = 0;
         numOfBreaths = 0;
 
@@ -77,6 +87,13 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         setUpBeginButton();
         setUpProceedButton();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editor.putInt("breathsToDo", breathsToDo);
+        editor.apply();
     }
 
     private void setUpProceedButton() {
