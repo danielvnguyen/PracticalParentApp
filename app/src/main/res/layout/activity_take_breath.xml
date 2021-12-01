@@ -7,20 +7,6 @@
     tools:context=".UI.TakeBreathActivity"
     android:background="@drawable/bg2">
 
-    <Button
-        android:id="@+id/proceedBtn"
-        android:layout_width="400dp"
-        android:layout_height="405dp"
-        android:background="#00FFFFFF"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_num_ET"
-        app:layout_constraintVertical_bias="0.31"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/input_breaths_TV"
         android:layout_width="wrap_content"
@@ -72,7 +58,8 @@
         android:text="@string/yes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="TextContrastCheck"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/noBtn"
@@ -83,6 +70,49 @@
         android:text="@string/no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="TextContrastCheck"
+        tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/in_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_num_ET"
+        app:layout_constraintVertical_bias="0.29000002"
+        app:srcCompat="@drawable/in_button"
+        tools:ignore="ContentDescription"
+        tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/out_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_num_ET"
+        app:layout_constraintVertical_bias="0.29000002"
+        app:srcCompat="@drawable/out_button"
+        tools:ignore="ContentDescription"
+        tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/good_job_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_num_ET"
+        app:layout_constraintVertical_bias="0.29000002"
+        app:srcCompat="@drawable/good_job_button"
+        tools:ignore="ContentDescription"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

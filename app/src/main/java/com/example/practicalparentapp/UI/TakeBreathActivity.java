@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,7 +41,11 @@ public class TakeBreathActivity extends AppCompatActivity {
     public final State askMoreState = new AskMoreState();
     private State currentState = new IdleState();
 
-    private ImageView generalButton;
+    private ImageView beginButton;
+    private ImageView inButton;
+    private ImageView outButton;
+    private ImageView goodJobButton;
+
     private Integer numOfBreaths;
     private TextView helpText;
     private EditText inputNumBreaths;
@@ -50,9 +55,11 @@ public class TakeBreathActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
 
     public void setState(State newState) {
-        currentState.handleExit();
-        currentState = newState;
-        currentState.handleEnter();
+        if (currentState != newState) {
+            currentState.handleExit();
+            currentState = newState;
+            currentState.handleEnter();
+        }
     }
 
     // ***********************************************************
@@ -75,7 +82,11 @@ public class TakeBreathActivity extends AppCompatActivity {
         breathsToDo = prefs.getInt("breathsToDo", 0);
         inputNumBreaths.setText(breathsToDo + "");
 
-        generalButton = findViewById(R.id.begin_btn);
+        beginButton = findViewById(R.id.begin_btn);
+        inButton = findViewById(R.id.in_btn);
+        outButton = findViewById(R.id.out_btn);
+        goodJobButton = findViewById(R.id.good_job_Btn);
+
         helpText = findViewById(R.id.input_breaths_TV);
         secondsHeld = 0;
         numOfBreaths = 0;
@@ -86,7 +97,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         noButton.setVisibility(View.INVISIBLE);
 
         setUpBeginButton();
-        setUpProceedButton();
+        setUpGoodJobButton();
     }
 
     @Override
@@ -96,16 +107,16 @@ public class TakeBreathActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void setUpProceedButton() {
-        Button proceedBtn = findViewById(R.id.proceedBtn);
-        proceedBtn.setOnClickListener((v) -> setState(askMoreState));
+    private void setUpGoodJobButton() {
+        goodJobButton.setOnClickListener((v) -> setState(askMoreState));
     }
 
     private void setUpBeginButton() {
-        generalButton.setOnClickListener((v) -> {
+        beginButton.setOnClickListener((v) -> {
             if (validateInput(inputNumBreaths)) {
                 setState(inhaleState);
                 breathsToDo = Integer.parseInt(inputNumBreaths.getText().toString());
+                beginButton.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -155,67 +166,85 @@ public class TakeBreathActivity extends AppCompatActivity {
     // ************************************************************
 
     private class InhaleState extends State {
+        Handler timerHandler = new Handler();
+        Runnable timerRunnable = () -> setState(exhaleState);
 
         @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
         @Override
         void handleEnter() {
+
             Button yesButton = findViewById(R.id.yesBtn);
             yesButton.setVisibility(View.INVISIBLE);
             Button noButton = findViewById(R.id.noBtn);
             noButton.setVisibility(View.INVISIBLE);
 
-            generalButton.setVisibility(View.VISIBLE);
-            generalButton.setImageResource(R.drawable.in_button);
+            inButton.setVisibility(View.VISIBLE);
             helpText.setText("Breath in while holding the 'In' button");
             inputNumBreaths.setVisibility(View.INVISIBLE);
             resetSeconds();
 
-            generalButton.setOnTouchListener((view, motionEvent) -> {
+            inButton.setOnTouchListener((view, motionEvent) -> {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     secondsHeld = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 10000);
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
                     //Need to automatically do this at 10 seconds.
                     if (secondsDuration >= 3000) {
-                        System.out.println("Button held for 3 seconds at least");
                         setState(exhaleState);
                     }
                     else {
                         resetSeconds();
+                        timerHandler.removeCallbacks(timerRunnable);
+                        timerHandler.postDelayed(timerRunnable, 10000);
                     }
                 }
                 return true;
             });
         }
+
+        @Override
+        void handleExit() {
+            timerHandler.removeCallbacks(timerRunnable);
+            inButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private class ExhaleState extends State {
+        Handler timerHandler = new Handler();
+        Runnable timerRunnable = () -> {
+            if (numOfBreaths < breathsToDo) {
+                setState(inhaleState);
+                numOfBreaths++;
+            }
+            else {
+                setState(askMoreState);
+            }
+        };
 
         @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
         @Override
         void handleEnter() {
-            generalButton.setImageResource(R.drawable.out_button);
+            outButton.setVisibility(View.VISIBLE);
             helpText.setText("Now breathe out while holding the 'Out' button");
             resetSeconds();
 
-            generalButton.setOnTouchListener((view, motionEvent) -> {
+            outButton.setOnTouchListener((view, motionEvent) -> {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     secondsHeld = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 10000);
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
                     //Need to automatically do this at 10 seconds.
                     if (secondsDuration >= 3000) {
-                        System.out.println("Button held for 3 seconds at least");
                         numOfBreaths++;
 
                         //Check if user has completed all breaths
                         if (numOfBreaths == breathsToDo) {
+                            goodJobButton.setVisibility(View.VISIBLE);
                             helpText.setVisibility(View.INVISIBLE);
-                            generalButton.setImageResource(R.drawable.good_job_button);
-                            Button proceedBtn = findViewById(R.id.proceedBtn);
-                            proceedBtn.setVisibility(View.VISIBLE);
                         }
                         else {
                             setState(inhaleState);
@@ -223,20 +252,26 @@ public class TakeBreathActivity extends AppCompatActivity {
                     }
                     else {
                         resetSeconds();
+                        timerHandler.removeCallbacks(timerRunnable);
+                        timerHandler.postDelayed(timerRunnable, 10000);
                     }
                 }
 
                 return true;
             });
         }
+
+        @Override
+        void handleExit() {
+            timerHandler.removeCallbacks(timerRunnable);
+            outButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private class AskMoreState extends State {
         @SuppressLint("SetTextI18n")
         void handleEnter() {
-            Button proceedBtn = findViewById(R.id.proceedBtn);
-            proceedBtn.setVisibility(View.INVISIBLE);
-            generalButton.setVisibility(View.INVISIBLE);
+            goodJobButton.setVisibility(View.INVISIBLE);
             helpText.setVisibility(View.VISIBLE);
             helpText.setText("Would you like to take more breaths?");
             resetSeconds();
