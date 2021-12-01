@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,10 @@ import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.TaskManager;
 import com.example.practicalparentapp.R;
+import com.example.practicalparentapp.TaskHistory;
+import com.example.practicalparentapp.UI.TinyDB;
+
+import java.util.ArrayList;
 
 /**
  * This class handles
@@ -26,7 +31,12 @@ import com.example.practicalparentapp.R;
  * by the parent
  */
 public class TaskEdit extends AppCompatActivity {
-
+//    TaskHistoryObjectClass history;
+    TinyDB tinydb;
+    public static String currentTask;
+    String currentChild;
+    private static final String TAG = "MyAct";
+    ArrayList<TaskHistoryObjectClass> taskList= new ArrayList<>();
     private TaskManager taskManager;
     private ChildrenManager childrenManager;
     private int pos;
@@ -48,6 +58,17 @@ public class TaskEdit extends AppCompatActivity {
         taskManager = TaskManager.getInstance(this);
         childrenManager = ChildrenManager.getInstance(this);
         editFields();
+
+        tinydb = new TinyDB(this);
+        // my code that I've added
+        Button history = findViewById(R.id.historyBtn);
+        history.setOnClickListener((v -> {
+            Intent intent = TaskHistory.makeIntent(this);
+            startActivity(intent);
+        }));
+
+
+
     }
 
     @Override
@@ -66,6 +87,7 @@ public class TaskEdit extends AppCompatActivity {
         Button confirm = findViewById(R.id.confirmTask);
         Button cancel = findViewById(R.id.cancel);
         Button remove = findViewById(R.id.removeTask);
+
         ImageView childImage = findViewById(R.id.childImg);
         confirm.setText("Confirm Turn");
 
@@ -100,6 +122,46 @@ public class TaskEdit extends AppCompatActivity {
             } else {
                 childPosition += 1;
             }
+
+
+            //##########################################################
+            // my code here ################################################
+
+
+            TinyDB tinydb = new TinyDB(this);
+            ArrayList<Object> historyObjects = tinydb.getListObject(currentTask, TaskHistoryObjectClass.class);
+
+
+            for(Object objs : historyObjects){
+                taskList.add((TaskHistoryObjectClass) objs);
+            }
+
+//            ArrayList<TaskHistoryObjectClass> taskList= new ArrayList<>();
+            currentChild = childWithTurn.getName();
+            currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
+            Log.i(TAG, "current child is  " + currentChild);
+            Log.i(TAG, "current task is  " + currentTask);
+            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild);
+            taskList.add(history);
+
+
+
+            ArrayList<Object> playerObjects = new ArrayList<Object>();
+
+            for(TaskHistoryObjectClass a : taskList){
+                playerObjects.add((Object)a);
+            }
+            Log.i(TAG, "size of taskList " + taskList.size());
+            Log.i(TAG, "size of playerObjects " + playerObjects.size());
+
+//            TinyDB tinydb = new TinyDB(this);
+            tinydb.putListObject(currentTask, playerObjects);
+
+            // ###########################################################
+            //##########################################################
+
+
+
 
             if (confirm.getText().toString().equals("Save Changes")) {
                 if (!childrenManager.doesChildExist(childWithTurn)) {

@@ -35,9 +35,10 @@
         app:cornerRadius="25dp"
         app:layout_constraintBottom_toTopOf="@+id/removeTask"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cancel"
-        app:layout_constraintVertical_bias="0.428"
+        app:layout_constraintVertical_bias="1.0"
         app:strokeColor="#CFCACA"
         app:strokeWidth="4dp" />
 
@@ -67,10 +68,10 @@
         app:cornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.164"
+        app:layout_constraintVertical_bias="0.369"
         app:strokeColor="#CFCACA"
         app:strokeWidth="4dp" />
 
@@ -99,5 +100,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.426" />
+
+    <Button
+        android:id="@+id/historyBtn"
+        android:layout_width="163dp"
+        android:layout_height="56dp"
+        android:text="History"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.659" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
