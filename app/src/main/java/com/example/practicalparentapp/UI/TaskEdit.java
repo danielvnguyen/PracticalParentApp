@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
  */
 public class TaskEdit extends AppCompatActivity {
 //    TaskHistoryObjectClass history;
-    TinyDB tinydb;
+//    TinyDB tinydb;
     public static String currentTask;
     String currentChild;
     private static final String TAG = "MyAct";
@@ -40,6 +41,7 @@ public class TaskEdit extends AppCompatActivity {
     private TaskManager taskManager;
     private ChildrenManager childrenManager;
     private int pos;
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskEdit.class);
@@ -54,16 +56,17 @@ public class TaskEdit extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        TinyDB tinydb = new TinyDB(this);
         taskManager = TaskManager.getInstance(this);
         childrenManager = ChildrenManager.getInstance(this);
         editFields();
 
-        tinydb = new TinyDB(this);
+//        tinydb = new TinyDB(this);
         // my code that I've added
         Button history = findViewById(R.id.historyBtn);
         history.setOnClickListener((v -> {
             Intent intent = TaskHistory.makeIntent(this);
+            currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
             startActivity(intent);
         }));
 
@@ -156,6 +159,7 @@ public class TaskEdit extends AppCompatActivity {
 
 //            TinyDB tinydb = new TinyDB(this);
             tinydb.putListObject(currentTask, playerObjects);
+
 
             // ###########################################################
             //##########################################################

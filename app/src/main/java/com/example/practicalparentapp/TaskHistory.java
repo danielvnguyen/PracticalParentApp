@@ -28,11 +28,6 @@ public class TaskHistory extends AppCompatActivity {
 
         String currentTask = TaskEdit.currentTask;
 
-        //Create the Person objects
-//        TaskHistoryObjectClass john = new TaskHistoryObjectClass ("clean","john");
-//        TaskHistoryObjectClass  steve = new TaskHistoryObjectClass ("shave","steve");
-//        TaskHistoryObjectClass  stacy = new TaskHistoryObjectClass ("clean","stacy");
-//        TaskHistoryObjectClass  ashley = new TaskHistoryObjectClass ("clean","ashley");
 
         TinyDB tinydb = new TinyDB(this);
         ArrayList<TaskHistoryObjectClass> List = new ArrayList<>();
@@ -41,29 +36,27 @@ public class TaskHistory extends AppCompatActivity {
             List.add((TaskHistoryObjectClass) objs);
         }
         ArrayList<TaskHistoryObjectClass> peopleList = new ArrayList<>();
-//        ArrayList<String> names = new ArrayList<>();
+
         int size=List.size();
 
+        String tname;
         for(int i = 0; i<size;i++) {
             TaskHistoryObjectClass o = List.get(i);
-//            if (o.getTaskName()==currentTask) {
+            tname=o.getTaskName();
+            if (tname.equals(currentTask)) {
+                Log.i(TAG, "entered the loop ");
+
                 peopleList.add(o);
-//                names.add(o.getChildName());
-//            }
+            }
         }
+
+        Log.i(TAG, "task name is " + currentTask);
+
+        Log.i(TAG, "size of List is " + List.size());
 
         Log.i(TAG, "size of peopleList is " + peopleList.size());
 
-        //Add the Person objects to an ArrayList
-//        ArrayList<TaskHistoryObjectClass> peopleList = new ArrayList<>();
-//        int sizeofnames=names.size();
-//        for (x = 0;x<sizeofnames;x++) {
 
-
-//        peopleList.add(john);
-//        peopleList.add(steve);
-//        peopleList.add(stacy);
-//        peopleList.add(ashley);
 
 
         TaskHistoryAdapter adapter = new TaskHistoryAdapter(this, R.layout.activity_task_history_adapter, peopleList);
