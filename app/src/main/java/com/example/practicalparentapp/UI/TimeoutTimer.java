@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.practicalparentapp.Model.NotificationClass;
@@ -48,6 +49,10 @@ import java.util.UUID;
  */
 public class TimeoutTimer extends AppCompatActivity {
 
+    public static final int [] GREEN = {
+            Color.rgb(0, 255, 0)
+    };
+
     private long START_TIME_IN_MILLIS;
     private TextView mTextViewCountDown, timeText;
     private Button mButtonStartPause, mButtonReset, mButtonSave;
@@ -66,6 +71,11 @@ public class TimeoutTimer extends AppCompatActivity {
     private long mEndTime;
 
     private List<PieEntry> pieEntries;
+    private PieDataSet dataSet;
+    private PieData data;
+    private PieChart chart;
+    private ImageView chartBackground;
+    private boolean isNewTimer;
 
     @Override
     protected void onUserLeaveHint() {
@@ -77,12 +87,13 @@ public class TimeoutTimer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
-
         setTitle("Timeout Timer");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        chartBackground = findViewById(R.id.chartBackground);
+        isNewTimer = true;
 
         if (!getIntent().getBooleanExtra("clickedNotification", false)) {
             notificationManager = NotificationManagerCompat.from(this);
@@ -239,30 +250,53 @@ public class TimeoutTimer extends AppCompatActivity {
 
             isCustom=true;
         });
-        setUpPieChart();
     }
 
-    //Update pie chart whenever a reset or timer starts.
-    private void updatePieChart() {
+    private void clearPieChart() {
+        if (chart.getData() != null) {
+            chart.getData().clearValues();
+        }
+        chart.clear();
+        chartBackground.setVisibility(View.INVISIBLE);
+    }
 
+    //Call every time the timer ticks.
+    private void decreasePieChart() {
+        int pieSize = pieEntries.size();
+        PieEntry toRemove = pieEntries.get(pieSize-1);
+        pieEntries.remove(toRemove);
+        chart.invalidate(); //refreshes chart
     }
 
     //This function sets up the pie chart on activity start.
-    private void setUpPieChart() {
-        pieEntries = new ArrayList<>();
+    private void updatePieChart() {
+        if (isNewTimer) {
+            chartBackground.setVisibility(View.VISIBLE);
+            pieEntries = new ArrayList<>();
 
-        for (int i = 0; i < mTimeLeftInMillis; i++) {
-            pieEntries.add(new PieEntry(1));
+            for (int i = 0; i < mTimeLeftInMillis; i+=1000) {
+                pieEntries.add(new PieEntry(1));
+            }
+
+            dataSet = new PieDataSet(pieEntries, "Visual Timer");
+            dataSet.setColors(GREEN);
+            dataSet.setDrawValues(false);
+            data = new PieData(dataSet);
+
+            chart = findViewById(R.id.chart);
+            chart.setData(data);
+
+            chart.getDescription().setEnabled(false);
+            chart.setDrawEntryLabels(false);
+            chart.getLegend().setEnabled(false);
+            chart.setDrawMarkers(false);
+            chart.setDrawCenterText(false);
+            chart.setDrawHoleEnabled(false);
+            chart.invalidate();
         }
-
-        PieDataSet dataSet = new PieDataSet(pieEntries, "");
-        PieData data = new PieData(dataSet);
-
-        PieChart chart = findViewById(R.id.chart);
-        chart.getDescription().setEnabled(false);
-        chart.setData(data);
-        chart.invalidate();
     }
+
+    //--------------------------------------------------------------------------
 
     private void changeLayout() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -298,6 +332,9 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void resetTimer() {
+        clearPieChart();
+        isNewTimer = true;
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("cancel", true);
@@ -332,6 +369,8 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.start);
         mButtonReset.setVisibility(View.INVISIBLE);
+
+        //updatePieChart();
     }
 
     public static Vibrator getVibrator(){
@@ -355,6 +394,7 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis=millisUntilFinished;
                 updateCountDownText();
+                decreasePieChart();
             }
 
             @Override
@@ -380,6 +420,7 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.pause);
         mButtonReset.setVisibility(View.VISIBLE);
+        updatePieChart();
     }
 
     private void setupAlarmVibrate() {
@@ -421,6 +462,7 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.resume);
         mButtonReset.setVisibility(View.VISIBLE);
+        isNewTimer = false;
     }
 
     private void updateCountDownText() {
