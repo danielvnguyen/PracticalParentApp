@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.practicalparentapp.Model.NotificationClass;
 import com.example.practicalparentapp.Model.NotificationReceiver;
 import com.example.practicalparentapp.R;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -37,7 +38,6 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -74,7 +74,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private long mTimeLeftInMillis;
     private long mEndTime;
 
-    private List<PieEntry> pieEntries;
+    private ArrayList<PieEntry> pieEntries;
     private PieChart chart;
     private ImageView chartBackground;
     private boolean isNewTimer;
@@ -96,6 +96,14 @@ public class TimeoutTimer extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         chart = findViewById(R.id.chart);
+        chart.getDescription().setEnabled(false);
+        chart.setDrawEntryLabels(false);
+        chart.getLegend().setEnabled(false);
+        chart.setDrawMarkers(false);
+        chart.setDrawCenterText(false);
+        chart.setDrawHoleEnabled(false);
+        chart.setRotationEnabled(false);
+        chart.setTouchEnabled(false);
         chartBackground = findViewById(R.id.chartBackground);
         isNewTimer = true;
 
@@ -285,8 +293,8 @@ public class TimeoutTimer extends AppCompatActivity {
         if (pieSize > 0) {
             PieEntry toRemove = pieEntries.get(pieSize-1);
             pieEntries.remove(toRemove);
-            chart.invalidate(); //refreshes chart
         }
+        chart.invalidate(); //refreshes chart
     }
 
     //This function sets up the initial pie chart
@@ -306,21 +314,17 @@ public class TimeoutTimer extends AppCompatActivity {
             dataSet.setDrawValues(false);
             PieData data = new PieData(dataSet);
 
-            chart = findViewById(R.id.chart);
             chart.setData(data);
-
-            chart.getDescription().setEnabled(false);
-            chart.setDrawEntryLabels(false);
-            chart.getLegend().setEnabled(false);
-            chart.setDrawMarkers(false);
-            chart.setDrawCenterText(false);
-            chart.setDrawHoleEnabled(false);
             chart.invalidate();
+
+            chart.animateY(1400, Easing.EaseInOutQuad);
         }
     }
 
+    //This function retrieves the data for an ongoing pie chart
     private void obtainPieChart() {
         if (!isNewTimer) {
+            chart.clear();
             chartBackground.setVisibility(View.VISIBLE);
             pieEntries = new ArrayList<>();
 
@@ -334,22 +338,18 @@ public class TimeoutTimer extends AppCompatActivity {
             dataSet.setDrawValues(false);
             PieData data = new PieData(dataSet);
 
-            chart = findViewById(R.id.chart);
             chart.setData(data);
 
-            int size = Math.toIntExact(mTimeLeftInMillis / 1000);
-            int initialSize = Math.toIntExact(initialTime / 1000);
-            if (size > 0) {
-                pieEntries.subList(size, initialSize).clear();
-            }
+            int timeLeft = (int) ((mTimeLeftInMillis / 1000)); //time left
+            int initialSize = (int) (initialTime / 1000); //total time
 
-            chart.getDescription().setEnabled(false);
-            chart.setDrawEntryLabels(false);
-            chart.getLegend().setEnabled(false);
-            chart.setDrawMarkers(false);
-            chart.setDrawCenterText(false);
-            chart.setDrawHoleEnabled(false);
+            //First parameter sets the pie chart size.
+            //timePassed is getting smaller obviously.
+            pieEntries.subList(timeLeft, initialSize).clear();
+
             chart.invalidate();
+
+            chart.animateY(1400, Easing.EaseInOutQuad);
         }
     }
 
@@ -446,21 +446,19 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
-        createPieChart();
-        obtainPieChart();
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis=millisUntilFinished;
+                mTimeLeftInMillis = millisUntilFinished;
                 updateCountDownText();
                 decreasePieChart();
             }
 
             @Override
             public void onFinish() {
-                mTimerRunning=false;
+                mTimerRunning = false;
                 mTimeLeftInMillis = 0;
                 updateCountDownText();
                 mButtonStartPause.setVisibility(View.INVISIBLE);
@@ -481,6 +479,9 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.pause);
         mButtonReset.setVisibility(View.VISIBLE);
+
+        obtainPieChart();
+        createPieChart();
     }
 
     private void setupAlarmVibrate() {
