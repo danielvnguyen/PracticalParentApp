@@ -7,7 +7,6 @@
     android:background="@drawable/abstract_background"
     tools:context=".UI.TimeoutTimer">
 
-
     <TextView
         android:id="@+id/text_view_countdown"
         android:layout_width="180dp"
@@ -207,5 +206,12 @@
         app:layout_constraintVertical_bias="0.873"
         tools:ignore="TextContrastCheck" />
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

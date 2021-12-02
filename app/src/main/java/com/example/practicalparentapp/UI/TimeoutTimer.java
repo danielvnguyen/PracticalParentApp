@@ -29,7 +29,14 @@ import android.widget.TextView;
 import com.example.practicalparentapp.Model.NotificationClass;
 import com.example.practicalparentapp.Model.NotificationReceiver;
 import com.example.practicalparentapp.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -58,6 +65,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private long mTimeLeftInMillis;
     private long mEndTime;
 
+    private List<PieEntry> pieEntries;
 
     @Override
     protected void onUserLeaveHint() {
@@ -185,6 +193,9 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_custom.setOnClickListener(view -> {
+            PieChart chart = findViewById(R.id.chart);
+            chart.setVisibility(View.INVISIBLE);
+
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -215,17 +226,42 @@ public class TimeoutTimer extends AppCompatActivity {
             mButtonSave = findViewById(R.id.button_save);
             mButtonSave.setVisibility(View.VISIBLE);
             mButtonSave.setOnClickListener(v -> {
-                int minutes = Integer.parseInt(inputTime.getText().toString());
-                setInputVisibilityToTrue();
-                START_TIME_IN_MILLIS = (long) minutes * 60 * 1000;
-                mTimeLeftInMillis = START_TIME_IN_MILLIS;
-                updateCountDownText();
-                lastSelector= START_TIME_IN_MILLIS;
+                if (!inputTime.getText().toString().equals("")) {
+                    int minutes = Integer.parseInt(inputTime.getText().toString());
+                    setInputVisibilityToTrue();
+                    START_TIME_IN_MILLIS = (long) minutes * 60 * 1000;
+                    mTimeLeftInMillis = START_TIME_IN_MILLIS;
+                    updateCountDownText();
+                    lastSelector= START_TIME_IN_MILLIS;
+                    chart.setVisibility(View.VISIBLE);
+                }
             });
 
             isCustom=true;
         });
+        setUpPieChart();
+    }
 
+    //Update pie chart whenever a reset or timer starts.
+    private void updatePieChart() {
+
+    }
+
+    //This function sets up the pie chart on activity start.
+    private void setUpPieChart() {
+        pieEntries = new ArrayList<>();
+
+        for (int i = 0; i < mTimeLeftInMillis; i++) {
+            pieEntries.add(new PieEntry(1));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        PieData data = new PieData(dataSet);
+
+        PieChart chart = findViewById(R.id.chart);
+        chart.getDescription().setEnabled(false);
+        chart.setData(data);
+        chart.invalidate();
     }
 
     private void changeLayout() {
