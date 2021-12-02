@@ -115,4 +115,17 @@
         tools:ignore="ContentDescription"
         tools:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/inhale_show"
+        android:layout_width="70dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="97dp"
+        app:layout_constraintBottom_toTopOf="@+id/begin_btn"
+        app:layout_constraintEnd_toStartOf="@+id/begin_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_breaths_TV"
+        app:layout_constraintVertical_bias="0.492"
+        app:srcCompat="@drawable/up_arrow" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

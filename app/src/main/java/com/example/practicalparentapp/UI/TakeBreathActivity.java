@@ -1,6 +1,9 @@
 package com.example.practicalparentapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.practicalparentapp.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,7 +26,7 @@ import java.util.Objects;
  * in the application. Guides the parent and/or
  * child through a relaxing breathing process.
  */
-public class TakeBreathActivity extends AppCompatActivity {
+public class TakeBreathActivity<Imageview extends View> extends AppCompatActivity {
 
     /**
      * This class is a state, handling the
@@ -45,6 +48,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     private ImageView inButton;
     private ImageView outButton;
     private ImageView goodJobButton;
+    private Imageview inhale_img;
 
     private Integer numOfBreaths;
     private TextView helpText;
@@ -66,7 +70,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Plain old Android Code (Non-State code)
     // ***********************************************************
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,9 @@ public class TakeBreathActivity extends AppCompatActivity {
         inputNumBreaths = findViewById(R.id.input_num_ET);
         breathsToDo = prefs.getInt("breathsToDo", 0);
         inputNumBreaths.setText(breathsToDo + "");
+
+        inhale_img=findViewById(R.id.inhale_show);
+
 
         beginButton = findViewById(R.id.begin_btn);
         inButton = findViewById(R.id.in_btn);
@@ -184,9 +191,11 @@ public class TakeBreathActivity extends AppCompatActivity {
             resetSeconds();
 
             inButton.setOnTouchListener((view, motionEvent) -> {
+                YoYo.with(Techniques.SlideInUp).duration(700).repeat(0).playOn(inhale_img);
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     secondsHeld = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 10000);
+
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
