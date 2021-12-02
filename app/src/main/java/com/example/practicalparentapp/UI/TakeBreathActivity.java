@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Objects;
@@ -26,7 +26,7 @@ import java.util.Objects;
  * in the application. Guides the parent and/or
  * child through a relaxing breathing process.
  */
-public class TakeBreathActivity<Imageview extends View> extends AppCompatActivity {
+public class TakeBreathActivity<ImageView extends View> extends AppCompatActivity {
 
     /**
      * This class is a state, handling the
@@ -48,7 +48,8 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
     private ImageView inButton;
     private ImageView outButton;
     private ImageView goodJobButton;
-    private Imageview inhale_img;
+    private ImageView up_arrow;
+    private ImageView down_arrow;
 
     private Integer numOfBreaths;
     private TextView helpText;
@@ -57,6 +58,9 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
     private long secondsHeld;
     private long secondsDuration;
     private SharedPreferences.Editor editor;
+
+    private MediaPlayer inhale_sound;
+    private MediaPlayer exhale_sound;
 
     public void setState(State newState) {
         if (currentState != newState) {
@@ -77,8 +81,7 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
         setContentView(R.layout.activity_take_breath);
         setTitle(R.string.take_a_breath);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-        //Initialize
+        
         SharedPreferences prefs = getSharedPreferences("myPref", MODE_PRIVATE);
         editor = prefs.edit();
 
@@ -86,8 +89,8 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
         breathsToDo = prefs.getInt("breathsToDo", 0);
         inputNumBreaths.setText(breathsToDo + "");
 
-        inhale_img=findViewById(R.id.inhale_show);
-
+        up_arrow = findViewById(R.id.inhale_animation);
+        down_arrow = findViewById(R.id.exhale_animation);
 
         beginButton = findViewById(R.id.begin_btn);
         inButton = findViewById(R.id.in_btn);
@@ -105,6 +108,14 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
 
         setUpBeginButton();
         setUpGoodJobButton();
+        setUpSounds();
+    }
+
+    private void setUpSounds() {
+        inhale_sound = new MediaPlayer();
+        inhale_sound = MediaPlayer.create(this, R.raw.inflate_sound);
+        exhale_sound = new MediaPlayer();
+        exhale_sound = MediaPlayer.create(this, R.raw.exhale_sound);
     }
 
     @Override
@@ -191,13 +202,18 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
             resetSeconds();
 
             inButton.setOnTouchListener((view, motionEvent) -> {
-                YoYo.with(Techniques.SlideInUp).duration(700).repeat(0).playOn(inhale_img);
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    setUpSounds();
+                    inhale_sound.start();
+                    YoYo.with(Techniques.SlideInUp).duration(10000).repeat(0).playOn(up_arrow);
+                    up_arrow.setVisibility(View.VISIBLE);
                     secondsHeld = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 10000);
 
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    inhale_sound.stop();
+                    up_arrow.setVisibility(View.INVISIBLE);
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
 
                     if (secondsDuration >= 3000 && secondsDuration < 10000) {
@@ -216,6 +232,7 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
             inButton.setVisibility(View.INVISIBLE);
+            up_arrow.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -240,10 +257,16 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
 
             outButton.setOnTouchListener((view, motionEvent) -> {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    setUpSounds();
+                    down_arrow.setVisibility(View.VISIBLE);
+                    exhale_sound.start();
+                    YoYo.with(Techniques.SlideInDown).duration(10000).repeat(0).playOn(down_arrow);
                     secondsHeld = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 10000);
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    exhale_sound.stop();
+                    down_arrow.setVisibility(View.INVISIBLE);
                     secondsDuration = System.currentTimeMillis() - secondsHeld;
 
                     if (secondsDuration >= 3000 && secondsDuration < 10000) {
@@ -271,6 +294,7 @@ public class TakeBreathActivity<Imageview extends View> extends AppCompatActivit
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
             outButton.setVisibility(View.INVISIBLE);
+            down_arrow.setVisibility(View.INVISIBLE);
         }
     }
 
