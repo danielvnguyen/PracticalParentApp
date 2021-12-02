@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.practicalparentapp.Model.NotificationClass;
 import com.example.practicalparentapp.Model.NotificationReceiver;
 import com.example.practicalparentapp.R;
@@ -35,7 +34,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -50,8 +48,8 @@ import java.util.UUID;
  */
 public class TimeoutTimer extends AppCompatActivity {
 
-    public static final int [] GREEN = {
-            Color.rgb(0, 255, 0)
+    public static final int [] COLOR = {
+            Color.rgb(64, 224, 208)
     };
 
     private long START_TIME_IN_MILLIS;
@@ -310,7 +308,7 @@ public class TimeoutTimer extends AppCompatActivity {
             initialTime = mTimeLeftInMillis;
 
             PieDataSet dataSet = new PieDataSet(pieEntries, "Visual Timer");
-            dataSet.setColors(GREEN);
+            dataSet.setColors(COLOR);
             dataSet.setDrawValues(false);
             PieData data = new PieData(dataSet);
 
@@ -324,8 +322,8 @@ public class TimeoutTimer extends AppCompatActivity {
     //This function retrieves the data for an ongoing pie chart
     private void obtainPieChart() {
         if (!isNewTimer) {
-            chart.clear();
             chartBackground.setVisibility(View.VISIBLE);
+            //Create new array list for the pie entries
             pieEntries = new ArrayList<>();
 
             //Fill pie chart to original size
@@ -333,18 +331,18 @@ public class TimeoutTimer extends AppCompatActivity {
                 pieEntries.add(new PieEntry(1));
             }
 
+            //Create the data for the pie chart
             PieDataSet dataSet = new PieDataSet(pieEntries, "Visual Timer");
-            dataSet.setColors(GREEN);
+            dataSet.setColors(COLOR);
             dataSet.setDrawValues(false);
             PieData data = new PieData(dataSet);
 
+            //Set the data to the pie chart
             chart.setData(data);
 
+            //Remove amount of time that has passed already
             int timeLeft = (int) ((mTimeLeftInMillis / 1000)); //time left
             int initialSize = (int) (initialTime / 1000); //total time
-
-            //First parameter sets the pie chart size.
-            //timePassed is getting smaller obviously.
             pieEntries.subList(timeLeft, initialSize).clear();
 
             chart.invalidate();
