@@ -46,6 +46,7 @@ import java.util.UUID;
  * Supports a drop down menu with a list of default
  * timer options, as well as a custom time option.
  * Can also pause and reset the timer.
+ * Also supports visual timer and speed/slow down rates.
  */
 public class TimeoutTimer extends AppCompatActivity {
 
@@ -54,8 +55,11 @@ public class TimeoutTimer extends AppCompatActivity {
     };
 
     private long START_TIME_IN_MILLIS;
-    private TextView mTextViewCountDown, timeText;
-    private Button mButtonStartPause, mButtonReset, mButtonSave;
+    private TextView mTextViewCountDown;
+    private TextView timeText;
+    private Button mButtonStartPause;
+    private Button mButtonReset;
+    private Button mButtonSave;
     private EditText inputTime;
 
     private CountDownTimer mCountDownTimer;
@@ -71,11 +75,10 @@ public class TimeoutTimer extends AppCompatActivity {
     private long mEndTime;
 
     private List<PieEntry> pieEntries;
-    private PieDataSet dataSet;
-    private PieData data;
     private PieChart chart;
     private ImageView chartBackground;
     private boolean isNewTimer;
+    private long initialTime;
 
     @Override
     protected void onUserLeaveHint() {
@@ -92,6 +95,7 @@ public class TimeoutTimer extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        chart = findViewById(R.id.chart);
         chartBackground = findViewById(R.id.chartBackground);
         isNewTimer = true;
 
@@ -114,7 +118,7 @@ public class TimeoutTimer extends AppCompatActivity {
             finish();
         }
 
-        mButtonStartPause=findViewById(R.id.button_start_pause);
+        mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset=findViewById(R.id.button_reset);
         Button mButton_one = findViewById(R.id.button_one);
         Button mButton_two = findViewById(R.id.button_two);
@@ -136,6 +140,8 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonReset.setOnClickListener(v -> resetTimer());
 
         mButton_one.setOnClickListener(view -> {
+            chart.setVisibility(View.VISIBLE);
+            isNewTimer = true;
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -149,6 +155,8 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_two.setOnClickListener(view -> {
+            chart.setVisibility(View.VISIBLE);
+            isNewTimer = true;
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -163,6 +171,8 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_three.setOnClickListener(view -> {
+            chart.setVisibility(View.VISIBLE);
+            isNewTimer = true;
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -177,6 +187,8 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_five.setOnClickListener(view -> {
+            chart.setVisibility(View.VISIBLE);
+            isNewTimer = true;
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -191,6 +203,8 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_ten.setOnClickListener(view -> {
+            chart.setVisibility(View.VISIBLE);
+            isNewTimer = true;
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
@@ -204,12 +218,13 @@ public class TimeoutTimer extends AppCompatActivity {
         });
 
         mButton_custom.setOnClickListener(view -> {
-            PieChart chart = findViewById(R.id.chart);
             chart.setVisibility(View.INVISIBLE);
+            chartBackground.setVisibility(View.INVISIBLE);
 
             if (mTimerRunning) {
                 pauseTimer();
                 resetTimer();
+                chartBackground.setVisibility(View.INVISIBLE);
             }
             mTextViewCountDown.setVisibility(View.INVISIBLE);
             mButtonStartPause.setVisibility(View.INVISIBLE);
@@ -248,9 +263,13 @@ public class TimeoutTimer extends AppCompatActivity {
                 }
             });
 
-            isCustom=true;
+            isCustom = true;
         });
     }
+
+    // ************************************************************
+    // Visual Timer Code
+    // ************************************************************
 
     private void clearPieChart() {
         if (chart.getData() != null) {
@@ -263,13 +282,15 @@ public class TimeoutTimer extends AppCompatActivity {
     //Call every time the timer ticks.
     private void decreasePieChart() {
         int pieSize = pieEntries.size();
-        PieEntry toRemove = pieEntries.get(pieSize-1);
-        pieEntries.remove(toRemove);
-        chart.invalidate(); //refreshes chart
+        if (pieSize > 0) {
+            PieEntry toRemove = pieEntries.get(pieSize-1);
+            pieEntries.remove(toRemove);
+            chart.invalidate(); //refreshes chart
+        }
     }
 
-    //This function sets up the pie chart on activity start.
-    private void updatePieChart() {
+    //This function sets up the initial pie chart
+    private void createPieChart() {
         if (isNewTimer) {
             chartBackground.setVisibility(View.VISIBLE);
             pieEntries = new ArrayList<>();
@@ -278,10 +299,12 @@ public class TimeoutTimer extends AppCompatActivity {
                 pieEntries.add(new PieEntry(1));
             }
 
-            dataSet = new PieDataSet(pieEntries, "Visual Timer");
+            initialTime = mTimeLeftInMillis;
+
+            PieDataSet dataSet = new PieDataSet(pieEntries, "Visual Timer");
             dataSet.setColors(GREEN);
             dataSet.setDrawValues(false);
-            data = new PieData(dataSet);
+            PieData data = new PieData(dataSet);
 
             chart = findViewById(R.id.chart);
             chart.setData(data);
@@ -296,7 +319,43 @@ public class TimeoutTimer extends AppCompatActivity {
         }
     }
 
-    //--------------------------------------------------------------------------
+    private void obtainPieChart() {
+        if (!isNewTimer) {
+            chartBackground.setVisibility(View.VISIBLE);
+            pieEntries = new ArrayList<>();
+
+            //Fill pie chart to original size
+            for (int i = 0; i < initialTime; i+=1000) {
+                pieEntries.add(new PieEntry(1));
+            }
+
+            PieDataSet dataSet = new PieDataSet(pieEntries, "Visual Timer");
+            dataSet.setColors(GREEN);
+            dataSet.setDrawValues(false);
+            PieData data = new PieData(dataSet);
+
+            chart = findViewById(R.id.chart);
+            chart.setData(data);
+
+            int size = Math.toIntExact(mTimeLeftInMillis / 1000);
+            int initialSize = Math.toIntExact(initialTime / 1000);
+            if (size > 0) {
+                pieEntries.subList(size, initialSize).clear();
+            }
+
+            chart.getDescription().setEnabled(false);
+            chart.setDrawEntryLabels(false);
+            chart.getLegend().setEnabled(false);
+            chart.setDrawMarkers(false);
+            chart.setDrawCenterText(false);
+            chart.setDrawHoleEnabled(false);
+            chart.invalidate();
+        }
+    }
+
+    // ************************************************************
+    // Timeout Timer Code
+    // ************************************************************
 
     private void changeLayout() {
         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -370,7 +429,7 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setText(R.string.start);
         mButtonReset.setVisibility(View.INVISIBLE);
 
-        //updatePieChart();
+        createPieChart();
     }
 
     public static Vibrator getVibrator(){
@@ -387,6 +446,8 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
+        createPieChart();
+        obtainPieChart();
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
@@ -420,7 +481,6 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mButtonStartPause.setText(R.string.pause);
         mButtonReset.setVisibility(View.VISIBLE);
-        updatePieChart();
     }
 
     private void setupAlarmVibrate() {
@@ -477,8 +537,17 @@ public class TimeoutTimer extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
+        //If the timer was running, isNewTimer should be set to false when activity is closed.
+        //If the timer was paused, it should be set to false anyways.
+        if (mTimerRunning) {
+            isNewTimer = false;
+        }
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("newTimer", isNewTimer);
+        editor.putLong("initialTime", initialTime);
 
         editor.putLong("millisLeft", mTimeLeftInMillis);
         editor.putBoolean("timerRunning", mTimerRunning);
@@ -497,16 +566,21 @@ public class TimeoutTimer extends AppCompatActivity {
 
         mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
         mTimerRunning = prefs.getBoolean("timerRunning", false);
+        isNewTimer = prefs.getBoolean("newTimer", true);
+        initialTime = prefs.getLong("initialTime", START_TIME_IN_MILLIS);
 
         updateCountDownText();
         lastSelector=prefs.getLong("lastSelector",-1);
+
+        //If timer was not running (paused, allow user to 'start')
         if (lastSelector != -1 && mTimeLeftInMillis != START_TIME_IN_MILLIS && !mTimerRunning) {
             mButtonStartPause.setVisibility(View.VISIBLE);
             mButtonStartPause.setText(R.string.start);
             mButtonReset.setVisibility(View.INVISIBLE);
         }
-        isCustom=prefs.getBoolean("isCustom",false);
+        isCustom = prefs.getBoolean("isCustom",false);
 
+        //If timer was running
         if (mTimerRunning) {
             mEndTime = prefs.getLong("endTime", 0);
             mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
