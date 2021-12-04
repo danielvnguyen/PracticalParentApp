@@ -3,15 +3,19 @@ package com.example.practicalparentapp.UI;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,6 +23,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +31,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.practicalparentapp.Model.NotificationClass;
 import com.example.practicalparentapp.Model.NotificationReceiver;
 import com.example.practicalparentapp.R;
@@ -78,6 +85,9 @@ public class TimeoutTimer extends AppCompatActivity {
     private boolean isNewTimer;
     private long initialTime;
 
+    private double currentRate;
+    private boolean isTicking;
+
     @Override
     protected void onUserLeaveHint() {
         finish();
@@ -102,6 +112,7 @@ public class TimeoutTimer extends AppCompatActivity {
         chart.setDrawHoleEnabled(false);
         chart.setRotationEnabled(false);
         chart.setTouchEnabled(false);
+        chart.setNoDataText("");
         chartBackground = findViewById(R.id.chartBackground);
         isNewTimer = true;
 
@@ -123,6 +134,9 @@ public class TimeoutTimer extends AppCompatActivity {
             getIntent().putExtra("clickedNotification", false);
             finish();
         }
+
+        currentRate = 1;
+        isTicking = true;
 
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset=findViewById(R.id.button_reset);
@@ -274,6 +288,101 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     // ************************************************************
+    // Setting up the Tool Bar
+    // ************************************************************
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_timeout_timer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+                
+            case R.id.action_settings:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Select a rate below:");
+
+                String[] rates = {"25%", "50%", "75%", "100%", "200%", "300%", "400%"};
+                int originalSelection = 3;
+                final int[] updatedSelection = new int[1];
+
+                builder.setSingleChoiceItems(rates, originalSelection, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        updatedSelection[0] = which;
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // user clicked OK
+                        switch(updatedSelection[0]) {
+                            case 0:
+                                currentRate = 0.25;
+                                break;
+                            case 1:
+                                currentRate = 0.5;
+                                if ((mTimeLeftInMillis / 1000) % 2 == 1) {
+                                    isTicking = true;
+                                }
+                                mTimeLeftInMillis /= 0.5;
+                                mCountDownTimer.cancel();
+                                isNewTimer = false;
+                                startTimer();
+                                break;
+                            case 2:
+                                currentRate = 0.75;
+                                break;
+                            case 3:
+                                currentRate = 1;
+                                break;
+                            case 4:
+                                currentRate = 2;
+                                if ((mTimeLeftInMillis / 1000) % 2 == 1) {
+                                    isTicking = true;
+                                }
+                                mTimeLeftInMillis /= 2;
+                                mCountDownTimer.cancel();
+                                isNewTimer = false;
+                                startTimer();
+                                break;
+                            case 5:
+                                currentRate = 3;
+                                if ((mTimeLeftInMillis / 1000) % 2 == 1) {
+                                    isTicking = true;
+                                }
+                                mTimeLeftInMillis /= 3;
+                                mCountDownTimer.cancel();
+                                isNewTimer = false;
+                                startTimer();
+                                break;
+                            case 6:
+                                currentRate = 4;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    // ************************************************************
     // Visual Timer Code
     // ************************************************************
 
@@ -298,6 +407,7 @@ public class TimeoutTimer extends AppCompatActivity {
     //This function sets up the initial pie chart
     private void createPieChart() {
         if (isNewTimer) {
+            Log.d("MSG_D", "hey there");
             chartBackground.setVisibility(View.VISIBLE);
             pieEntries = new ArrayList<>();
 
@@ -343,7 +453,7 @@ public class TimeoutTimer extends AppCompatActivity {
             //Remove amount of time that has passed already
             int timeLeft = (int) ((mTimeLeftInMillis / 1000)); //time left
             int initialSize = (int) (initialTime / 1000); //total time
-            pieEntries.subList(timeLeft, initialSize).clear();
+            pieEntries.subList((int) (timeLeft * currentRate), initialSize).clear();
 
             chart.invalidate();
 
@@ -379,18 +489,10 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonSave.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void resetTimer() {
         clearPieChart();
         isNewTimer = true;
+        currentRate = 1;
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -446,32 +548,33 @@ public class TimeoutTimer extends AppCompatActivity {
     private void startTimer() {
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-                decreasePieChart();
-            }
-
-            @Override
-            public void onFinish() {
-                mTimerRunning = false;
-                mTimeLeftInMillis = 0;
-                updateCountDownText();
-                mButtonStartPause.setVisibility(View.INVISIBLE);
-                mButtonReset.setVisibility(View.INVISIBLE);
-
-                Log.d("OK", "onFinished");
-                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                if (!prefs.getBoolean("cancel", false)) {
-                    setupAlarmVibrate();
+        //for (long time = mTimeLeftInMillis; time >= 0; time -= 1000) {
+            mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, (long) (1000 / currentRate)) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTimeLeftInMillis = millisUntilFinished;
+                    updateCountDownText();
+                    decreasePieChart();
                 }
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("cancel", false);
-                editor.apply();
-            }
-        } .start();
+
+                @Override
+                public void onFinish() {
+                    mTimerRunning = false;
+                    mTimeLeftInMillis = 0;
+                    updateCountDownText();
+                    mButtonStartPause.setVisibility(View.INVISIBLE);
+                    mButtonReset.setVisibility(View.INVISIBLE);
+
+                    SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                    if (!prefs.getBoolean("cancel", false)) {
+                        setupAlarmVibrate();
+                    }
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("cancel", false);
+                    editor.apply();
+                }
+            } .start();
+        //}
 
         mTimerRunning = true;
         mButtonStartPause.setVisibility(View.VISIBLE);
@@ -523,10 +626,47 @@ public class TimeoutTimer extends AppCompatActivity {
         mButtonReset.setVisibility(View.VISIBLE);
         isNewTimer = false;
     }
+    // 1  2  3
+    // 30 29
 
+            // 120
+    // 60
+    // 59
+    // 58
     private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        int minutes, seconds;
+        if (isTicking) {
+            if (currentRate >= 1) {
+                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate); // 30
+                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate); // 30
+            } else {
+
+                minutes = (int) ((mTimeLeftInMillis / 1000) / 60); // 30
+                seconds = (int) ((mTimeLeftInMillis / 1000) % 60); // 30
+            }
+            isTicking = false;
+        } else {                                                                          // OnTick
+            if (currentRate > 1) {                                                     // 2   // 3
+                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);      // 30 // 30
+                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate) - 1;  // 29 // 29
+                if (seconds <= 0) {                                                     // 28 // 30
+                    seconds += 1;                                                       // 27 // 27
+                    currentRate = 1;
+                }
+                isTicking = true;
+            } else if (currentRate == 1) {
+                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);
+                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate);
+            } else {
+                minutes = (int) ((mTimeLeftInMillis / 1000) / 60);      // 30 // 30
+                seconds = (int) ((mTimeLeftInMillis / 1000) % 60) - 1;  // 29 // 29
+                if (seconds <= 0) {                                                     // 28 // 30
+                    seconds += 1;                                                       // 27 // 27
+                    currentRate = 1;
+                }
+                isTicking = true;
+            }
+        }
 
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
