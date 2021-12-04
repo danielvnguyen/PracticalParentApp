@@ -83,7 +83,6 @@ public class TimeoutTimer extends AppCompatActivity {
     private TextView displayRate;
     private double currentRate;
     private boolean isTicking;
-    private long lastMillisLeft;
 
     @Override
     protected void onUserLeaveHint() {
@@ -363,7 +362,6 @@ public class TimeoutTimer extends AppCompatActivity {
                             if ((mTimeLeftInMillis / 1000) % 2 == 1) {
                                 isTicking = true;
                             }
-                            lastMillisLeft = mTimeLeftInMillis;
                             mTimeLeftInMillis /= 2;
                             mCountDownTimer.cancel();
                             isNewTimer = false;
@@ -656,71 +654,38 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
 
-//    private void updateCountDownText() {
-//        int minutes, seconds;
-//        if (isTicking) {
-//            if (currentRate >= 1) {
-//                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate); // 30
-//                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate); // 30
-//            } else {
-//
-//                minutes = (int) ((mTimeLeftInMillis / 1000) / 60); // 30
-//                seconds = (int) ((mTimeLeftInMillis / 1000) % 60); // 30
-//            }
-//            isTicking = false;
-//        } else {
-//            if (currentRate > 1) {
-//                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);
-//                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate) - 1;
-//                if (seconds <= 0) {
-//                    seconds += 1;
-//                    currentRate = 1;
-//                }
-//                isTicking = true;
-//            } else if (currentRate == 1) {
-//                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);
-//                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate);
-//            } else {
-//                minutes = (int) ((mTimeLeftInMillis / 1000) / 60);
-//                seconds = (int) ((mTimeLeftInMillis / 1000) % 60) - 1;
-//                if (seconds <= 0) {
-//                    seconds += 1;
-//                    currentRate = 1;
-//                }
-//                isTicking = true;
-//            }
-//        }
-//
-//        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-//        mTextViewCountDown.setText(timeLeftFormatted);
-//    }
-
-    @SuppressLint("SetTextI18n")
     private void updateCountDownText() {
-        int minutes;
-        int seconds;
-
+        int minutes, seconds;
         if (isTicking) {
-            minutes = (int) ((mTimeLeftInMillis / 1000) / 60);
-            seconds = (int) (lastMillisLeft / 1000);
-            isTicking = false;
-        }
-        else{
-            if (currentRate != 1) {
-                minutes = (int) ((mTimeLeftInMillis / 1000) / 60);
-                seconds = (int) (lastMillisLeft / 1000) - 1;
-                lastMillisLeft -= 1;
+            if (currentRate >= 1) {
+                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate); // 30
+                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate); // 30
+            } else {
 
+                minutes = (int) ((mTimeLeftInMillis / 1000) / 60); // 30
+                seconds = (int) ((mTimeLeftInMillis / 1000) % 60); // 30
+            }
+            isTicking = false;
+        } else {
+            if (currentRate > 1) {
+                minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);
+                seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate) - 1;
                 if (seconds <= 0) {
                     seconds += 1;
                     currentRate = 1;
-                    displayRate.setText("Time @100%");
                 }
                 isTicking = true;
-            }
-            else {
+            } else if (currentRate == 1) {
                 minutes = (int) (((mTimeLeftInMillis / 1000) / 60) * currentRate);
                 seconds = (int) (((mTimeLeftInMillis / 1000) % 60) * currentRate);
+            } else {
+                minutes = (int) ((mTimeLeftInMillis / 1000) / 60);
+                seconds = (int) ((mTimeLeftInMillis / 1000) % 60) - 1;
+                if (seconds <= 0) {
+                    seconds += 1;
+                    currentRate = 1;
+                }
+                isTicking = true;
             }
         }
 
