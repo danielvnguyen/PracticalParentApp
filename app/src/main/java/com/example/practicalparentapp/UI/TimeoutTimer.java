@@ -353,69 +353,93 @@ public class TimeoutTimer extends AppCompatActivity {
                     // user clicked OK
                     switch(updatedSelection[0]) {
                         case 0:
-                            currentRate = 0.25F;
-                            mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.25);
-                            mCountDownTimer.cancel();
+                            if (mCountDownTimer != null)
+                                mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 0.25F;
+                                mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.25);
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @25%");
                             break;
                         case 1:
-                            currentRate = 0.5F;
-                            mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.5);
-                            mCountDownTimer.cancel();
+                            if (mCountDownTimer != null)
+                                mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 0.5F;
+                                mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.5);
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @50%");
                             break;
                         case 2:
-                            currentRate = 0.75F;
-                            mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.75);
-                            mCountDownTimer.cancel();
+                            if (mCountDownTimer != null)
+                                mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 0.75F;
+                                mTimeLeftInMillis = (long) (screenTimeLeftInMillis / 0.75);
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @75%");
                             break;
                         case 3:
-                            currentRate = 1;
-                            mTimeLeftInMillis = screenTimeLeftInMillis;
                             if (mCountDownTimer != null)
                                 mCountDownTimer.cancel();
                             mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 1;
+                                mTimeLeftInMillis = screenTimeLeftInMillis;
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @100%");
                             break;
                         case 4:
-                            currentRate = 2;
-                            mTimeLeftInMillis = screenTimeLeftInMillis / 2;
                             if (mCountDownTimer != null)
                                 mCountDownTimer.cancel();
                             mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 2;
+                                mTimeLeftInMillis = screenTimeLeftInMillis / 2;
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @200%");
                             break;
                         case 5:
-                            currentRate = 3;
-                            mTimeLeftInMillis = screenTimeLeftInMillis / 3;
-                            mCountDownTimer.cancel();
+                            if (mCountDownTimer != null)
+                                mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 3;
+                                mTimeLeftInMillis = screenTimeLeftInMillis / 3;
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @300%");
                             break;
                         case 6:
-                            currentRate = 4;
-                            mTimeLeftInMillis = screenTimeLeftInMillis / 4;
-                            mCountDownTimer.cancel();
+                            if (mCountDownTimer != null)
+                                mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                             isNewTimer = false;
-                            startTimer();
+                            if (mTimerRunning) {
+                                currentRate = 4;
+                                mTimeLeftInMillis = screenTimeLeftInMillis / 4;
+                                startTimer();
+                            }
 
                             displayRate.setText("Time @400%");
                             break;
@@ -452,6 +476,11 @@ public class TimeoutTimer extends AppCompatActivity {
         if (pieSize > 0) {
             PieEntry toRemove = pieEntries.get(pieSize-1);
             pieEntries.remove(toRemove);
+        }
+        if (pieSize == 0) {
+            screenTimeLeftInMillis = 0;
+            updateCountDownText();
+            setupAlarmVibrate();
         }
         chart.invalidate(); //refreshes chart
     }
@@ -620,11 +649,6 @@ public class TimeoutTimer extends AppCompatActivity {
                 updateCountDownText();
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 mButtonReset.setVisibility(View.INVISIBLE);
-
-                //SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                if (ticked) {
-                    setupAlarmVibrate();
-                }
             }
         } .start();
 
