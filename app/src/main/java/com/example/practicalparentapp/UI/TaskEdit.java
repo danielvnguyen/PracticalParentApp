@@ -24,7 +24,9 @@ import com.example.practicalparentapp.R;
 import com.example.practicalparentapp.TaskHistory;
 import com.example.practicalparentapp.UI.TinyDB;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * This class handles
@@ -126,6 +128,11 @@ public class TaskEdit extends AppCompatActivity {
                 childPosition += 1;
             }
 
+            // handles date
+            Calendar calendar = Calendar.getInstance();
+            String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+
 
             //##########################################################
             // my code here ################################################
@@ -139,12 +146,13 @@ public class TaskEdit extends AppCompatActivity {
                 taskList.add((TaskHistoryObjectClass) objs);
             }
 
+
 //            ArrayList<TaskHistoryObjectClass> taskList= new ArrayList<>();
             currentChild = childWithTurn.getName();
             currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
             Log.i(TAG, "current child is  " + currentChild);
             Log.i(TAG, "current task is  " + currentTask);
-            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild);
+            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild, currentDate);
             taskList.add(history);
 
 
@@ -160,6 +168,10 @@ public class TaskEdit extends AppCompatActivity {
 //            TinyDB tinydb = new TinyDB(this);
             tinydb.putListObject(currentTask, playerObjects);
 
+            ArrayList<String> taskList = new ArrayList<>();
+            taskList = tinydb.getListString("tasks");
+            taskList.add(currentTask);
+            tinydb.putListString("tasks",taskList);
 
             // ###########################################################
             //##########################################################
@@ -209,6 +221,9 @@ public class TaskEdit extends AppCompatActivity {
             taskManager.remove(TaskEdit.this, pos);
             Toast.makeText(TaskEdit.this, "Your task has now been deleted", Toast.LENGTH_SHORT).show();
             finish();
+//            TinyDB tinydb = new TinyDB(this);
+//            tinydb.remove(currentTask);
+//            TaskHistory
             Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
             intent.putExtra("TaskEdit", true);
             startActivity(intent);

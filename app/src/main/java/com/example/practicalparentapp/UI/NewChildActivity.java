@@ -9,6 +9,8 @@ import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.ChildListViewAdapter;
 import com.example.practicalparentapp.R;
+import com.example.practicalparentapp.TaskHistory;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
