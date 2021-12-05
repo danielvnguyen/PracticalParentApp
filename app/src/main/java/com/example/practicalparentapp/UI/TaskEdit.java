@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,8 +35,7 @@ import java.util.Calendar;
  * by the parent
  */
 public class TaskEdit extends AppCompatActivity {
-//    TaskHistoryObjectClass history;
-//    TinyDB tinydb;
+
     public static String currentTask;
     String currentChild;
     private static final String TAG = "MyAct";
@@ -63,8 +63,6 @@ public class TaskEdit extends AppCompatActivity {
         childrenManager = ChildrenManager.getInstance(this);
         editFields();
 
-//        tinydb = new TinyDB(this);
-        // my code that I've added
         Button history = findViewById(R.id.historyBtn);
         history.setOnClickListener((v -> {
             Intent intent = TaskHistory.makeIntent(this);
@@ -128,33 +126,24 @@ public class TaskEdit extends AppCompatActivity {
                 childPosition += 1;
             }
 
-            // handles date
+
             Calendar calendar = Calendar.getInstance();
             String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
-
-
-            //##########################################################
-            // my code here ################################################
-
-
             TinyDB tinydb = new TinyDB(this);
             ArrayList<Object> historyObjects = tinydb.getListObject(currentTask, TaskHistoryObjectClass.class);
-
 
             for(Object objs : historyObjects){
                 taskList.add((TaskHistoryObjectClass) objs);
             }
 
-
-//            ArrayList<TaskHistoryObjectClass> taskList= new ArrayList<>();
             currentChild = childWithTurn.getName();
             currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
             Log.i(TAG, "current child is  " + currentChild);
             Log.i(TAG, "current task is  " + currentTask);
-            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild, currentDate);
+            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild, currentDate,
+                    childWithTurn.getChildImageInBytes());
             taskList.add(history);
-
 
 
             ArrayList<Object> playerObjects = new ArrayList<Object>();
@@ -165,17 +154,12 @@ public class TaskEdit extends AppCompatActivity {
             Log.i(TAG, "size of taskList " + taskList.size());
             Log.i(TAG, "size of playerObjects " + playerObjects.size());
 
-//            TinyDB tinydb = new TinyDB(this);
             tinydb.putListObject(currentTask, playerObjects);
 
             ArrayList<String> taskList = new ArrayList<>();
             taskList = tinydb.getListString("tasks");
             taskList.add(currentTask);
             tinydb.putListString("tasks",taskList);
-
-            // ###########################################################
-            //##########################################################
-
 
 
 
@@ -221,9 +205,6 @@ public class TaskEdit extends AppCompatActivity {
             taskManager.remove(TaskEdit.this, pos);
             Toast.makeText(TaskEdit.this, "Your task has now been deleted", Toast.LENGTH_SHORT).show();
             finish();
-//            TinyDB tinydb = new TinyDB(this);
-//            tinydb.remove(currentTask);
-//            TaskHistory
             Intent intent = ConfigureTasks.makeIntent(TaskEdit.this);
             intent.putExtra("TaskEdit", true);
             startActivity(intent);

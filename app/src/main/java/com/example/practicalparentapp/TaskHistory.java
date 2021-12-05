@@ -53,7 +53,8 @@ public class TaskHistory extends AppCompatActivity {
             stringList.add(child.getName());
         }
 
-        int stringListSize = stringList.size();
+
+
         // This handles checking if child in history got removed from child manager, then adds
         // the children that are still existing
         Child aChild;
@@ -70,59 +71,7 @@ public class TaskHistory extends AppCompatActivity {
                 }
             }
         }
-        int peopleListsize = peopleList.size();
 
-
-
-
-//
-//        TaskHistoryObjectClass zeChild;
-//        String theChild;
-//        for (int i = 0; i<peopleList.size();i++) {
-//            zeChild = peopleList.get(i);
-//
-//            for (int j = 0; j<childList.size();j++) {
-//                aChild=childList.get(j);
-//                if (zeChild.getChildName().equals(aChild.getName())) {
-//
-//
-//                    peopleList.remove(i);
-//
-//                }
-//            }
-//        }
-//        String theChild;
-//        Child aChild;
-//        for (int i=0;i<peopleListsize;i++) {
-//            TaskHistoryObjectClass chld=peopleList.get(i);
-//            theChild = chld.getChildName();
-//            aChild = cm.getChildByName(theChild);
-//            if (aChild == null) {
-//                peopleList.remove(i);
-//            }
-//        }
-
-
-
-//        peopleList.removeAll(Arrays.asList(stringList));
-
-
-//        for (int o=0; o<peopleListsize;o++) {
-//            TaskHistoryObjectClass obj = peopleList.get(o);
-//            boolean childExist = false;
-//            for (int i=0;i<stringListSize;i++) {
-//                String someChild= stringList.get(i);
-//                if (obj.getChildName()==someChild) {
-//                    childExist = true;
-//                    break;
-//                }
-//
-//            }
-////            if (!childExist) {
-////                peopleList.remove(o);
-////            }
-//
-//        }
 
         Log.i(TAG, "task name is " + currentTask);
 
