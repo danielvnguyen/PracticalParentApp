@@ -107,9 +107,7 @@ public class ChildrenManager {
         saveChildList(context, childList);
     }
 
-    //load child list from save
     public static ArrayList<Child> loadChildList(Context context) {
-        //create gson parser
         Gson gson = createGson();
         ArrayList<Child> childList = null;
 
@@ -134,9 +132,7 @@ public class ChildrenManager {
         return childList;
     }
 
-    //loads the child list from childList.json
     public static void saveChildList(Context context, ArrayList<Child> childList) {
-        //create gson parser and write list to json format
         Gson gson = createGson();
         String json = gson.toJson(childList);
 
@@ -153,8 +149,6 @@ public class ChildrenManager {
         }
     }
 
-
-    //create gson object to allow saving
     private static Gson createGson() {
         return new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {

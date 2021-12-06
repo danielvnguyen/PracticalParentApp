@@ -25,10 +25,12 @@
         android:theme="@style/Theme.PracticalParentApp" >
         <activity
             android:name=".UI.TaskHistory"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.TakeBreathActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".UI.TaskEdit"
             android:exported="false"

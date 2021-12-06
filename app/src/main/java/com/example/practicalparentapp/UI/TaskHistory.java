@@ -19,6 +19,10 @@ import com.example.practicalparentapp.Model.TinyDB;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * This class handles the task history activity screen.
+ */
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class TaskHistory extends AppCompatActivity {
     private static final String TAG = "MyActivity";
     @Override
@@ -29,7 +33,6 @@ public class TaskHistory extends AppCompatActivity {
         setContentView(R.layout.activity_task_history);
         ListView mListView = (ListView) findViewById(R.id.historytasklistview);
 
-        // all below handles outputting child task history
         String currentTask = TaskEdit.currentTask;
         TinyDB tinydb = new TinyDB(this);
         ArrayList<TaskHistoryObjectClass> List = new ArrayList<>();
@@ -43,20 +46,16 @@ public class TaskHistory extends AppCompatActivity {
         ChildrenManager cm = ChildrenManager.getInstance(this);
         int size=List.size();
         Child child;
-        ArrayList<Child> childList = new ArrayList<>();
+        ArrayList<Child> childList;
         childList = cm.getChildList();
         ArrayList<String> stringList = new ArrayList<>();
 
-        int childListsize = cm.size();
-        for (int x = 0;x <childListsize;x++) {
+        int childListSize = cm.size();
+        for (int x = 0;x <childListSize;x++) {
             child = childList.get(x);
             stringList.add(child.getName());
         }
 
-
-
-        // This handles checking if child in history got removed from child manager, then adds
-        // the children that are still existing
         Child aChild;
         String tname;
         for(int i = 0; i<size;i++) {
@@ -72,20 +71,15 @@ public class TaskHistory extends AppCompatActivity {
             }
         }
 
-
         Log.i(TAG, "task name is " + currentTask);
-
         Log.i(TAG, "size of List is " + List.size());
-
         Log.i(TAG, "size of peopleList is " + peopleList.size());
-
-
-
 
         TaskHistoryAdapter adapter = new TaskHistoryAdapter(this, R.layout.activity_task_history_adapter, peopleList);
         mListView.setAdapter(adapter);
 
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskHistory.class);
     }

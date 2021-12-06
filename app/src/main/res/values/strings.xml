@@ -72,7 +72,7 @@
     <string name="child_text_view">The_Child</string>
     <string name="n_n_n_n_n_n_n_nno_tasks_added_yet_n_nplease_click_on_the_add_task_n_button_to_add_and_assign_a_task_n_to_a_child">\n\n\n\n\n\n\n\nNo Tasks Added Yet.\n\nPlease, click on the Add Task\n Button to add and assign a task\n to a child</string>
     <string name="take_a_breath">Take a Breath</string>
-    <string name="how_many_breaths">How many breaths? \n<br /> (enter 1-10)</string>
+    <string name="how_many_breaths">How many breaths? \n<br /> (enter 1–10)</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="time_100">Time @100%</string>
@@ -82,4 +82,7 @@
     <string name="task_name">Task Name</string>
     <string name="name_of_child">Name of Child</string>
     <string name="date_of_completion">date of completion</string>
+    <string name="add_task" tools:ignore="DuplicateDefinition">Add Task</string>
+    <string name="history">History</string>
+    <string name="no_task_text">\n\n\n\n\n\n\n\nNo Tasks Added Yet.\n\nPlease, click on the Add Task\n Button to add and assign a task\n to a child</string>
 </resources>

@@ -1,14 +1,12 @@
 package com.example.practicalparentapp.Model;
 
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

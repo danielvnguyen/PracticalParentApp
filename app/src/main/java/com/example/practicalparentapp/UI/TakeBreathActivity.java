@@ -1,7 +1,6 @@
 package com.example.practicalparentapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.practicalparentapp.R;

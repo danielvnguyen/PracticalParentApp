@@ -42,11 +42,11 @@ public class TaskEdit extends AppCompatActivity {
     private ChildrenManager childrenManager;
     private int pos;
 
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskEdit.class);
     }
 
+    @SuppressWarnings("unused")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,7 +144,7 @@ public class TaskEdit extends AppCompatActivity {
             taskList.add(history);
 
 
-            ArrayList<Object> playerObjects = new ArrayList<Object>();
+            ArrayList<Object> playerObjects = new ArrayList<>();
 
             for(TaskHistoryObjectClass a : taskList){
                 playerObjects.add((Object)a);
@@ -154,7 +154,7 @@ public class TaskEdit extends AppCompatActivity {
 
             tinydb.putListObject(currentTask, playerObjects);
 
-            ArrayList<String> taskList = new ArrayList<>();
+            ArrayList<String> taskList;
             taskList = tinydb.getListString("tasks");
             taskList.add(currentTask);
             tinydb.putListString("tasks",taskList);

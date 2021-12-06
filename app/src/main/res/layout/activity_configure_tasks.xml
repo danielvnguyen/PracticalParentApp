@@ -29,14 +29,15 @@
         android:id="@+id/addTaskBtn"
         android:layout_width="132dp"
         android:layout_height="64dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="13dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginBottom="6dp"
         android:backgroundTint="#FFFFFF"
-        android:text="Add Task"
+        android:text="@string/add_task"
         app:cornerRadius="20dp"
         app:strokeColor="#C4CBD1"
-        app:strokeWidth="4dp" />
+        app:strokeWidth="4dp"
+        tools:ignore="TextContrastCheck" />
 
 </RelativeLayout>

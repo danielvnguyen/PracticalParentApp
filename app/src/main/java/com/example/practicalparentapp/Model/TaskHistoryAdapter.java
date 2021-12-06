@@ -1,56 +1,41 @@
 package com.example.practicalparentapp.Model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
-
 import com.example.practicalparentapp.R;
-import com.example.practicalparentapp.Model.TaskHistoryObjectClass;
 
-
+/**
+ * This class handles how the task history list
+ * looks in each individual task in the Tasks activity
+ */
 public class TaskHistoryAdapter extends ArrayAdapter<TaskHistoryObjectClass> {
 
+    private final Context mContext;
+    private final int mResource;
 
-
-    private Context mContext;
-    private int mResource;
-    private int lastPosition = -1;
-
-
-
-    /**
-     * Default constructor for the PersonListAdapter
-     * @param context
-     * @param resource
-     * @param objects
-     */
     public TaskHistoryAdapter(Context context, int resource, ArrayList<TaskHistoryObjectClass> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
     }
 
+    @SuppressLint("ViewHolder")
     @NonNull
     @Override
     public View getView(int position, View convertAView, ViewGroup parent) {
-        //get the persons information
         String ChildName = getItem(position).getChildName();
         String TaskName = getItem(position).getTaskName();
         String date = getItem(position).getDate();
         byte[] image = getItem(position).getChildImage();
 
-
-        //Create the person object with the information
         TaskHistoryObjectClass taskHistory = new TaskHistoryObjectClass(TaskName,ChildName,date,image);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -66,9 +51,6 @@ public class TaskHistoryAdapter extends ArrayAdapter<TaskHistoryObjectClass> {
         tvTaskName.setText(TaskName);
         tvChildName.setText(ChildName);
         tvDate.setText(date);
-
-
-
 
         return convertAView;
     }

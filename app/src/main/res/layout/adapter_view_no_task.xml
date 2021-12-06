@@ -14,7 +14,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="0dp"
-        android:text="\n\n\n\n\n\n\n\nNo Tasks Added Yet.\n\nPlease, click on the Add Task\n Button to add and assign a task\n to a child"
+        android:text="@string/no_task_text"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"

@@ -54,7 +54,6 @@ public class HistoryManager {
     }
 
     public static ArrayList<History> loadHistoryList(Context context) {
-        //create gson parser
         Gson gson = createGson();
         ArrayList<History> historyList = null;
 
@@ -80,7 +79,6 @@ public class HistoryManager {
     }
 
     public static void saveHistoryList(Context context, ArrayList<History> historyList) {
-        //create gson parser and write list to json format
         Gson gson = createGson();
         String json = gson.toJson(historyList);
 
