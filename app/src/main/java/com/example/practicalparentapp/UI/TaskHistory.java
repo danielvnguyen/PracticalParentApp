@@ -1,4 +1,4 @@
-package com.example.practicalparentapp;
+package com.example.practicalparentapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,17 +8,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
-import com.example.practicalparentapp.UI.TaskEdit;
-import com.example.practicalparentapp.UI.TaskHistoryAdapter;
-import com.example.practicalparentapp.UI.TaskHistoryObjectClass;
-import com.example.practicalparentapp.UI.TinyDB;
+import com.example.practicalparentapp.R;
+import com.example.practicalparentapp.Model.TaskHistoryAdapter;
+import com.example.practicalparentapp.Model.TaskHistoryObjectClass;
+import com.example.practicalparentapp.Model.TinyDB;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class TaskHistory extends AppCompatActivity {

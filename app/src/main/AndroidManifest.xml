@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticalParentApp" >
         <activity
-            android:name=".TaskHistory"
+            android:name=".UI.TaskHistory"
             android:exported="false" />
         <activity
             android:name=".UI.TakeBreathActivity"

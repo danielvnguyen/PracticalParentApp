@@ -1,13 +1,10 @@
-package com.example.practicalparentapp.UI;
+package com.example.practicalparentapp.Model;
 
 import android.content.Context;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,15 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import com.example.practicalparentapp.R;
-import com.example.practicalparentapp.UI.TaskHistoryObjectClass;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.practicalparentapp.Model.TaskHistoryObjectClass;
 
 
 public class TaskHistoryAdapter extends ArrayAdapter<TaskHistoryObjectClass> {

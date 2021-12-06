@@ -1,4 +1,4 @@
-package com.example.practicalparentapp.UI;
+package com.example.practicalparentapp.Model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
