@@ -3,6 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_coin_flip_queue.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_configure_children.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_configure_tasks.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_help_screen.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_new_child.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_take_breath.xml" value="0.22" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_task_adder.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_task_edit.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/adapter.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/adapter_view_layout.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/adapter_view_no_task.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/alert_dialog_profile_picture.xml" value="0.1796875" />
+        <entry key="..\:/276 project work/ParentApp/app/src/main/res/layout/coin_flip_history_adapter.xml" value="0.1796875" />
         <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic.xml" value="0.1" />
         <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic_camera.xml" value="0.1" />
         <entry key="..\:/276 project work/cloning iter2/app/src/main/res/drawable/ic_gallery.xml" value="0.1" />
