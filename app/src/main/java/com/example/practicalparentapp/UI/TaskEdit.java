@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +22,12 @@ import com.example.practicalparentapp.Model.Child;
 import com.example.practicalparentapp.Model.ChildrenManager;
 import com.example.practicalparentapp.Model.TaskManager;
 import com.example.practicalparentapp.R;
+import com.example.practicalparentapp.TaskHistory;
+import com.example.practicalparentapp.UI.TinyDB;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * This class handles
@@ -27,9 +36,14 @@ import com.example.practicalparentapp.R;
  */
 public class TaskEdit extends AppCompatActivity {
 
+    public static String currentTask;
+    String currentChild;
+    private static final String TAG = "MyAct";
+    ArrayList<TaskHistoryObjectClass> taskList= new ArrayList<>();
     private TaskManager taskManager;
     private ChildrenManager childrenManager;
     private int pos;
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskEdit.class);
@@ -44,10 +58,20 @@ public class TaskEdit extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        TinyDB tinydb = new TinyDB(this);
         taskManager = TaskManager.getInstance(this);
         childrenManager = ChildrenManager.getInstance(this);
         editFields();
+
+        Button history = findViewById(R.id.historyBtn);
+        history.setOnClickListener((v -> {
+            Intent intent = TaskHistory.makeIntent(this);
+            currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
+            startActivity(intent);
+        }));
+
+
+
     }
 
     @Override
@@ -66,6 +90,7 @@ public class TaskEdit extends AppCompatActivity {
         Button confirm = findViewById(R.id.confirmTask);
         Button cancel = findViewById(R.id.cancel);
         Button remove = findViewById(R.id.removeTask);
+
         ImageView childImage = findViewById(R.id.childImg);
         confirm.setText("Confirm Turn");
 
@@ -100,6 +125,43 @@ public class TaskEdit extends AppCompatActivity {
             } else {
                 childPosition += 1;
             }
+
+
+            Calendar calendar = Calendar.getInstance();
+            String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+            TinyDB tinydb = new TinyDB(this);
+            ArrayList<Object> historyObjects = tinydb.getListObject(currentTask, TaskHistoryObjectClass.class);
+
+            for(Object objs : historyObjects){
+                taskList.add((TaskHistoryObjectClass) objs);
+            }
+
+            currentChild = childWithTurn.getName();
+            currentTask = taskManager.get(TaskEdit.this, pos).getTaskName();
+            Log.i(TAG, "current child is  " + currentChild);
+            Log.i(TAG, "current task is  " + currentTask);
+            TaskHistoryObjectClass history = new TaskHistoryObjectClass(currentTask,currentChild, currentDate,
+                    childWithTurn.getChildImageInBytes());
+            taskList.add(history);
+
+
+            ArrayList<Object> playerObjects = new ArrayList<Object>();
+
+            for(TaskHistoryObjectClass a : taskList){
+                playerObjects.add((Object)a);
+            }
+            Log.i(TAG, "size of taskList " + taskList.size());
+            Log.i(TAG, "size of playerObjects " + playerObjects.size());
+
+            tinydb.putListObject(currentTask, playerObjects);
+
+            ArrayList<String> taskList = new ArrayList<>();
+            taskList = tinydb.getListString("tasks");
+            taskList.add(currentTask);
+            tinydb.putListString("tasks",taskList);
+
+
 
             if (confirm.getText().toString().equals("Save Changes")) {
                 if (!childrenManager.doesChildExist(childWithTurn)) {
