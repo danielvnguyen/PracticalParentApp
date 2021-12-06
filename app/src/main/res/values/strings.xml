@@ -75,6 +75,7 @@
     <string name="how_many_breaths">How many breaths? \n<br /> (enter 1-10)</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="time_100">Time @100%</string>
     <string name="inhale_txt">Breath in while holding the \'In\' button</string>
     <string name="exhale_txt">Now breathe out while holding the \'Out\' button</string>
     <string name="ask_more_txt">Would you like to take more breaths?</string>
