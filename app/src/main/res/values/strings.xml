@@ -79,4 +79,7 @@
     <string name="inhale_txt">Breath in while holding the \'In\' button</string>
     <string name="exhale_txt">Now breathe out while holding the \'Out\' button</string>
     <string name="ask_more_txt">Would you like to take more breaths?</string>
+    <string name="task_name">Task Name</string>
+    <string name="name_of_child">Name of Child</string>
+    <string name="date_of_completion">date of completion</string>
 </resources>

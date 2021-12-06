@@ -5,53 +5,59 @@
     android:id="@+id/taskHistory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:weightSum="100">
 
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/name"
-        app:layout_constraintEnd_toStartOf="@+id/name"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:layout_conversion_absoluteHeight="60dp"
+        tools:layout_conversion_absoluteWidth="103dp" />
+
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Task Name"
+        android:text="@string/task_name"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/task"
         app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/task" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="60dp"
+        tools:layout_conversion_absoluteWidth="103dp" />
 
     <TextView
         android:id="@+id/task"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Name of Child"
-        app:layout_constraintBottom_toTopOf="@+id/date"
+        android:text="@string/name_of_child"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="30dp"
+        tools:layout_conversion_absoluteWidth="206dp" />
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="671dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="date of completion"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/date_of_completion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/task" />
+        app:layout_constraintTop_toBottomOf="@+id/task"
+        tools:layout_conversion_absoluteHeight="30dp"
+        tools:layout_conversion_absoluteWidth="206dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
