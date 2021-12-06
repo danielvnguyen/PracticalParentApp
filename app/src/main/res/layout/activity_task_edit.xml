@@ -23,8 +23,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538"
+        app:layout_constraintVertical_bias="0.499"
         tools:ignore="Autofill,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/childName"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ntextview"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.389" />
 
     <Button
         android:id="@+id/confirmTask"
@@ -38,7 +52,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cancel"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.529"
         app:strokeColor="#CFCACA"
         app:strokeWidth="4dp" />
 
@@ -54,7 +68,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.883"
+        app:layout_constraintVertical_bias="0.939"
         app:strokeColor="#CFCACA"
         app:strokeWidth="4dp"
         tools:ignore="TextContrastCheck" />
@@ -71,14 +85,14 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editChildTask"
-        app:layout_constraintVertical_bias="0.369"
+        app:layout_constraintVertical_bias="0.353"
         app:strokeColor="#CFCACA"
         app:strokeWidth="4dp" />
 
     <ImageView
         android:id="@+id/childImg"
-        android:layout_width="210dp"
-        android:layout_height="191dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,20 +100,6 @@
         app:layout_constraintVertical_bias="0.09"
         tools:ignore="ContentDescription,ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/childName"
-        android:layout_width="333dp"
-        android:layout_height="wrap_content"
-        android:text="@string/ntextview"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
 
     <Button
         android:id="@+id/historyBtn"
@@ -110,6 +110,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.659" />
+        app:layout_constraintVertical_bias="0.632" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

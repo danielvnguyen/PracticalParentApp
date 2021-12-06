@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,13 +19,14 @@ import com.example.practicalparentapp.UI.TinyDB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class TaskHistory extends AppCompatActivity {
     private static final String TAG = "MyActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setTitle("Task History");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_history);
         ListView mListView = (ListView) findViewById(R.id.historytasklistview);
@@ -88,6 +90,18 @@ public class TaskHistory extends AppCompatActivity {
     }
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskHistory.class);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemID = item.getItemId();
+
+        if (itemID == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
