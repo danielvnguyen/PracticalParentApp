@@ -107,6 +107,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private TextView displayRate;
     private float currentRate;
     private boolean ticked;
+    private boolean temp_state;
 
 
     @Override
@@ -160,6 +161,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
         currentRate = 1;
         ticked = false;
+        temp_state = false;
 
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset=findViewById(R.id.button_reset);
@@ -534,6 +536,21 @@ public class TimeoutTimer extends AppCompatActivity {
             //Remove amount of time that has passed already
             int timeLeft = (int) ((mTimeLeftInMillis / 1000)); //time left
             int initialSize = (int) (initialTime / 1000); //total time
+
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (!temp_state) {
+                        mButtonStartPause.performClick();
+                        mButtonStartPause.performClick();
+                    }
+                    temp_state = true;
+                }
+            };
+
+            handler.postDelayed(runnable, 10);
+
 
             pieEntries.subList((int) (timeLeft * currentRate), initialSize).clear();
 
