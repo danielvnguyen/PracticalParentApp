@@ -11,6 +11,19 @@
 
 
     <TextView
+        android:id="@+id/task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="center"
+        android:text="@string/name_of_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="30dp"
+        tools:layout_conversion_absoluteWidth="206dp" />
+
+    <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +41,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
@@ -39,7 +52,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="88dp"
         android:gravity="center"
         android:text="@string/task_name"
         android:textAlignment="center"
@@ -49,19 +62,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_conversion_absoluteHeight="60dp"
         tools:layout_conversion_absoluteWidth="103dp" />
-
-    <TextView
-        android:id="@+id/task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="4dp"
-        android:gravity="center"
-        android:text="@string/name_of_child"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_conversion_absoluteHeight="30dp"
-        tools:layout_conversion_absoluteWidth="206dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
